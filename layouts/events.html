@@ -1,0 +1,31 @@
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          {{ .Title }}
+        </h1>
+      </header>
+      <section>
+        <div class="mw8 center br3 pa3 shadow-4">
+            <p class="lh-copy">{{ .Content }}</p>
+
+            <div class="mt4">
+                <h3 class="f4">Location</h3>
+                <p class="f5"><a href="https://www.google.com/maps/search/?api=1&query={{ .Params.Location }}">{{ .Params.Location }}</a>
+</p>
+            </div>
+
+            <div class="mt4">
+                <h3 class="f4">Event Dates</h3>
+                <p class="f5"><strong>Start:</strong> {{ .Params.EventStartDate | time.Format "Jan 2, 2006 3:04PM" }}</p>
+                <p class="f5"><strong>End:</strong> {{ .Params.EventEndDate | time.Format "Jan 2, 2006 3:04PM" }}</p>
+            </div>
+	    <a class="f6 link dim ph3 pv2 mb2 dib white bg-dark-blue" href='https://calendar.google.com/calendar/render?action=TEMPLATE&text={{ .Title }}&dates={{ .Params.EventStartDate | time.Format "20060102T150405" }}/{{ .Params.EventEndDate | time.Format "20060102T150405" }}&details={{ .Content }}&location={{ .Params.Location }}&trp=false&crm=false'>Add to Google Calendar</a>
+        </div>
+       </section>
+    </article>
+  </div>
+{{ end }}
+

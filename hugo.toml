@@ -1,0 +1,34 @@
+baseURL = 'https://pcyo.miceplans.net/'
+languageCode = 'en-us'
+title = 'Peninsula Community Youth Orchestra'
+theme = 'ananke'
+
+[[menu.main]]
+name = "Events"
+pageRef = "events" # Reference to the folder
+weight = 1
+
+[[menu.main]]
+  name = "About"
+  url = "/about"
+  weight = 2
+
+[[menu.main]]
+  name = "New Students"
+  url = "/new-students"
+  weight = 3
+
+[[menu.main]]
+  name = "Current Students"
+  url = "/current-students"
+  weight = 4
+
+[[menu.main]]
+  name = "Donate"
+  url = "/donate"
+  weight = 5
+
+[params]
+background_color_class = "bg-light-yellow"
+site_logo = "images/white-note.png"
+favicon = "images/purple-note.png"
