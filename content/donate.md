@@ -1,7 +1,7 @@
 ---
 title: "Donate"
 description: ""
-draft: true
+draft: false
 tags: ["featured"]
 images: ["donate.jpg"]
 keywords: ["donate"]

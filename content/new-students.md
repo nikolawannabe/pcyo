@@ -1,6 +1,6 @@
 +++
 date = '2025-07-19T17:44:02-07:00'
-draft = true
+draft = false
 title = 'New Students'
 +++
 
