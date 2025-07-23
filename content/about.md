@@ -16,7 +16,7 @@ The children's program has operated out of Sequim since the SCO's founding in 20
 
 In 2025, the Peninsula Community Youth Orchestra expanded the children's program's mission, encouraging string students from across the Olympic Peninsula to join and rehearse at Swisher Hall.
 
-The Peninsula Community Youth Orchestra varies a bit from a traditional orchestra in that it accepts very young children who have not played before.  The beginners class rehearses separately from the intermediate and advanced students.
+The Peninsula Community Youth Orchestra varies a bit from a traditional youth orchestra in that it accepts very young children who have not played before.  Our primary requirement is that students can read, so they can be taught to read music.  The beginners class rehearses separately from the intermediate and advanced students.
 
 [Learn more about our children's classes](/new-students).
 
