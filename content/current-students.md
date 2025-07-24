@@ -4,7 +4,7 @@ draft = false
 title = 'Current Students'
 +++
 
-Coming soon: [Family Portal](https://jovial.org/pcyo)
+Coming soon: Family Portal at Jovial
 
 ## Contact us
 *Family Coordinator*: 
