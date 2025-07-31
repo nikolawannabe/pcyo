@@ -15,10 +15,15 @@ as a studio teacher for violin, viola, cello, and music theory.
 - Classes are held Monday and Wednesday afternoons.
 - Classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
 
-Registration will open soon.
+[Join our mailing list](https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073)
 
+Registration will open for new students August 7th, 2025.
 
-For more information about registration, email youth@sequimcommunityorchestra.org, or call or text the parent coordinator at [(360)-207-1720](tel:+1-360-207-1720).
+For more information about registration, email registrar@sequimcommunityorchestra.org.
+
+### Material to look through before registration
+- [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
+- [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
 
 # How does our program fit in with other Peninsula music programs?
 
