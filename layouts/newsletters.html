@@ -1,0 +1,34 @@
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          {{ .Title }}
+        </h1>
+      </header>
+      <section>
+        <div class="mw8 center br3 pa3 shadow-4">
+            <p class="lh-copy">{{ .Content }}</p>
+	    <h2>About Us</h2>
+	    <p>The SCO is a charitable organization promoting the teaching and performance of orchestral
+music. Our strings education program, the Peninsula Community Youth Orchestra, holds string
+classes for children and the Sequim Community Orchestra provides a community orchestra
+open to beginning and intermediate players of all ages and presents performances and
+informative programs for the public.</p>
+	    <h2>The Team</h2>
+	    <ul>
+		    <li>PCYO Instructor Sara Baldwin</li>
+		    <li>PCYO Classroom Coordinator Amanda Westman</li>
+		    <li>SCO President Case Schmidt</li>
+		    <li>SCO Vice-President Scott Schmidt</li>
+		    <li>SCO Secretary Julie Novak</li>
+		    <li>SCO Treasurer Lisa McMillian</li>
+		    <li>SCO Director Carol Koenig</li>
+	    </ul>
+        </div>
+       </section>
+    </article>
+  </div>
+{{ end }}
+
