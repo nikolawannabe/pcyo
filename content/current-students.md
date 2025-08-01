@@ -4,6 +4,8 @@ draft = false
 title = 'Current Students'
 +++
 
+***New*** [Current Students: Register on Jovial](https://jovial.org/pcyo/family)
+
 [Family Portal](https://jovial.org/pcyo/family)
 
 ## Contact us
