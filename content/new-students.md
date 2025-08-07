@@ -17,7 +17,7 @@ as a studio teacher for violin, viola, cello, and music theory.
 
 [Join our mailing list](https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073)
 
-Registration will open for new students August 7th, 2025.
+[Register Now!](https://jovial.org/pcyo/hello)
 
 For more information about registration, email registrar@sequimcommunityorchestra.org.
 
