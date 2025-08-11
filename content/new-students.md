@@ -10,7 +10,7 @@ Sara has 25 years of experience as a public school orchestra director, and over 
 as a studio teacher for violin, viola, cello, and music theory.
 
 ## About Our Classes
-- Peninsula Community Youth Orchestra is for children in grades 1-12.  Children entering the program should be able to read.  More advanced high school students may instead prefer to join our parent organization, the [Sequim Community Orchestra](https://sequimcommunityorchestra.org).
+- Peninsula Community Youth Orchestra is for children in grades 1-12.  Children entering the program should be able to read.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
 - We offer group lessons for beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
 - Classes are held Monday and Wednesday afternoons.
 - Classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
