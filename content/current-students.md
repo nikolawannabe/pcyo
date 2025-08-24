@@ -13,10 +13,6 @@ title = 'Current Students'
 *Registrar*:
 - **Email**: registrar@sequimcommunityorchestra.org
 
-*Classroom Coordinator*: 
-- **Text or Voicemail**: [(360) 207-1720](tel:+1-360-207-1720)
-- **Email** : youth@sequimcommunityorchestra.org
-
 ### Class Materials
 - [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
 - [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
