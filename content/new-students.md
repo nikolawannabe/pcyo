@@ -4,16 +4,20 @@ draft = false
 title = 'New Students'
 +++
 
-## About Our Teacher
-### Sara Baldwin
+## About Our Teachers
+### Sequim: Sara Baldwin
 Sara has 25 years of experience as a public school orchestra director, and over 30 years
-as a studio teacher for violin, viola, cello, and music theory.
+as a studio teacher for violin, viola, cello, and music theory.  Sara has been teaching beginner, intermediate, and advanced students in Sequim since 2022.
+
+### Port Angeles: Jesse Ahmann
+Jesse is an eminently skilled cellist and bass player who regularly performs as a professional musician with multiple groups across multiple genres of music and has 15 years of experience teaching orchestra kids in school, camp, and private lessons.  We are so happy to welcome Jesse to our teaching staff in 2025 teaching beginner students in Port Angeles.
 
 ## About Our Classes
-- Peninsula Community Youth Orchestra is for children in grades 1-12.  Children entering the program should be able to read.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
+- Peninsula Community Youth Orchestra is for children in grades 1-8.  Children entering the program should be able to read.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
 - We offer group lessons for beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
 - Classes are held Monday and Wednesday afternoons.
-- Classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
+- Sequim classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
+- Port Angeles class location is TBD.
 
 [Join our mailing list](https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073)
 
