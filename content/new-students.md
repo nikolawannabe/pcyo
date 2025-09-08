@@ -10,7 +10,7 @@ Sara has 25 years of experience as a public school orchestra director, and over 
 as a studio teacher for violin, viola, cello, and music theory.  Sara has been teaching beginner, intermediate, and advanced students in Sequim since 2022.
 
 ### Port Angeles: Jesse Ahmann
-Jesse is an eminently skilled cellist and bass player who regularly performs as a professional musician with multiple groups across multiple genres of music and has 15 years of experience teaching orchestra kids in school, camp, and private lessons.  We are so happy to welcome Jesse to our teaching staff in 2025 teaching beginner students in Port Angeles.
+Jesse is an eminently skilled cellist and bass player who regularly performs as a professional musician with multiple groups across multiple genres of music and has 15 years of experience teaching orchestra kids in school, camp, and private lessons.  He also is very skilled at composition and adaptation of music and will be able to bring the kids' favorite music to life in our classrooms. We are so happy to welcome Jesse to our teaching staff in 2025 teaching beginner students in Port Angeles.
 
 ## About Our Classes
 - Peninsula Community Youth Orchestra is for children in grades 1-8.  Children entering the program should be able to read.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
