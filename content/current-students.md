@@ -17,5 +17,8 @@ title = 'Current Students'
 - [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
 - [Instrument Care Handbook](/Instrument%20Care.pdf)
 - [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
+- [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
 
-Classes are held at [Swisher Hall in Sequim](https://www.google.com/maps/search/?api=1&query=506%20N%20Blake%20Ave,%20Sequim,%20WA%2098382).
+
+Classes in Sequim are held at [Swisher Hall](https://www.google.com/maps/search/?api=1&query=506%20N%20Blake%20Ave,%20Sequim,%20WA%2098382).
+Port Angeles class location is TBD.
