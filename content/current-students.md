@@ -15,7 +15,7 @@ title = 'Current Students'
 
 ### Class Materials
 - [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
-- [Instrument Care Handbook](/Instrument%20Care.pdf)
+- [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
 

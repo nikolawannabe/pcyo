@@ -28,7 +28,7 @@ For more information about registration, email registrar@sequimcommunityorchestr
 ### Material to look through before registration
 - [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
 - [Behavior and Attendance Policies](/PCYO-Policies_2025-2026.pdf)
-- [Instrument Care Handbook](/Instrument%20Care.pdf)
+- [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
 
 # How does our program fit in with other Peninsula music programs?
