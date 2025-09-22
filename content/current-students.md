@@ -14,7 +14,8 @@ title = 'Current Students'
 - **Email**: registrar@sequimcommunityorchestra.org
 
 ### Class Materials
-- [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
+- [Read our Student Handbook (Sequim)](/25-26_PCYO_Sequim_Handbook.pdf)
+- PA Handbook upcoming.
 - [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)

@@ -26,7 +26,8 @@ Jesse is an eminently skilled cellist and bass player who regularly performs as 
 For more information about registration, email registrar@sequimcommunityorchestra.org.
 
 ### Material to look through before registration
-- [Read our Student Handbook](/PCYO-Family-Handbook_2025-2026.pdf)
+- [Read our Student Handbook (Sequim)](/25-26_PCYO_Sequim_Handbook.pdf)
+- PA Handbook upcoming.
 - [Behavior and Attendance Policies](/PCYO-Policies_2025-2026.pdf)
 - [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
