@@ -6,6 +6,8 @@ tags: ["featured"]
 images: ["donate.jpg"]
 keywords: ["donate"]
 ---
+[![Cello Fund](/pcyo-cello-fund.png)](https://www.paypal.com/donate/?hosted_button_id=EQWW6AWB5D9JG)
+
 ## How can I donate?
 - Donate directly to the program on PayPal on the [SCO home page](https://sequimcommunityorchestra.org/index.php).
 - Designate the Sequim Community Orchestra as a beneficiary in your will
