@@ -4,8 +4,6 @@ draft = false
 title = 'Current Students'
 +++
 
-***New*** [Current Students: Register on Jovial](https://jovial.org/pcyo/family)
-
 [Family Portal](https://jovial.org/pcyo/family)
 
 ## Contact us
@@ -22,4 +20,5 @@ title = 'Current Students'
 
 
 Classes in Sequim are held at [Swisher Hall](https://www.google.com/maps/search/?api=1&query=506%20N%20Blake%20Ave,%20Sequim,%20WA%2098382).
-Port Angeles class location is TBD.
+
+Port Angeles classes are held at [First United Methodist Church](https://maps.app.goo.gl/11qt4rfRE6qrkPZK6).

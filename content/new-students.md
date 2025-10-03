@@ -17,7 +17,7 @@ Jesse is an eminently skilled cellist and bass player who regularly performs as 
 - We offer group lessons for beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
 - Classes are held Monday and Wednesday afternoons.
 - Sequim classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
-- Port Angeles class location is TBD.
+- Port Angeles class location is First United Methodist Church on 7th Street near the Masonic Lodge.
 
 [Join our mailing list](https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073)
 
@@ -42,10 +42,12 @@ school orchestra program begins in fourth grade, so students in grades 1-3 do no
 group program they can participate in.  Homeschool students also may lack a program that they can participate in.
 
 We assume that students will graduate from our program after a few years, and enter another
-orchestra that their skills are suited to, such as the Sequim Community Orchestra.  Once
-students have mastered their instrument, they may choose to audition for the Port Angeles
-Symphony Orchestra.  This does not typically occur until high school, and generally requires
+orchestra that their skills are suited to, such as the [Sequim Community Orchestra](https://sequimcommunityorchestra.org/).  Once
+students have mastered their instrument, they may choose to audition for the [Port Angeles
+Symphony Orchestra](https://portangelessymphony.org/).  This does not typically occur until high school, and generally requires
 a private teacher.
+
+The PCYO highly recommends private lessons in addition to our classes, especially as students demonstrate continued interest in their studies. Violins, violas, cellos, and basses are difficult instruments that take many years to master.  A private teacher is an excellent way to find weaknesses and conquer them and find strengths and bolster them.  Please talk to your PCYO teacher to find a private teacher suitable to their needs as they have a list of excellent instructors.  Port Angeles and Sequim both have a very healthy complement of extremely well-vetted private teachers that we are happy to refer students to.
 
 The SCO and PCYO collaborate with [Olympic Strings](https://www.olympicstringsworkshop.org/) as our educational mission is very closely aligned with theirs. Olympic Strings
 provide summer string programs for students on the Olympic Peninsula and we highly recommend

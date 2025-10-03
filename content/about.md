@@ -14,7 +14,7 @@ The SCO has two distinct programs:
 
 The children's program has operated out of Sequim since the SCO's founding in 2012 and varies from 10-20 students.
 
-In 2025, the Peninsula Community Youth Orchestra expanded the children's program's mission, encouraging string students from across the Olympic Peninsula to join and rehearse at Swisher Hall.
+In 2025, the Peninsula Community Youth Orchestra expanded the children's program's mission, encouraging string students from across the Olympic Peninsula to join and rehearse at both Swisher Hall in Sequim and First United Methodist Church in Port Angeles.
 
 The Peninsula Community Youth Orchestra varies a bit from a traditional youth orchestra in that it accepts very young children who have not played before.  Our primary requirement is that students can read, so they can be taught to read music.  The beginners class rehearses separately from the intermediate and advanced students.
 
