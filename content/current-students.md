@@ -13,7 +13,8 @@ title = 'Current Students'
 
 ### Class Materials
 - [Read our Student Handbook (Sequim)](/25-26_PCYO_Sequim_Handbook.pdf)
-- PA Handbook upcoming.
+- [Read our Student Handbook (Port Angeles)](/25-26_PCYO_PA_Handbook.pdf
+)
 - [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Learn about our policies](/PCYO-Policies_2025-2026.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
