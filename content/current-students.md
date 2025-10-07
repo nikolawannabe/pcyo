@@ -6,6 +6,9 @@ title = 'Current Students'
 
 [Family Portal](https://jovial.org/pcyo/family)
 
+[📅 calendar](/calendar)
+
+
 ## Contact us
 
 *Registrar*:
