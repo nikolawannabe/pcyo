@@ -5,19 +5,22 @@ title = 'New Students'
 +++
 
 ## About Our Teachers
-### Sequim: Sara Baldwin
+
+### Sound Sprouts and Suzuki Sprouts with Christine Faught
+Christine has 30 years of experience teaching Suzuki classes and private lessons and directing youth orchestras from New York, Texas, and has recently returned to her roots in Washington.  We are so grateful to have her traveling from Port Orchard to Sequim and Port Angeles to offer Suzuki group classes and early music classes. Suzuki group classes have not been available in Port Angeles for decades.  Christine also offers private lessons to 3-6 year old students which pair perfectly with her Suzuki Sprouts classes and are in extremely short supply in Port Angeles.
+### Sequim Beginner, Intermediate, and Advanced Strings: Sara Baldwin
 Sara has 25 years of experience as a public school orchestra director, and over 30 years
 as a studio teacher for violin, viola, cello, and music theory.  Sara has been teaching beginner, intermediate, and advanced students in Sequim since 2022.
 
-### Port Angeles: Jesse Ahmann
+### Port Angeles Beginner, Intermediate, and Advanced Strings: Jesse Ahmann
 Jesse is an eminently skilled cellist and bass player who regularly performs as a professional musician with multiple groups across multiple genres of music and has 15 years of experience teaching orchestra kids in school, camp, and private lessons.  He also is very skilled at composition and adaptation of music and will be able to bring the kids' favorite music to life in our classrooms. We are so happy to welcome Jesse to our teaching staff in 2025 teaching beginner students in Port Angeles.
 
 ## About Our Classes
-- Peninsula Community Youth Orchestra is for children in grades 1-8.  Children entering the program should be able to read.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
-- We offer group lessons for beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
-- Classes are held Monday and Wednesday afternoons.
+- Peninsula Community Youth Orchestra is for children 3+. Children entering the "beginner" program should be able to read, children who are not able to read yet should instead join our Sprouts classes.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
+- We offer group lessons for toddlers, beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
+- Beginner, Intermediate, and Advanced classes are held Monday and Wednesday afternoons. Toddler classes are offered Monday or Friday depending on the town.  Please see our [class calendar](/calendar) for more details.
 - Sequim classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
-- Port Angeles class location is First United Methodist Church on 7th Street near the Masonic Lodge.
+- Port Angeles classes are located at First United Methodist Church on 7th Street near the Masonic Lodge.
 
 [Join our mailing list](https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073)
 
@@ -27,7 +30,7 @@ For more information about registration, email registrar@sequimcommunityorchestr
 
 ### Material to look through before registration
 - [Read our Student Handbook (Sequim)](/25-26_PCYO_Sequim_Handbook.pdf)
-- PA Handbook upcoming.
+- [Read our Student Handbook (Port Angeles)](25-26_PortAngeles_Handbook.pdf)
 - [Behavior and Attendance Policies](/PCYO-Policies_2025-2026.pdf)
 - [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
@@ -38,7 +41,7 @@ The Peninsula Community Youth Orchestra is designed to serve students that have 
 had less opportunities to learn string instruments.  The [Sequim Community Orchestra's mission](https://sequimcommunityorchestra.org/aboutUs.php)
 specifically calls out the Sequim area as it's school district does not have an orchestra
 program.  We also see many students join our classes from Chimacum. In Port Angeles, the 
-school orchestra program begins in fourth grade, so students in grades 1-3 do not have a 
+school orchestra program begins in fourth grade, so students younger than grade 4 do not have a 
 group program they can participate in.  Homeschool students also may lack a program that they can participate in.
 
 We assume that students will graduate from our program after a few years, and enter another
