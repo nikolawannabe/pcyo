@@ -16,8 +16,9 @@ as a studio teacher for violin, viola, cello, and music theory.  Sara has been t
 Jesse is an eminently skilled cellist and bass player who regularly performs as a professional musician with multiple groups across multiple genres of music and has 15 years of experience teaching orchestra kids in school, camp, and private lessons.  He also is very skilled at composition and adaptation of music and will be able to bring the kids' favorite music to life in our classrooms. We are so happy to welcome Jesse to our teaching staff in 2025 teaching beginner students in Port Angeles.
 
 ## About Our Classes
-- Peninsula Community Youth Orchestra is for children 3+. Children entering the "beginner" program should be able to read, children who are not able to read yet should instead join our Sprouts classes.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.
-- We offer group lessons for toddlers, beginner, intermediate, and advanced learners of violin, viola, cello, or bass.  
+- Peninsula Community Youth Orchestra is for children 3+. Children entering the "Beginner" program generally start between 6 and 8 and should be able to read. Children who are not able to read yet should join our <a href="/sprouts">Sprouts classes</a>.  [High school students](/high-school-students) are likely ready for our parent organization, the Sequim Community Orchestra.  Older beginners (under 18) may join with permission of the teacher.  
+- Students switching instruments may join the beginner class mid-year or mid-term if there is room, otherwise students should plan to start in the Fall and continue with regular attendance through May to be able to progress with their class and graduate into the intermediate class. 
+- All of our classes are for groups of students studying violin, viola, cello, or bass.
 - Beginner, Intermediate, and Advanced classes are held Monday and Wednesday afternoons. Toddler classes are offered Monday or Friday depending on the town.  Please see our [class calendar](/calendar) for more details.
 - Sequim classes are located at Swisher Hall in Sequim, WA, which is near Carrie Blake Park and the soccer fields.
 - Port Angeles classes are located at First United Methodist Church on 7th Street near the Masonic Lodge.
