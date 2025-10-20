@@ -1,0 +1,338 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Events — Tachyons Responsive List + Instrument Filter</title>
+    <style>
+     .event-card {
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    } 
+
+    .event-card h2 {
+      margin-top: 0;
+      color: #137752;
+      font-size: 1.5rem;
+    }
+
+    .event-card h3 {
+      color: #137752;
+      font-size: 1.5rem;
+      margin-top: 0.3rem;
+    }
+
+    .event-card .town {
+      font-weight: bold;
+      color: #888;
+    }
+
+    .event-card p {
+      margin: 0.3rem 0;
+    }
+
+    /* Add festive snowflakes in the background */
+    .event-card::after {
+      content: "❄️ ❄️ ❄️";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.2rem;
+      opacity: 0.4;
+    } 
+
+    /* Optional hover effect */
+    .event-card:hover {
+      transform: scale(1.02);
+      transition: transform 0.2s ease;
+    }
+  </style>
+
+  <script>
+  const eventsData = 
+	  [
+  {
+    "title": "A Very Cello Christmas",
+    "teacher": "Marlene Moore",
+    "town": "sequim",
+    "description": "Local cello teacher Marlene Moore will lead a group of students playing Christmas music.",
+    "date": "Monday, Dec. 21, 10am to 12, with a short snack break at 11.",
+    "location": "Peninsula Adventist Elementary School.",
+    "instrumentation": ["cello", "violin", "viola"],
+	  "instrumentationText": "Cello beginner and intermediate students. Violin and Viola are welcome if they like hanging with cellos! All students must be 12 years old or under",
+    "music": "Newman Christmas Books.",
+    "fee": "$50",
+    "acceptingPrivate": true
+  },
+  {
+    "title": "Christmas Beginner Viola Duets",
+    "teacher": "Darcy Morrissey",
+    "town": "sequim",
+    "description": "Local musician and educator Darcy Morrissey will lead up to 5 beginner viola students playing Christmas music in short sessions over 2 weeks.",
+    "date": "4:45-5:30 Mondays and Wednesdays: Dec. 8, Dec. 10, Dec. 15, Dec. 17. Shared performance Dec. 18 at 4pm.",
+    "location": "Darcy Morrissey’s house in Sequim.",
+    "instrumentation": ["viola"],
+	  "instrumentationText": "Up to 5 Violas. All students must be 12 years old or under.",
+    "music": "Newman Christmas Viola Duet books.",
+    "fee": "$50",
+    "acceptingPrivate": false
+  },
+  {
+    "title": "Beginner Kaleidoscope String Christmas",
+    "teacher": "Carol Koenig",
+    "town": "sequim",
+    "description": "Local musician, public school educator, and private teacher Carol Koenig will lead up to 5 violins or cello students playing Christmas music in short sessions over 2 weeks.",
+    "date": "4:00-5:00pm Mondays and Wednesdays: Dec. 8, Dec. 10, Dec. 15, Dec. 17. Shared performance Dec. 18 at 4pm.",
+    "location": "Carol Koenig’s private studio in Sequim.",
+    "instrumentation": ["violin", "cello"],
+	  "instrumentationText": "Up to 5 Violins or cellos. All students must be 12 years old or under.",
+    "music": "Christmas Kaleidoscope.",
+    "fee": "$50",
+    "acceptingPrivate": true
+  },
+  {
+    "title": "An Intermediate Festive Violin Christmas",
+    "teacher": "Peggy Nogle-Mott",
+    "town": "sequim",
+    "description": "Local private teacher Peggy will lead up to 5 violin students playing Christmas music in short sessions over 4 weeks.",
+    "date": "4:30-5:30pm Wednesdays: Nov. 26, Dec. 3, Dec. 10, Dec. 17. Shared performance Dec. 18 at 4pm.",
+    "location": "TBD. Trinity United Methodist Church in Sequim?",
+    "instrumentation": ["violin"],
+	  "instrumentationText": "Up to 5 Violins. All students must be 13 years old or under.",
+    "music": "Festive Strings For Violin Ensemble.",
+    "fee": "$50",
+    "acceptingPrivate": true
+  },
+  {
+    "title": "A Merry String Christmas",
+    "teacher": "Christine Faught",
+    "town": "port angeles",
+    "description": "Musician and teacher Christine Faught (violin) will lead string players playing fun Christmas music tailored to their level and interests. Parents may play along if there’s room for an additional fee.",
+    "date": "Mondays and Fridays from 3:30-4:15, 12/12, 12/15, 12/19, 12/22",
+    "location": "First United Methodist Church in PA.",
+    "instrumentation": ["violin", "viola", "cello", "bass"],
+	  "instrumentationText": "any string players are welcome!",
+    "music": "Christmas Kaleidoscope Books.",
+    "fee": "$50",
+    "acceptingPrivate": true
+  },
+  {
+    "title": "Sugarplum Strings Shindig",
+    "teacher": "Olivia Bailey",
+    "town": "port angeles",
+    "description": "Local musician Olivia Bailey (violin and piano) will lead a piano quintet for beginning string students playing upbeat holiday music. Now a long-time RN at OMC, Olivia studied both violin and piano at St. Olaf College. There she played with the prestigious St. Olaf Orchestra while participating in multiple other performance studios. She has extensive experience teaching very young students violin, as well as coaching older students in ensemble performance. She can support violin, viola, and piano students who wish to join. Her teaching philosophy is to foster a supportive and encouraging environment, whether working with beginners or advanced musicians. Her goal is to help students grow in both skill and confidence.",
+    "date": "Tuesdays and Thursdays, 4:00-4:45pm Dec. 9th, 11th, 16th, and 18th",
+    "location": "TBD. (Not FUMC)",
+    "instrumentation": ["piano", "violin", "viola"],
+	  "instrumentationText": "Piano, violin(s), and viola(s). All students must be 12 years old or under.",
+    "music": "Olivia Bailey’s personal collection.",
+    "fee": "$50",
+    "acceptingPrivate": true
+  },
+  {
+    "title": "Christmas Rock Jam",
+    "teacher": "Jeremiah Turner, Scott and Case Schmidt",
+    "town": "port angeles",
+    "description": "Local lead guitarist Jeremiah Turner of the Randall Wolf Band will lead students jamming on fun Christmas music. Jeremiah will support guitar students, and Case Schmidt and Scott Schmidt will support beginning, intermediate, or advanced string players and intermediate or higher C instrument players.",
+    "date": "Tuesday, Dec. 23, 1:00-3:00pm.",
+    "location": "Classroom at First United Methodist Church in PA.",
+    "instrumentation": ["guitar", "piano", "violin", "cello", "viola", "bass", "flute", "oboe"],
+	  "instrumentationText": "Beginner guitar, piano, violin, cello, viola, bass, and any other intermediate or higher level C instruments students that know the basics of their instrument. All students must be 15 years old or under.",
+    "music": "Newman Christmas Books.",
+    "fee": "$50",
+    "acceptingPrivate": false
+  },
+  {
+    "title": "Piano Family Jam for Beginners",
+    "teacher": "Scott and Case Schmidt",
+    "town": "port angeles",
+    "description": "Local musicians Scott Schmidt (cello) and Case Schmidt (violin) will lead a Piano Trio (Piano, cello or viola, violin) for beginner strings students and an intermediate piano student playing fun Christmas music. Parents may play along if there’s room.",
+    "date": "Monday and Wednesdays 5:00-5:30 Dec. 10, 15, 17, and 22.",
+    "location": "First United Methodist Church Choir Room in PA.",
+    "instrumentation": ["piano", "violin", "cello", "viola"],
+	  "instrumentationText": "Piano, violin, cello or viola. All students must be 14 years old or under.",
+    "music": "Newman Christmas Books.",
+    "fee": "$50",
+    "acceptingPrivate": false
+  }
+];
+  </script>
+</head>
+<body>
+	<img src="/images/jams-header.png">
+	<div class="tc">
+		This December, the Peninsula Community Youth Orchestra has organized a
+collection of short holiday family jams held across Clallam County taught by local
+
+musicians and private teachers playing easy beginner and intermediate holiday
+music. Each holiday jam will welcome up to 5 students, and coaches will invite
+students playing instruments they are personally familiar with, allowing family and
+friends to play along with beginner and intermediate string students on guitar,
+piano, or wind instruments as able. Any students of the appropriate age playing
+the appropriate instruments may sign up!
+	</div>
+	<main class="wrap tc">
+
+    <!-- Filter UI -->
+    <section aria-labelledby="filter-heading" class="mb4">
+	    <h2 id="filter-heading" class="f4 mb2">Instrument</h2>
+
+      <form id="filter-form" class="flex items-center flex-wrap">
+        <label class="mr3 mb2">
+          <input type="checkbox" name="instr" value="cello" /> <span class="ml2">Cello</span>
+        </label>
+        <label class="mr3 mb2">
+          <input type="checkbox" name="instr" value="violin" /> <span class="ml2">Violin</span>
+        </label>
+        <label class="mr3 mb2">
+          <input type="checkbox" name="instr" value="viola" /> <span class="ml2">Viola</span>
+        </label>
+	<label class="mr3 mb2">
+          <input type="checkbox" name="instr" value="piano" /> <span class="ml2">Piano</span>
+        </label>
+        <label class="mr3 mb2">
+          <input type="checkbox" name="instr" value="guitar" /> <span class="ml2">Guitar</span>
+        </label>
+        <button id="clear-filters" type="button" class="f6 link dim ph3 pv2 mb2 dib white bg-dark-green">Clear</button>
+        <p id="no-match" class="ml3 dn mv0">Sorry, we don't have any groups scheduled this year for that instrument in the selected town.</p>
+      </form>
+    </section>
+    <!-- Town Filter UI -->
+<section aria-labelledby="town-filter-heading" class="mb4">
+  <h2 id="town-filter-heading" class="f4 mb2">Town</h2>
+
+  <form id="town-filter-form" class="tc">
+    <label class="mr3 mb2">
+      <select id="town-select" class="ba b--black-20 bg-white pa2 br2">
+        <option value="">All Towns</option>
+        <option value="sequim">Sequim</option>
+        <option value="port angeles">Port Angeles</option>
+      </select>
+    </label>
+
+    <button id="clear-town" type="button" class="f6 link dim ph3 pv2 mb2 dib white bg-dark-green">Clear</button>
+  </form>
+</section>
+
+<section id="events" class="flex flex-wrap justify-center"></section>
+  </main>
+
+  <script>
+  (function () {
+    const eventsContainer = document.getElementById('events');
+
+    function createEventCard(event, index) {
+      const article = document.createElement('article');
+      article.className = "event-card w-100 w-50-m w-50-l pa3";
+      article.setAttribute('data-instrumentation', event.instrumentation.join(' ').toLowerCase());
+      article.setAttribute('data-town', event.town.toLowerCase());
+      article.setAttribute('aria-labelledby', `title-${index}`);
+
+      // Build inner HTML
+      article.innerHTML = `
+        <h3 id="title-${index}" class="event-header lh-title tc">${event.title}</h3>
+        <h4 class="mt1 mb2 tc"><strong>with ${event.teacher}</strong></h4>
+        <div class="meta mb2">
+          <h5 class="tc"><strong>${capitalize(event.town)}</strong></h5>
+	  <div><b>Description</b>: ${event.description}</div>
+	  <div><b>Date</b>: ${event.date}</div>
+	  <div><b>Location</b>: ${event.location}</div>
+	  <div><b>Instrumentation</b>: ${event.instrumentationText}</div>
+	  <div><b>Music</b>: ${event.music}</div>
+	  <div><b>Fee</b>: All Holiday Jams are $50 per student.</div>
+	  <div><b>Accepting Private Students</b>: ${event.acceptingPrivate ? "Yes" : "No"}</div>
+	  <br />
+	 <div class="tc">Registration opens November 1st.</div>
+	 <div class="tc"><a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href="https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073">✉️  Join our mailing list</a></div> 
+        </div>
+      `;
+      return article;
+    }
+    const capitalize = (str) =>
+    str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+
+    // Generate cards from data
+    eventsData.forEach((event, idx) => {
+      const card = createEventCard(event, idx + 1);
+      eventsContainer.appendChild(card);
+    });
+
+    // Optional: trigger filter if it's already loaded
+    if (typeof applyFilters === 'function') {
+      applyFilters();
+    }
+  })();
+</script>
+
+
+  <script>
+  (function () {
+    const formInstr = document.getElementById('filter-form');
+    const checkboxes = Array.from(formInstr.querySelectorAll('input[type="checkbox"][name="instr"]'));
+    const clearInstrBtn = document.getElementById('clear-filters');
+
+    const townSelect = document.getElementById('town-select');
+    const clearTownBtn = document.getElementById('clear-town');
+
+    const eventsContainer = document.getElementById('events');
+    const cards = Array.from(eventsContainer.querySelectorAll('article[data-instrumentation]'));
+    const noMatch = document.getElementById('no-match');
+
+    function getSelectedInstruments() {
+      return checkboxes.filter(cb => cb.checked).map(cb => cb.value.toLowerCase().trim());
+    }
+
+    function getSelectedTown() {
+      return (townSelect.value || '').toLowerCase().trim();
+    }
+
+    function cardMatches(card, instruments, town) {
+      const instrAttr = (card.getAttribute('data-instrumentation') || '').toLowerCase();
+      const townAttr = (card.getAttribute('data-town') || '').toLowerCase();
+
+      // Instrumentation logic (OR)
+      const instrMatch = instruments.length === 0 || instruments.some(i => instrAttr.split(/\s+/).includes(i));
+
+      // Town logic (exact match)
+      const townMatch = town === '' || townAttr === town;
+
+      return instrMatch && townMatch;
+    }
+
+    function applyFilters() {
+      const selectedInstruments = getSelectedInstruments();
+      const selectedTown = getSelectedTown();
+      let anyVisible = false;
+
+      cards.forEach(card => {
+        if (cardMatches(card, selectedInstruments, selectedTown)) {
+          card.style.display = '';
+          anyVisible = true;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      noMatch.classList.toggle('dn', anyVisible);
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    clearInstrBtn.addEventListener('click', () => {
+      checkboxes.forEach(cb => cb.checked = false);
+      applyFilters();
+    });
+
+    townSelect.addEventListener('change', applyFilters);
+    clearTownBtn.addEventListener('click', () => {
+      townSelect.value = '';
+      applyFilters();
+    });
+
+    applyFilters();
+  })();
+</script>
+
+</body>
