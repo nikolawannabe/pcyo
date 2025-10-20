@@ -11,7 +11,7 @@
 
   {{ if and ($show_recent_posts) (compare.Ge $section_count 1) }}
   <h2 class="tc mid-gray lh-copy">Upcoming Events</h2>
-    <div class="pa3 pa4-ns w-100 w-70-ns center">
+    <div class="pa3 pa4-ns w-100 w-50-ns center">
       {{ $n_posts := $.Param "recent_posts_number" | compare.Default 3 }}
 
       <section class="w-100 mw8">
