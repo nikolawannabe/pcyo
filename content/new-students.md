@@ -4,6 +4,7 @@ draft = false
 title = 'New Students'
 +++
 
+![teachers](/images/teachers.png)
 ## About Our Teachers
 
 ### Sound Sprouts and Suzuki Sprouts with Christine Faught
