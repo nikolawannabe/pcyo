@@ -36,6 +36,7 @@ For more information about registration, email registrar@sequimcommunityorchestr
 - [Behavior and Attendance Policies](/PCYO-Policies_2025-2026.pdf)
 - [Instrument Care Handbook (Covers loan for most violins and violas)](/Instrument%20Care.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
+- [Non-Program Loan Policy (for non-students)](/Non-Program\ Loan\ Policy\ -\ 2025.pdf)
 
 # How does our program fit in with other Peninsula music programs?
 
