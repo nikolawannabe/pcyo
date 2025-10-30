@@ -4,7 +4,7 @@ draft = false
 title = 'New Students'
 +++
 
-![teachers](/images/teachers.png)
+![beginners](/images/pcyo-kids-sequim-beginners.png)
 ## About Our Teachers
 
 ### Sound Sprouts and Suzuki Sprouts with Christine Faught
