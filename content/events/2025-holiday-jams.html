@@ -133,6 +133,7 @@
 		  },
   {
     "title": "Sugarplum Strings Shindig",
+	  "full": true,
     "teacher": "Olivia Bailey",
     "town": "port angeles",
     "description": "Local musician Olivia Bailey (violin and piano) will lead a piano quintet for beginning string students playing upbeat holiday music. Now a long-time RN at OMC, Olivia studied both violin and piano at St. Olaf College. There she played with the prestigious St. Olaf Orchestra while participating in multiple other performance studios. She has extensive experience teaching very young students violin, as well as coaching older students in ensemble performance. She can support violin, viola, and piano students who wish to join. Her teaching philosophy is to foster a supportive and encouraging environment, whether working with beginners or advanced musicians. Her goal is to help students grow in both skill and confidence.",
@@ -248,7 +249,7 @@ the appropriate instruments may sign up!
   <script>
   (function () {
     const eventsContainer = document.getElementById('events');
-
+	  const registerButton = `<div class="tc"><a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href="https://jovial.org/pcyo/hello">New students: Sign up</a>  <a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href="https://jovial.org/pcyo/family">Register as a current student</a></div>`
     function createEventCard(event, index) {
       const article = document.createElement('article');
       article.className = "event-card w-100 w-50-m w-50-l pa3";
@@ -270,7 +271,8 @@ the appropriate instruments may sign up!
 	  <div><b>Fee</b>: All Holiday Jams are $50 per student.</div>
 	  <div><b>Accepting Private Students</b>: ${event.acceptingPrivate ? "Yes" : "No"}</div>
 	  <br />
-	 <div class="tc"><a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href="https://jovial.org/pcyo/hello">New students: Sign up</a>  <a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href="https://jovial.org/pcyo/family">Register as a current student</a></div> 
+	  <div><b>${event.full ? 'Jam is full!' : ""}</b></div>
+	  ${!event.full ? registerButton : ""}
         </div>
       `;
       return article;
