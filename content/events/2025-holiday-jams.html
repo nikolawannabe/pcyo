@@ -56,6 +56,7 @@
   {
     "title": "A Very Cello Christmas",
     "teacher": "Marlene Moore",
+	  "full": true,
     "town": "sequim",
     "description": "Local cello teacher Marlene Moore will lead a group of students playing Christmas music.",
     "date": "Monday, Dec. 22, 10am to 12, with a short snack break at 11.",
@@ -150,17 +151,18 @@
     "title": "Christmas Rock Jam",
     "teacher": "Jeremiah Turner, Scott and Case Schmidt",
     "town": "port angeles",
-    "description": "Local lead guitarist Jeremiah Turner of the Randall Wolf Band will lead students jamming on fun Christmas music. Jeremiah will support guitar students, and Case Schmidt and Scott Schmidt will support beginning, intermediate, or advanced string players and intermediate or higher C instrument players.",
+    "description": "Local lead guitarist Jeremiah Turner of the Randall Wolf Band will lead students jamming on fun Christmas music. Jeremiah will support guitar students, and Case Schmidt and Scott Schmidt will support intermediate or advanced string players and intermediate or advanced C instrument players.",
     "date": "Tuesday, Dec. 23, 1:00-3:00pm.",
     "location": "Classroom at First United Methodist Church in PA.",
     "instrumentation": ["guitar", "piano", "violin", "cello", "viola", "bass", "flute", "oboe"],
-	  "instrumentationText": "Beginner guitar, piano, violin, cello, viola, bass, and any other intermediate or higher level C instruments students that know the basics of their instrument. All students must be 15 years old or under.",
+	  "instrumentationText": "Guitar, piano, violin, cello, viola, bass, and any other intermediate or higher level C instruments students that know the basics of their instrument. All students must be 18 years old or under. Parents may play along!",
     "music": "Newman Christmas Books. Students will be contacted with the book they should purchase after registration.",
     "fee": "$50",
     "acceptingPrivate": false
   },
   {
     "title": "Piano Family Jam",
+	  "full": true,
     "teacher": "Scott and Case Schmidt",
     "town": "port angeles",
     "description": "Local musicians Scott Schmidt (cello) and Case Schmidt (violin) will lead a Piano Trio (Piano, cello or viola, violin) for strings students and an intermediate piano student playing fun Christmas music. Parents may play along if there’s room.",
@@ -206,6 +208,12 @@ the appropriate instruments may sign up!
 
     <!-- Filter UI -->
     <section aria-labelledby="filter-heading" class="mb4 tc">
+    	<h2 id="filter-heading" class="f4 mb2">Availability</h2>
+        <label class="mr3 mb2 nowrap">
+		    <input type="checkbox" id="available-only" checked/> 
+		    <span class="ml2">Only show sessions with spots left</span>
+     	</label>
+     	
 	    <h2 id="filter-heading" class="f4 mb2">Instrument</h2>
 
       <form id="filter-form" class="tc">
@@ -224,26 +232,28 @@ the appropriate instruments may sign up!
         <label class="mr3 mb2 nowrap">
           <input type="checkbox" name="instr" value="guitar" /> <span class="ml2">Guitar</span>
         </label>
+
         <button id="clear-filters" type="button" class="f6 link dim ph3 pv2 mb2 dib white bg-dark-green">Clear</button>
         <p id="no-match" class="ml3 dn mv0">Sorry, we don't have any groups scheduled this year for that instrument in the selected town.</p>
       </form>
+      <section aria-labelledby="town-filter-heading" class="mb4">
+	  <h2 id="town-filter-heading" class="f4 mb2">Town</h2>
+
+	  <form id="town-filter-form" class="tc">
+	    <label class="mr3 mb2">
+	      <select id="town-select" class="ba b--black-20 bg-white pa2 br2">
+		<option value="">All Towns</option>
+		<option value="sequim">Sequim</option>
+		<option value="port angeles">Port Angeles</option>
+	      </select>
+	    </label>
+
+	    <button id="clear-town" type="button" class="f6 link dim ph3 pv2 mb2 dib white bg-dark-green">Clear</button>
+	  </form>
+	</section>
     </section>
     <!-- Town Filter UI -->
-<section aria-labelledby="town-filter-heading" class="mb4">
-  <h2 id="town-filter-heading" class="f4 mb2">Town</h2>
 
-  <form id="town-filter-form" class="tc">
-    <label class="mr3 mb2">
-      <select id="town-select" class="ba b--black-20 bg-white pa2 br2">
-        <option value="">All Towns</option>
-        <option value="sequim">Sequim</option>
-        <option value="port angeles">Port Angeles</option>
-      </select>
-    </label>
-
-    <button id="clear-town" type="button" class="f6 link dim ph3 pv2 mb2 dib white bg-dark-green">Clear</button>
-  </form>
-</section>
 
 <section id="events" class="flex flex-wrap justify-center"></section>
   </main>
@@ -257,6 +267,7 @@ the appropriate instruments may sign up!
       article.className = "event-card w-100 w-50-m w-50-l pa3";
       article.setAttribute('data-instrumentation', event.instrumentation.join(' ').toLowerCase());
       article.setAttribute('data-town', event.town.toLowerCase());
+      article.setAttribute('data-full', event.full ? "true" : "false");
       article.setAttribute('aria-labelledby', `title-${index}`);
 
       // Build inner HTML
@@ -265,6 +276,8 @@ the appropriate instruments may sign up!
         <h4 class="mt1 mb2 tc"><strong>with ${event.teacher}</strong></h4>
         <div class="meta mb2">
           <h5 class="tc"><strong>${capitalize(event.town)}</strong></h5>
+
+	  <h4>${event.full ? 'Jam is full!' : ""}</h4>
 	  <div><b>Description</b>: ${event.description}</div>
 	  <div><b>Date</b>: ${event.date}</div>
 	  <div><b>Location</b>: ${event.location}</div>
@@ -273,7 +286,6 @@ the appropriate instruments may sign up!
 	  <div><b>Fee</b>: All Holiday Jams are $50 per student.</div>
 	  <div><b>Accepting Private Students</b>: ${event.acceptingPrivate ? "Yes" : "No"}</div>
 	  <br />
-	  <div><b>${event.full ? 'Jam is full!' : ""}</b></div>
 	  ${!event.full ? registerButton : ""}
         </div>
       `;
@@ -311,6 +323,7 @@ the appropriate instruments may sign up!
     const eventsContainer = document.getElementById('events');
     const cards = Array.from(eventsContainer.querySelectorAll('article[data-instrumentation]'));
     const noMatch = document.getElementById('no-match');
+    const availableOnly = document.getElementById('available-only');
 
     function getSelectedInstruments() {
       return checkboxes.filter(cb => cb.checked).map(cb => cb.value.toLowerCase().trim());
@@ -323,14 +336,16 @@ the appropriate instruments may sign up!
     function cardMatches(card, instruments, town) {
       const instrAttr = (card.getAttribute('data-instrumentation') || '').toLowerCase();
       const townAttr = (card.getAttribute('data-town') || '').toLowerCase();
+      const isFull = card.getAttribute('data-full') === "true";
 
       // Instrumentation logic (OR)
       const instrMatch = instruments.length === 0 || instruments.some(i => instrAttr.split(/\s+/).includes(i));
 
       // Town logic (exact match)
       const townMatch = town === '' || townAttr === town;
+      const availabilityMatch = !availableOnly.checked || !isFull;
 
-      return instrMatch && townMatch;
+      return instrMatch && townMatch && availabilityMatch;
     }
 
     function applyFilters() {
@@ -361,6 +376,8 @@ the appropriate instruments may sign up!
       townSelect.value = '';
       applyFilters();
     });
+    
+    availableOnly.addEventListener('change', applyFilters);
 
     applyFilters();
   })();
