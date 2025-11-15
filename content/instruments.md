@@ -22,7 +22,7 @@ For ages 3-6, the PCYO is starting a new instrument library of extra tiny instru
 
 Please fill out the instrument request form in Jovial if you would like an instrument. Instruments will be loaned out on a first-come-first-served basis, and if we do not have your instrument, we may need to refer you elsewhere to rent your instrument at your cost.
 
-Instruments not currently loaned to our students may be borrowed by other students in private lessons or classes if sponsored by a teacher and SCO board member.  We charge a small maintenance fee (very roughly $10/month) to students not in our program for violins and also require a damage deposit or tile tracker for cellos.
+Instruments not currently loaned to our students may be borrowed by other students in private lessons or classes if sponsored by a teacher and SCO board member.  We charge a small maintenance fee (typically $8-$15/month) to students not in our program for violins and also require a damage deposit or tile tracker for cellos.
 
 Parents may also borrow an instrument to play along with their student for a small maintenance fee that supports regularly stringing the instrument and bow maintenance.
 
@@ -52,11 +52,12 @@ Please carefully look at their trade in programs before considering purchase as 
 
 # Purchasing Used Instruments
 
-It is possible to purchase used instruments online, but evaluating these instruments for quality remotely is difficult, so you take the risk with each purchase that the instrument may be one of the previously mentioned poor quality instruments, may be too damaged to use, may require significant repairs, or may have poor tone quality.  
+I prefer to purchase instruments in person.  When purchasing used, you have to make sure the instrument, bow, and case are all in good working condition. To verify tone quality, you have to play the instrument to hear how it sounds, so online purchases are always a gamble.  I would never buy an instrument over $500 sight unseen.
 
-Buying online or used is particularly problematic when buying instruments such as full size violins worth more than $500 or cellos of any sort.  Purchasing these instruments from a reputable luthier or shop is always best, and having your private teacher along is even better as they can help you find aspects of the instrument that may cause pause for you.
+Purchasing instruments from a reputable luthier like Rick at [The Violin Shop](http://violinshopofportangeles.com/) or shop such as [Metropolitan Music](https://metropolitan-music.com/) is always best, and having your private teacher along is even better as they can help you find aspects of the instrument that may cause pause for you.  
 
-I prefer to purchase instruments in person. When I purchase or check over instruments I have an inspection sheet about 40 items long to make sure the instrument, strings, bow, and case are each in good enough to be used by our students and even then some items like "tone quality" just require playing the instrument to see how it sounds so online purchases are always a gamble. 
+It is possible to purchase used instruments online, but you take the risk with each purchase that the instrument may be one of the previously mentioned poor quality instruments, may be too damaged to use, may require significant repairs, or may have poor tone quality.  
 
-For 1/16 size violins this is relaxed in some aspects, because the tone on a 1/16 size violin will never be particularly impressive.
+For 1/16 size violins this process is more relaxed in some aspects, because the tone on a 1/16 size violin will never be particularly impressive.
 
+When in doubt, ask for help.  Your teacher or the registrar may have a line on good quality instruments in your student's size and price range.
