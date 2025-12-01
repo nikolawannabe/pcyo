@@ -27,7 +27,7 @@ Instruments not currently loaned to our students may be borrowed by other studen
 Parents may also borrow an instrument to play along with their student for a small maintenance fee that supports regularly stringing the instrument and bow maintenance.
 
 Relevant documents:
-- [Instrument Care Handbook And Violin/Viola Loan Policy](/Instrument%20Care.pdf)
+- [Student Instrument Care Handbook And Violin/Viola Loan Policy](/Instrument%20Care.pdf)
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
 - [Non-Program Loan Policy (for non-students)](/Non-Program%20Loan%20Policy%20-%202025.pdf)
 
