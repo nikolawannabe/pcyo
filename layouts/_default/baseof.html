@@ -49,11 +49,11 @@
     {{- template "_internal/twitter_cards.html" . -}}
 
     {{ if .Params.og_image }}
-  <meta property="og:image" content="{{ .Params.og_image }}">
-  <meta property="og:image:secure_url" content="{{ .Params.og_image }}">
+  <meta property="og:image" content="{{(print .Site.BaseURL .Params.og_image)}}">
+  <meta property="og:image:secure_url" content="{{(print .Site.BaseURL .Params.og_image)}}">
   {{ else if .Site.Params.site_logo }} 
-    <meta property="og:image" content="{{ .Site.Params.site_logo }}">
-  <meta property="og:image:secure_url" content="{{ .Site.Params.site_logo }}">
+    <meta property="og:image" content="{{ (print .Site.BaseURL .Site.Params.site_logo)}}">
+  <meta property="og:image:secure_url" content="{{(print .Site.BaseURL .Site.Params.site_logo)}}">
 {{- end }}
     {{ if hugo.IsProduction }}
       {{ template "_internal/google_analytics.html" . }}
