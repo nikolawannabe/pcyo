@@ -1,0 +1,43 @@
+  <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links mid-gray">
+    <h2>2026-2027 Classes and Ensembles</h2>
+    <div class="flex flex-wrap items-center justify-between mb3">
+      <div class="flex flex-wrap items-center">
+        <!-- Search -->
+        <input id="filterInput" type="text" placeholder="Search classes…" 
+		class="pa2 br2 ba b--black-20 mr2 mb2">
+        <div id="townButtons" class="flex br2 overflow-hidden ba b--black-20 mr2 mb2">
+          <button data-town="All" class="pa2 bg-light-gray bn">All</button> 
+	  <button data-town="Sequim" class="pa2 bg-white bn bl b--black-20">Sequim</button> 
+	  <button data-town="Port Angeles" class="pa2 bg-white bn bl b--black-20">Port Angeles</button>
+        </div><!-- Sort -->
+        <select id="sortSelect" class="pa2 br2 ba b--black-20 bg-white mb2">
+          <option value="loc">
+            Sort: Town
+          </option>
+          <option value="name">
+            Sort: Name
+          </option>
+          <option value="age">
+            Sort: Age
+          </option>
+        </select>
+      </div>
+    </div><!-- TABLE (desktop) -->
+    <div class="dn db-ns overflow-auto">
+      <table class="collapse ba br2 b--black-10 w-100" id="classTable">
+        <thead>
+          <tr class="bg-light-gray">
+            <th class="pa2 tl pointer" data-sort="loc">Town</th>
+            <th class="pa2 tl pointer" data-sort="name">Name</th>
+            <th class="pa2 tl pointer" data-sort="age">Ages</th>
+            <th class="pa2 tl pointer" data-sort="time">Days & Times</th>
+          </tr>
+        </thead>
+      </table>
+    </div><!-- CARDS (mobile) -->
+    <div class="dn-ns" id="cardContainer"></div>
+  </article>
+  {{ with resources.Get "js/classes.js" }} 
+  {{ $js := . }} 
+ <script src="{{ $js.RelPermalink }}"></script>
+{{ end }}
