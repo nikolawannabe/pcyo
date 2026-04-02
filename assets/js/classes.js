@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="b mb1">${d.name}</div>
         <div class="f6">Ages: ${d.age}</div>
-        <div class="f6">${d.time}</div>
+        <div class="f6">Days: ${d.time}</div>
+	<div class="f6">Location: ${d.loc}</div>
       `;
       cardContainer.appendChild(card);
     });

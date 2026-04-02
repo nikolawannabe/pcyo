@@ -20,6 +20,8 @@ The Peninsula Community Sound Sprouts and Suzuki Sprouts classes accept students
 
 The Peninsula Community Youth Orchestra beginner class varies a bit from a traditional youth orchestra in that it accepts very young children who have not played before.  Our primary requirement is that students can read, so they can be taught to read music.  The beginners class rehearses separately from the intermediate and advanced students.
 
+Students who are not yet reading may begin with an instrument as early as 3 with our Suzuki Sprouts program, and children even younger may join introduction to music classes with Sound Sprouts.
+
 [Learn more about our children's classes](/new-students).
 
 [Learn more about the SCO](https://sequimcommunityorchestra.org).
