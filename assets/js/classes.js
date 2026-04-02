@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const DATA = [
     // Sequim
-    {loc:"Sequim", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Mondays 10am", link:"/classes/sprouts"},
-    {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW)", age:"3–4", time:"Mondays 11am", link:"/classes/sprouts"},
-    {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Mondays 3:30–4:20", link:"/classes/sprouts"},
+    {loc:"Sequim", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Mondays 10am", link:"/classes/sprouts/#sound-sprouts"},
+    {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW)", age:"3–4", time:"Mondays 11am", link:"/classes/sprouts/#suzuki-sprouts"},
+    {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Mondays 3:30–4:20", link:"/classes/sprouts/#suzuki-sprouts"},
     {loc:"Sequim", teacher:"Sara & Darcy", name:"Beginner Strings", age:"7+", time:"Mon & Wed 4:30–5:15", link:"/classes/6-plus-classes/"},
     {loc:"Sequim", teacher:"Sara & Darcy", name:"Intermediate Strings", age:"7+", time:"Mon & Wed 3:30–4:15", link:"/classes/6-plus-classes/"},
     {loc:"Sequim", teacher:"Christine Faught", name:"Youth Orchestra", age:"8–13", time:"Mondays 4:30–5:45", link:"/classes/youth-orchestra/"},
     {loc:"Sequim", teacher:"Anne Burns", name:"Adult Viola Lab", age:"13+", time:"Tuesday 6:00–6:50pm", link:"/classes/adult-strings/"},
 
     // Port Angeles
-    {loc:"Port Angeles", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Friday 10am", link:"/classes/sprouts"},
-    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW)", age:"3–4", time:"Friday 11am / 2:30–3:20", link:"/classes/sprouts"},
-    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Friday 3:30–4:05", link:"/classes/sprouts"},
+    {loc:"Port Angeles", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Friday 10am", link:"/classes/sprouts/#sound-sprouts"},
+    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW)", age:"3–4", time:"Friday 11am / 2:30–3:20", link:"/classes/sprouts/#suzuki-sprouts"},
+    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Friday 3:30–4:05", link:"/classes/sprouts/#suzuki-sprouts"},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Beginner Strings", age:"7+", time:"Mon & Wed 3:30–4:15", link:"/classes/6-plus-classes/"},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Intermediate Strings", age:"7+", time:"Mon & Wed 4:30–5:15", link:"/classes/6-plus-classes/"},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Youth Orchestra", age:"8–13", time:"Fridays 3:30–5:45", link:"/classes/youth-orchestra/"},
