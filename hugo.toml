@@ -41,3 +41,7 @@ favicon = "images/purple-note.png"
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+
+[security]
+  # Allows all content media types, including HTML files
+  allowContent = ['.*']
