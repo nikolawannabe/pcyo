@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Friday 3:30–4:05", link:"/classes/sprouts/#suzuki-sprouts"},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Beginner Strings", age:"7+", time:"Mon & Wed 3:30–4:15", link:"/classes/6-plus-classes/"},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Intermediate Strings", age:"7+", time:"Mon & Wed 4:30–5:15", link:"/classes/6-plus-classes/"},
-    {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Youth Orchestra", age:"8–13", time:"Fridays 3:30–5:45", link:"/classes/youth-orchestra/"},
+    {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Youth Orchestra", age:"8–13", time:"Fridays 3:30–4:45", link:"/classes/youth-orchestra/"},
     {loc:"Port Angeles", teacher:"Christine Faught", name:"Adult Violin Lab", age:"13+", time:"Fridays 1:30–2:20", link:"/classes/adult-strings/"}
   ];
 
