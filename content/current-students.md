@@ -6,7 +6,7 @@ title = 'Current Students'
 
 [Family Portal](https://jovial.org/pcyo/family)
 
-[📅 calendar](/calendar)
+[📅 2026-2027 Annual Calendar](https://docs.google.com/spreadsheets/d/1c9Kp3MUUsrpSA7L6TWG9OsEty8YxFBLFp0ufsr6gOnk/edit?usp=sharing)
 
 
 ## Contact us
