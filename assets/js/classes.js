@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const DATA = [
     // Sequim
     {loc:"Sequim", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Mondays 11am", link:"/classes/sprouts/#sound-sprouts", description: "Early music education with fun movement and songs for parent and child.  Preparation for eventual study of an instrument or other music study."},
-    {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW) - Cancelled", age:"3–7", time:"Mondays 11am", link:"/classes/sprouts/#suzuki-sprouts", description: "Violin study for young children, with early music education and lots of movement to keep the kids interested."},
     {loc:"Sequim", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Mondays 3:15–4:05", link:"/classes/sprouts/#suzuki-sprouts", description: "The continuation class for Suzuki Sprouts students who started January 2026."},
     {loc:"Sequim", teacher:"Amber Roskamp", name:"Beginner Strings", age:"6+", time:"Mon & Wed 4:30–5:15", link:"/classes/6-plus-classes/", description: "Welcoming young students to the study of violin, viola, cello, and bass. No experience required."},
     {loc:"Sequim", teacher:"Amber Roskamp", name:"Intermediate Strings", age:"7+", time:"Mon & Wed 3:30–4:15", link:"/classes/6-plus-classes/", description: "For students who have completed 1 or 2 years of string study."},
@@ -11,8 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Port Angeles
     {loc:"Port Angeles", teacher:"Christine Faught", name:"Sound Sprouts", age:"0–6", time:"Friday 11am", link:"/classes/sprouts/#sound-sprouts", description: "Early music education with fun movement and songs for parent and child.  Preparation for eventual study of an instrument or other music study."},
-    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW) - Postponed until Winter", age:"3–7", time:"<a href='https://forms.gle/hnGVEE7q9Xocyqak8'>Friday 2:30 or 3pm</a>", link:"/classes/sprouts/#suzuki-sprouts",  description: "Violin study for young children, with early music education and lots of movement to keep the kids interested."},
-    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (CONTINUING)", age:"3–7", time:"Friday 2:30–4:05", link:"/classes/sprouts/#suzuki-sprouts", description: "The continuation class for Suzuki Sprouts students who started January 2026."},
+    {loc:"Port Angeles", teacher:"Christine Faught", name:"Suzuki Sprouts (NEW) - Beginning January 2027", age:"3–7", time:"Friday 3:30pm", link:"/classes/sprouts/#suzuki-sprouts",  description: "Violin study for young children, with early music education and lots of movement to keep the kids interested."},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Beginner Strings", age:"6+", time:"Mon & Wed 3:30–4:15", link:"/classes/6-plus-classes/", description: "Welcoming young students to the study of violin, viola, cello, and bass. No experience required."},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Intermediate Strings", age:"7+", time:"Mon & Wed 4:30–5:15", link:"/classes/6-plus-classes/", description: "For students who have completed 1 or 2 years of string study."},
     {loc:"Port Angeles", teacher:"Jesse Ahmann", name:"Youth Orchestra", age:"8–13", time:"Fridays 3:30–4:45", link:"/classes/youth-orchestra/", description: "For students who have mastered the basics of their instrument. Typically students enter with 3-6 years of prior study, but this depends somewhat on age and focus."},
