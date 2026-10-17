@@ -1,7 +1,10 @@
-default:
-	hugo --cleanDestinationDir 
+.PHONY: default clean up push
+
+default: clean
+	hugo --gc
+
+clean:
+	rm -rf public resources/_gen
 
 up: default
-	hugo server
-push:
-	rsync -avz --delete public/ nikkie@miceplans.net:~/pcyo.miceplans.net/
+	hugo server --disableFastRender
