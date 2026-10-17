@@ -193,7 +193,7 @@
         <div class="radio-group">
           <label class="radio-option">
             <input type="radio" name="location" value="Port Angeles" required checked>
-            Port Angeles (First United Methodist Church)
+            Port Angeles (First United Methodist Church / St. Andrew's Episcopal Church)
           </label>
           <label class="radio-option">
             <input type="radio" name="location" value="Sequim">
@@ -341,14 +341,14 @@
       if (exp === '1-plus-years' && age >= 8) {
         rec.tier = 'Tier 3: Youth Orchestra';
         rec.group = 'Youth Orchestra (Ages 8–13)';
-        rec.details = 'Main ensemble for students with 1–2+ years experience. Performs multi-part orchestral arrangements and collaborates with the Sequim Community Orchestra.';
+        rec.details = 'Main ensemble for students who have completed at least 2 years of classes or private lessons. Performs multi-part orchestral arrangements and collaborates with the Sequim Community Orchestra.';
       } else if (exp === 'under-1-year') {
         rec.tier = 'Tier 2: Core String Ensembles';
         rec.group = 'Intermediate Strings (Ages 7+)';
         rec.details = 'For students who have completed basic fundamentals and need continued support with reading staff notation and multi-part harmony.';
       } else {
         rec.tier = 'Tier 2: Core String Ensembles';
-        rec.group = 'Beginner Strings (Ages 7+)';
+        rec.group = 'Beginner Strings (Ages 6+)';
         rec.details = 'For first-time players with no prior musical background. Teaches instrument mechanics, bow control, and reading standard staff notation.';
       }
     }

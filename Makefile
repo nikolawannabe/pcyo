@@ -1,2 +1,7 @@
 default:
-	hugo && rsync -avz --delete public/ nikkie@miceplans.net:~/pcyo.miceplans.net/
+	hugo --cleanDestinationDir 
+
+up: default
+	hugo server
+push:
+	rsync -avz --delete public/ nikkie@miceplans.net:~/pcyo.miceplans.net/

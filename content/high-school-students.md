@@ -2,6 +2,7 @@
 date = '2025-08-11T10:22:07-07:00'
 draft = false
 title = 'High School Students'
+expiryDate = '2026-10-17T00:00:00-07:00'
 +++
 
 # Need More Music?
