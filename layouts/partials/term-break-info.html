@@ -1,0 +1,17 @@
+{{- /* Details for one day off (data/terms.yaml breaks): label · dates · who it applies to.
+       Teacher-only days list that teacher's classes meeting in that term (from data/classes.yaml). */ -}}
+{{- $b := .b -}}
+{{- $bs := time $b.start -}}{{- $be := time $b.end -}}
+{{- $dates := $bs.Format "Mon, Jan 2, 2006" -}}
+{{- if $be.After $bs }}{{ $dates = printf "%s – %s" ($bs.Format "Mon, Jan 2") ($be.Format "Mon, Jan 2, 2006") }}{{ end -}}
+{{- $who := "No class for all students" -}}
+{{- if ne $b.who "all" -}}
+  {{- $term := "" -}}
+  {{- range .terms }}{{ if and (not ($bs.Before (time .start))) (not ($bs.After (time .end))) }}{{ $term = .id }}{{ end }}{{ end -}}
+  {{- $names := slice -}}
+  {{- range .classes }}{{ if and (in (.teacher | default "") $b.who) (in (.terms | default (slice "fall" "winter" "spring")) $term) }}{{ $names = $names | append (printf "%s (%s)" .name .town) }}{{ end }}{{ end -}}
+  {{- $who = printf "No class for %s's classes only" $b.who -}}
+  {{- with $names }}{{ $who = printf "%s: %s" $who (delimit . ", ") }}{{ end -}}
+  {{- $who = printf "%s. All other classes meet as usual." $who -}}
+{{- end -}}
+{{- return printf "%s · %s · %s" $b.label $dates $who -}}

@@ -13,12 +13,20 @@
   <h2 class="tc mid-gray lh-copy">Upcoming Events</h2>
     <div class="pa3 pa4-ns w-100 w-50-ns center">
       <section class="w-100 mw8">
-            {{ range sort (where .Site.RegularPages "Section" "events") ".Params.start_date" "desc" }}
-	      <div class="w-100 mb4 relative">
+            {{/* soonest first */}}
+            {{ range sort (where .Site.RegularPages "Section" "events") ".Params.eventStartDate" "asc" }}
+	      {{/* homepageDate (optional): keep an event off the home page until this date.
+	           Built before that date, it is rendered hidden and the script below reveals it on the date. */}}
+	      <div class="w-100 mb4 relative"{{ with .Params.homepageDate }}{{ $show := time . }}{{ if $show.After now }} hidden data-show-after="{{ $show.Format "2006-01-02T15:04:05Z07:00" }}"{{ end }}{{ end }}>
             {{ .Render "summary-with-image" }}
           </div>
         {{ end }}
       </section>
+      <script>
+        document.querySelectorAll('[data-show-after]').forEach(function (el) {
+          if (new Date() >= new Date(el.dataset.showAfter)) el.hidden = false;
+        });
+      </script>
 
     </div>
     <div class="tc">

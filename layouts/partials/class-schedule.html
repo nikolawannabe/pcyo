@@ -1,0 +1,113 @@
+{{- /*
+  "Schedule & joining" section shared by every class page.
+  Everything comes from data/terms.yaml and data/classes.yaml; nothing here needs editing year to year.
+  Usage: {{ partial "class-schedule.html" (dict "names" (slice "Sound Sprouts" "Suzuki Sprouts")) }}
+  "names" are class names from classes.yaml (regular and Holiday Session entries with that name both show).
+*/ -}}
+{{- $names := .names -}}
+{{- $T := site.Data.terms -}}
+{{- $terms := where $T.terms "hidden" "!=" true -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+{{- $termName := dict -}}{{- range $T.terms }}{{ $termName = merge $termName (dict .id (replace .name " Term" "")) }}{{ end -}}
+<style>
+  .class-schedule { text-align: left; }
+  .cs-card { background: #fff; border-radius: .5rem; padding: .8rem 1rem; margin-bottom: .8rem; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .cs-card h3 { margin: 0 0 .2rem; font-size: 1.15rem; color: #103742; }
+  .cs-card .cs-meta { font-size: .95rem; line-height: 1.5; }
+  .cs-terms { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+  .cs-chip { font-size: .8rem; line-height: 1.25; padding: .25rem .55rem; border-radius: 999px; border-left: 5px solid; background: #f4f4f4; color: #444; }
+  .cs-chip b { color: #222; }
+  .cs-open { background: #dff3e4; color: #1d6b36; }
+  /* "New students start": solid green with a shimmer every few seconds */
+  .cs-start { position: relative; overflow: hidden; background: #1f8a45; color: #fff; font-weight: 600; }
+  .cs-start::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg);
+    animation: pcyo-shimmer 5s ease-in-out infinite; }
+  @keyframes pcyo-shimmer { 0%, 72% { left: -60%; } 100% { left: 130%; } }
+  @media (prefers-reduced-motion: reduce) { .cs-start::after { animation: none; display: none; } }
+  .cs-start b { color: #fff; }
+  .cs-start svg { color: #fff !important; }
+  .cs-skills { background: #dde9f8; color: #1f4e8c; }
+  .cs-cont, .cs-none { background: #eee; color: #666; }
+  .cs-chip a { color: #1f4e8c; font-weight: 600; text-decoration: underline; }
+  .cs-towns { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .cs-towns button { font: inherit; font-size: .95rem; padding: .3rem .9rem; border-radius: 999px; border: 1px solid #c9c4b0; background: #fff; color: #555; cursor: pointer; }
+  .cs-towns button[aria-pressed="true"] { background: #103742; border-color: #103742; color: #fff; font-weight: 600; }
+  .cs-towns button:focus-visible { outline: 2px solid #c4001a; outline-offset: 2px; }
+</style>
+{{ partial "term-icons.html" . }}
+<section class="class-schedule mw7 center ph3 pv3" id="schedule">
+  <h2 class="f3 mb2">Schedule &amp; joining</h2>
+  <p class="f5 mt0 mb3">Term dates, days off and every class are on the <a href="/classes/" class="link blue">Classes page</a>.</p>
+  {{- /* town filter: only when this page has classes in more than one town */ -}}
+  {{- $towns := slice }}{{ range site.Data.classes }}{{ if in $names .name }}{{ $towns = $towns | append .town }}{{ end }}{{ end }}{{ $towns = uniq $towns }}
+  {{- if gt (len $towns) 1 }}
+  <div class="cs-towns mb3" role="group" aria-label="Show classes in">
+    <button type="button" data-town="" aria-pressed="true">All towns</button>
+    {{- range slice "Sequim" "Port Angeles" }}{{ if in $towns . }}
+    <button type="button" data-town="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{- end }}{{ end }}
+  </div>
+  {{- end }}
+  {{- range site.Data.classes }}{{ if in $names .name }}
+    {{- $c := . -}}
+    {{- $cterms := .terms | default $regular -}}
+    {{- $holidayOnly := and (eq (len $cterms) 1) (in $cterms "holiday") -}}
+    {{- $show := true -}}
+    {{- if $holidayOnly }}{{ with index (where $T.terms "id" "holiday") 0 }}{{ if or .hidden ((time .end).Before now) }}{{ $show = false }}{{ end }}{{ end }}{{ end -}}
+    {{- if $show }}
+  <div class="cs-card" data-town="{{ .town }}">
+    <h3>{{ .name }} · {{ .town }}{{ if $holidayOnly }} <span class="f6 normal" style="color:#b3123a">(Holiday Session only)</span>{{ end }}</h3>
+    <div class="cs-meta">
+      {{- $lo := .exp_min | default 0 }}{{ $hasHi := isset . "exp_max" }}{{ $hi := .exp_max | default 0 -}}
+      {{- $exp := "Any" }}{{ if and (eq $lo 0) (not $hasHi) }}{{ $exp = "Any" }}{{ else if not $hasHi }}{{ $exp = printf "%d+ yrs" $lo }}{{ else if and (eq $lo 0) (eq $hi 0) }}{{ $exp = "None" }}{{ else if eq $lo 0 }}{{ $exp = printf "New–%d %s" $hi (cond (eq $hi 1) "yr" "yrs") }}{{ else }}{{ $exp = printf "%d–%d yrs" $lo $hi }}{{ end }}
+      <div>{{ if findRE `^[0-9]` .ages }}Ages {{ end }}{{ .ages }} · Experience: {{ $exp }}{{ with .teacher }} · Teacher: {{ . }}{{ end }}</div>
+      <div><b>When:</b> {{ partial "class-time.html" (dict "c" . "style" "long") }}</div>
+      {{- with .location }}
+      <div><b>Where:</b> <a class="link blue" href="https://www.google.com/maps/search/?api=1&query={{ printf "%s, WA" . | urlquery }}">{{ . }}</a></div>
+      {{- end }}
+      {{- with .prereq }}<div><b>Prerequisite:</b> {{ . }}</div>{{ end }}
+    </div>
+    <div class="cs-terms">
+      {{- range $terms }}
+        {{- $t := . -}}
+        {{- if or (in $cterms $t.id) (and (not $holidayOnly) (in $regular $t.id)) -}}
+          {{- $label := "Not offered" }}{{ $cls := "cs-none" -}}
+          {{- if in $cterms $t.id -}}
+            {{- if reflect.IsSlice $c.join -}}
+              {{- if in $c.join $t.id }}{{ $label = "New students start" }}{{ $cls = "cs-start" -}}
+              {{- else -}}
+                {{- $when := slice }}{{ range $c.join }}{{ $when = $when | append (printf `<a href="/classes/#%s">%s</a>` . (index $termName .)) }}{{ end -}}
+                {{- $label = printf "Continuing students only (new students join in %s)" (delimit $when " or ") }}{{ $cls = "cs-cont" -}}
+              {{- end -}}
+            {{- else if eq $c.join "open" }}{{ $label = "Open to all" }}{{ $cls = "cs-open" -}}
+            {{- else if eq $c.join "skills" }}{{ $label = "Open with skills" }}{{ $cls = "cs-skills" -}}
+            {{- else if and $c.new_students (index $termName $c.new_students) }}{{ $label = printf `Continuing students only (new students: see <a href="/classes/#%s">%s Term</a>)` $c.new_students (index $termName $c.new_students) }}{{ $cls = "cs-cont" -}}
+            {{- else }}{{ $label = "Continuing students only" }}{{ $cls = "cs-cont" }}{{ end -}}
+          {{- end }}
+      <span class="cs-chip {{ $cls }}" style="border-left-color:{{ $t.color }}">{{ with $t.icon }}<svg width="14" height="14" viewBox="-12 -12 24 24" aria-hidden="true" style="color:{{ $t.color }};vertical-align:-2px;margin-right:3px"><use href="#ico-term-{{ . }}" x="-12" y="-12" width="24" height="24"/></svg>{{ end }}<b>{{ index $termName $t.id }}:</b> {{ $label | safeHTML }}</span>
+        {{- end -}}
+      {{- end }}
+    </div>
+    {{- if $holidayOnly }}{{ with index (where $T.terms "id" "holiday") 0 }}{{ with .page }}
+    <div class="f6 mt2"><a class="link blue" href="{{ . }}">Holiday Session details and registration</a></div>
+    {{- end }}{{ end }}{{ end }}
+  </div>
+    {{- end }}
+  {{- end }}{{ end }}
+</section>
+<script>
+  (function () {
+    var sec = document.getElementById('schedule'); if (!sec) return;
+    var btns = sec.querySelectorAll('.cs-towns button'); if (!btns.length) return;
+    var KEY = 'pcyo-town';   // remembered across class pages
+    function show(town) {
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.town === town); });
+      sec.querySelectorAll('.cs-card').forEach(function (c) { c.style.display = !town || c.dataset.town === town ? '' : 'none'; });
+      try { localStorage.setItem(KEY, town); } catch (e) {}
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.town); }); });
+    var saved = ''; try { saved = localStorage.getItem(KEY) || ''; } catch (e) {}
+    if (saved && sec.querySelector('.cs-towns button[data-town="' + saved + '"]')) show(saved);
+  })();
+</script>

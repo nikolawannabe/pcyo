@@ -10,7 +10,7 @@ support education for students of all ages in Sequim](https://sequimcommunityorc
 
 The SCO has two distinct programs:
 - The SCO itself, a teaching orchestra which plays roughly high school level music and performs 3 times a year.  It is led by a paid music director.
-- The Peninsula Community Youth Orchestra, (PCYO) which is a children's program that accepts toddlers, beginners, intermediate, and advanced students. The children's program performs with the SCO once a year at the Spring Family Concert and is led by teachers across Port Angeles and Sequim.
+- The Peninsula Community Youth Orchestra, (PCYO) which is a children's program that accepts toddlers, beginners, intermediate, and advanced students. The children's program performs with the SCO once a year at the Winter Family Concert and is led by teachers across Port Angeles and Sequim.
 
 The children's program has operated out of Sequim since the SCO's founding in 2012 and varies from 10-20 students.
 

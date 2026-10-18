@@ -1,0 +1,90 @@
+# PCYO school year, from the "PCYO 2026-2027 Year Calendar" Google Sheet.
+# Update this file once a year; the term calendar, the term tabs on /classes/
+# and the "can I join?" badges all read from it.
+# hidden: true keeps a term in this file but off the site.
+# join_note: who can sign up that term; shown when a family taps the term on the chart.
+# icon: seasonal decoration (maple, snowflake, rose or star) used on the chart and class cards.
+# sprinkle: optional small icon scattered across a term's bar on the timeline (e.g. twinkle).
+year: "2026–2027"
+tuition: 150            # per regular term
+# How a regular term is described on /classes/ (the calendar dates include breaks and make-up days).
+term_length: "about 8 weeks, with each class meeting once or twice a week"
+
+terms:
+  - id: fall
+    name: Fall Term
+    start: 2026-09-14
+    end: 2026-11-13
+    color: "#b85c00"
+    icon: maple
+    join_note: "Beginners start in Fall: beginner classes build week to week, so new beginners join now. Students with intermediate skills (school orchestra, lessons, or our classes) are welcome too."
+  - id: holiday
+    name: Holiday Session
+    short: Holiday
+    optional: true
+    start: 2026-11-30
+    end: 2026-12-18
+    color: "#b3123a"
+    icon: star
+    sprinkle: twinkle   # little stars scattered across the bar on the timeline
+    join_note: "Optional, and not required to continue in Winter. Sound Sprouts is open to everyone. Other groups are for students who already have the skills for their group; no brand-new beginners."
+    note: "3 classes · $50 early (Oct 15–31), $75 after"
+    tuition: "$50 early registration (Oct. 15-31), $75 after."
+    page: /pages/2026-holiday-session/
+  - id: winter
+    name: Winter Term
+    start: 2027-01-04
+    end: 2027-03-17
+    makeup: { start: 2027-03-15, end: 2027-03-17 }   # Winter Term make-up days
+    color: "#2f6db5"
+    icon: snowflake
+    join_note: "Beginner classes are for continuing students; new beginners start in Fall. Students with intermediate skills (school orchestra, lessons, or our classes) can join."
+  - id: spring
+    name: Spring Term
+    start: 2027-03-29
+    end: 2027-05-21
+    color: "#2e7d4f"
+    icon: rose
+    join_note: "Beginner classes are for continuing students; new beginners start in Fall. Students with intermediate skills (school orchestra, lessons, or our classes) can join."
+  - id: summer
+    name: Summer Jams
+    short: Summer
+    optional: true
+    start: 2027-07-05
+    end: 2027-07-23
+    color: "#7a3fa0"
+    hidden: true        # on the sheet, but likely not happening; set to false to show it
+
+# No class. who: all = everyone; otherwise only that teacher's classes.
+breaks:
+  - { start: 2026-10-12, end: 2026-10-12, label: "Indigenous Peoples’/Columbus Day", who: all }
+  - { start: 2026-10-16, end: 2026-10-16, label: "Veteran's Friday", who: Christine }
+  - { start: 2026-11-11, end: 2026-11-11, label: "Veterans Day", who: all }
+  - { start: 2026-11-23, end: 2026-11-27, label: "Thanksgiving Break", who: all }
+  - { start: 2026-12-21, end: 2027-01-01, label: "Winter Break", who: all }
+  - { start: 2027-01-18, end: 2027-01-18, label: "Martin Luther King Jr. Day", who: all }
+  - { start: 2027-02-15, end: 2027-02-15, label: "Presidents’ Day", who: all }
+  - { start: 2027-02-19, end: 2027-02-19, label: "Midwinter Break", who: Christine }
+  - { start: 2027-04-05, end: 2027-04-09, label: "Spring Break (PASD/SSD)", who: all }
+  - { start: 2027-04-11, end: 2027-04-16, label: "Spring Break", who: Christine }
+
+# Marked on the calendar. type: concert | registration | instrument
+# Concerts also need org: PCYO or SCO (each gets its own lane on the chart).
+# event: the file name in content/events (without .md); the chart and calendar link to that page while it is live.
+milestones:
+  - { date: 2026-08-30, type: registration, label: "Fall Registration (General) closes" }
+  - { date: 2026-09-07, type: instrument, label: "Instrument checkout/swap day, Sequim, Swisher Hall 3:30–5:30" }
+  - { date: 2026-09-09, type: instrument, label: "Instrument checkout/swap day, Port Angeles FUMC 3:30–5:30" }
+  - { date: 2026-11-01, type: registration, label: "Winter Registration opens" }
+  - { date: 2026-11-09, type: concert, org: PCYO, label: "Sequim Kids Fall Concert, 5pm", event: 2026-PCYO-Fall-Sequim-Concert }
+  - { date: 2026-11-13, type: concert, org: PCYO, label: "PA Kids Fall Concert, 4pm", event: 2026-PCYO-Fall-PA-Concert }
+  - { date: 2026-11-14, type: concert, org: SCO, label: "SCO Fall Concert and Bake Sale, 7pm", event: 2026-SCO-Fall-Concert }
+  - { date: 2026-12-12, type: concert, org: SCO, label: "Holiday Market", event: 2026-SCO-Holiday-Market }
+  - { date: 2026-12-18, type: concert, org: PCYO, label: "Holiday Party, 6pm", event: 2026-PCYO-Holiday-Concert }
+  - { date: 2027-02-01, type: registration, label: "Spring Registration opens" }
+  - { date: 2027-02-27, type: concert, org: SCO, label: "SCO Family Concert and Bake Sale, 2pm", event: 2027-SCO-Family-Concert }
+  - { date: 2027-03-15, type: registration, label: "Fall 2027 Early Registration opens" }
+  - { date: 2027-05-15, type: concert, org: SCO, label: "SCO Spring Concert and Bake Sale, 7pm", event: 2027-SCO-Spring-Concert }
+  - { date: 2027-05-22, type: concert, org: PCYO, label: "Kids End of Year Concert, 4pm", event: 2027-PCYO-End-of-Year-Concert }
+  - { date: 2027-05-24, type: instrument, label: "Instrument check-in/swap day, Sequim, Swisher Hall 3:30–5:30" }
+  - { date: 2027-05-26, type: instrument, label: "Instrument check-in/swap day, Port Angeles FUMC 3:30–5:30" }

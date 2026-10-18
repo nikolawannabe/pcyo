@@ -1,0 +1,258 @@
+# One entry per class. Fields:
+#   terms: which terms it meets (default: fall, winter, spring)
+#   join:  when NEW students may sign up
+#          open        any term, no experience needed
+#          skills      any term, if they have the prerequisite skills (see prereq)
+#          [fall]      only in the listed term(s); continuing students the rest of the year
+#          continuing  returning students only
+#   new_students: for a "continuing" class, the term new students should look at instead (linked on the site)
+#   days / start / length: when it meets. The site writes every time from these, so they can't drift apart:
+#          days: [Mon, Wed]   start: "4:30pm"   length: 45   (minutes; leave out if not known yet)
+#          Classes that only meet in an optional term (Holiday Session) also list their dates,
+#          worked out from the term dates and days off.
+#   location: where it meets (shown with a map link)
+#   exp_min / exp_max: years of experience the class suits (0 = brand new); the experience slider uses them.
+#          Leave out for "any experience".
+#   ages:  shown to families; the age slider reads the numbers in it ("3–7", "6+", "Children 0–6").
+#          Add age_min / age_max when the text has no numbers or you want to override it.
+# Holiday Session classes are separate entries with terms: [holiday].
+
+- name: Sound Sprouts
+  town: Sequim
+  teacher: Christine Faught
+  ages: "0–6"
+  exp_min: 0
+  exp_max: 0          # only for students with no experience yet
+  days: [Mon]
+  start: "11:00am"
+  length: 50
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /classes/sprouts/#sound-sprouts
+  join: open
+  description: Early music education with fun movement and songs for parent and child. A good fit for children who aren't reading yet.
+
+- name: Suzuki Sprouts
+  town: Sequim
+  teacher: Christine Faught
+  ages: "3–7"
+  exp_min: 0
+  exp_max: 2
+  days: [Mon]
+  start: "3:15pm"
+  length: 50
+  location: "Trinity United Methodist Church, 100 N Blake Ave, Sequim"
+  link: /classes/sprouts/#suzuki-sprouts
+  join: continuing
+  new_students: winter   # new Suzuki Sprouts students start in Winter
+  description: The continuation class for Suzuki Sprouts students who started January 2026. A good fit for children who aren't reading yet.
+
+- name: Beginner Strings
+  town: Sequim
+  teacher: Amber Roskamp
+  ages: "6–12"
+  exp_min: 0
+  exp_max: 1
+  days: [Mon, Wed]
+  start: "4:30pm"
+  length: 45
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /classes/6-plus-classes/
+  join: [fall]
+  description: Welcoming young students to violin, viola, cello, and bass. No experience required. Students should be able to read (we start reading music right away) and be ready to sit and learn for 30–45 minutes.
+
+- name: Intermediate Strings
+  town: Sequim
+  teacher: Amber Roskamp
+  ages: "7–12"
+  exp_min: 1
+  exp_max: 3
+  days: [Mon, Wed]
+  start: "3:30pm"
+  length: 45
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /classes/6-plus-classes/
+  join: skills
+  prereq: 1–2 years of our classes, school classes, or private lessons.
+  description: Twice-weekly ensemble to build mastery of the instrument.
+
+- name: Youth Orchestra
+  town: Sequim
+  teacher: Christine Faught
+  ages: "8–13"
+  exp_min: 3
+  days: [Mon]
+  start: "4:15pm"
+  length: 75
+  location: "Trinity United Methodist Church, 100 N Blake Ave, Sequim"
+  link: /classes/youth-orchestra/
+  join: skills
+  prereq: At least 3 years of classes or private lessons.
+  description: For students who have mastered the basics of their instrument. Not quite ready? Intermediate Strings is a great alternative.
+
+- name: Adult Viola Lab
+  town: Sequim
+  teacher: Anne Burns
+  ages: "13+"
+  exp_min: 0
+  exp_max: 2
+  days: [Tue]
+  start: "5:45pm"
+  length: 45
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /classes/adult-strings/
+  join: continuing
+  description: For adult viola students who began in March 2026. We may add more adult classes (intermediate, cello, and others) as interest grows.
+
+- name: Sound Sprouts
+  town: Port Angeles
+  teacher: Christine Faught
+  ages: "0–6"
+  exp_min: 0
+  exp_max: 0          # only for students with no experience yet
+  days: [Fri]
+  start: "11:00am"
+  length: 50
+  location: "First United Methodist Church, 110 E 7th St, Port Angeles"
+  link: /classes/sprouts/#sound-sprouts
+  join: open
+  description: Early music education with fun movement and songs for parent and child. A good fit for children who aren't reading yet.
+
+- name: Suzuki Sprouts
+  town: Port Angeles
+  teacher: Christine Faught
+  ages: "3–7"
+  exp_min: 0
+  exp_max: 1
+  days: [Fri]
+  start: "3:30pm"
+  length: 50
+  location: "St. Andrew's Episcopal Church, 510 E Park Ave, Port Angeles"
+  link: /classes/sprouts/#suzuki-sprouts
+  terms: [winter, spring]
+  join: [winter]
+  description: Violin for young children, with early music education and lots of movement. A good fit for children who aren't reading yet.
+
+- name: Beginner Strings
+  town: Port Angeles
+  teacher: Jesse Ahmann
+  ages: "6–12"
+  exp_min: 0
+  exp_max: 1
+  days: [Mon, Wed]
+  start: "3:30pm"
+  length: 45
+  location: "First United Methodist Church, 110 E 7th St, Port Angeles"
+  link: /classes/6-plus-classes/
+  join: [fall]
+  description: Welcoming young students to violin, viola, cello, and bass. No experience required. Students should be able to read (we start reading music right away) and be ready to sit and learn for 30–45 minutes.
+
+- name: Intermediate Strings
+  town: Port Angeles
+  teacher: Jesse Ahmann
+  ages: "7–12"
+  exp_min: 1
+  exp_max: 3
+  days: [Mon, Wed]
+  start: "4:30pm"
+  length: 45
+  location: "First United Methodist Church, 110 E 7th St, Port Angeles"
+  link: /classes/6-plus-classes/
+  join: skills
+  prereq: 1–2 years of our classes, school classes, or private lessons.
+  description: Twice-weekly ensemble to build mastery of the instrument.
+
+- name: Youth Orchestra
+  town: Port Angeles
+  teacher: Jesse Ahmann
+  ages: "8–13"
+  exp_min: 3
+  days: [Fri]
+  start: "3:30pm"
+  length: 75
+  location: "St. Andrew's Episcopal Church, 510 E Park Ave, Port Angeles"
+  link: /classes/youth-orchestra/
+  join: skills
+  prereq: At least 3 years of classes or private lessons.
+  description: For students who have mastered the basics of their instrument. Not quite ready? Intermediate Strings is a great alternative.
+
+- name: Adult Violin Lab
+  town: Port Angeles
+  teacher: Christine Faught
+  ages: "13+"
+  exp_min: 0
+  exp_max: 2
+  days: [Fri]
+  start: "1:30pm"
+  length: 50
+  location: "St. Andrew's Episcopal Church, 510 E Park Ave, Port Angeles"
+  link: /classes/adult-strings/
+  join: continuing
+  description: For adult violin students who began in January 2026. We may add more adult classes (intermediate, cello, and others) as interest grows.
+
+# ---- Holiday Session (optional) ----
+# These also build the class cards on the Holiday Session page (shortcode term-classes).
+# Holiday Session is for students who already have the skills for their group (no brand-new beginners),
+# except Sound Sprouts, which is always open to everyone.
+- name: Sound Sprouts
+  town: Port Angeles
+  teacher: Christine Faught
+  ages: "Children 0–6"
+  exp_min: 0
+  exp_max: 0          # only for students with no experience yet
+  days: [Fri]
+  start: "11:00am"
+  length: 50
+  location: "St. Andrew's Episcopal Church, 510 E Park Ave, Port Angeles"
+  link: /pages/2026-holiday-session/
+  terms: [holiday]
+  join: open
+  description: Music and movement for our youngest students and their grown-ups.
+
+- name: Suzuki Sprouts
+  town: Sequim
+  teacher: Christine Faught
+  ages: "Children 3–7 learning violin"
+  exp_min: 0
+  exp_max: 2
+  days: [Mon]
+  start: "3:30pm"
+  length: 50
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /pages/2026-holiday-session/
+  terms: [holiday]
+  join: skills
+  prereq: Already playing violin (current or past Suzuki Sprouts students, or similar experience).
+  description: Suzuki-style group violin for young violinists.
+
+- name: 6+ Beginners
+  town: Sequim
+  teacher: Amber Roskamp
+  ages: "Students 6–13 learning strings"
+  exp_min: 0
+  exp_max: 1
+  days: [Wed]
+  start: "4:30pm"
+  length: 50
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /pages/2026-holiday-session/
+  terms: [holiday]
+  join: skills
+  prereq: Already started violin, viola, cello or bass (current Beginner Strings students, or similar experience).
+  description: Group class for violin, viola, cello and bass students in their first year or so.
+
+- name: Intermediate & Youth Orchestra
+  town: Sequim
+  teacher: Christine Faught
+  ages: "Intermediate and advanced, ages 7–13, plus adult students with appropriate skills"
+  age_min: 7          # Intermediate Strings (7–12) and Youth Orchestra (8–13); adults with appropriate skills welcome too
+  age_max: 99
+  exp_min: 1
+  days: [Mon]
+  start: "4:30pm"
+  length: 75
+  location: "Swisher Hall, 506 N Blake Ave, Sequim"
+  link: /pages/2026-holiday-session/
+  terms: [holiday]
+  join: skills
+  prereq: Intermediate skills on a string instrument.
+  description: Rehearsals for our intermediate group and Youth Orchestra. Adult students with appropriate skills are welcome too.

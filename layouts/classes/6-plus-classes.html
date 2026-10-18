@@ -26,6 +26,7 @@
       him to bring students’ favorite music to life in the classroom. We are thrilled to have
       Jesse on our teaching staff in Port Angeles.</p>
     </section>
+    {{ partial "class-schedule.html" (dict "names" (slice "Beginner Strings" "Intermediate Strings" "6+ Beginners" "Intermediate & Youth Orchestra")) }}
     <section class="mw7 center ph3">
       <div class="tc">
         <a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href=
@@ -40,16 +41,16 @@
       <ul>
 	      <li><strong>Who are these classes for?</strong> Our 6+ student classes are for beginner and intermediate students and held in both Port Angeles and Sequim. Students who cannot read or who cannot yet do focused work for 30 minutes should instead join our <a href="/classes/sprouts/">Sprouts</a> classes.</li>
 	      <li><strong>My child is 6 or 7. Should they join a 6+ Beginner class or Suzuki Sprouts?</strong> Our 6+ Beginner classes and <a href="/classes/sprouts/#suzuki-sprouts">Suzuki Sprouts</a> (ages 3–7) overlap on purpose, so each child can join the group that fits them best, regardless of age. 6+ Beginner classes teach violin, viola, cello, or bass and start reading music right away, so they suit children who can read and are ready to focus for about 30–45 minutes. Suzuki Sprouts gently introduces violin through songs, games, and movement, with parents taking part in every class, and is a great fit for children who are not yet reading or who do best with short, active activities. Not sure which is right for your child? Email <a href="mailto:registrar@sequimcommunityorchestra.org" class="link blue hover-dark-blue">registrar@sequimcommunityorchestra.org</a> and we'll help you decide.</li>
-	      <li><strong>When are classes?</strong> Classes are twice a week, Mondays and Wednesdays, held after school.  Port Angeles students who would like extra support for their orchestra classes at school may choose to attend once per week.</li>
-	      <li><strong>How long will my student be in these classes?</strong> Students are expected to stay in the beginner class for one year, and then spend 1 to 2 years mastering the basics of their instrument in the intermediate class.</li>
-	      <li><strong>Is my student too skilled for this group?</strong> Students who have completed at least 2 years of classes (ours or school orchestra) or private lessons are likely ready for <a href="/classes/youth-orchestra/">Youth Orchestra</a>. High school students are likely ready for <a href="https://sequimcommunityorchestra.org">Sequim Community Orchestra</a>.</li>
+	      <li><strong>When are classes?</strong> Classes are twice a week, Mondays and Wednesdays, held after school (see <a href="#schedule">Schedule &amp; joining</a> for times and places).  Port Angeles students who would like extra support for their orchestra classes at school may choose to attend once per week.</li>
+	      <li><strong>How long will my student be in these classes?</strong> Students are expected to stay in the beginner class for one year, and then spend about 2 years mastering the basics of their instrument in the intermediate class.</li>
+	      <li><strong>Is my student too skilled for this group?</strong> Students who have completed at least 3 years of classes (ours or school orchestra) or private lessons are likely ready for <a href="/classes/youth-orchestra/">Youth Orchestra</a>. High school students are likely ready for <a href="https://sequimcommunityorchestra.org">Sequim Community Orchestra</a>.</li>
 	      <li><strong>When can my student start?</strong> Our 6+ string classes are progressive throughout the year, so students wishing to start
         with no musical background should plan to join in fall and plan to attend the entire year. Students switching instruments or
         with school or private lesson support
         may join classes mid-year or mid-term if there is room.</li>
 	<li class="mb3"><strong>What instruments are studied?</strong> Our 6+ classes are for groups of students studying <strong>violin, viola,
         cello, or bass</strong>.</li>
-	<li class="mb3"><strong>How much is this ensemble?</strong> Beginner and intermediate classes are $150 per 8 week term. There are 3 terms, Fall, Winter, and Spring. We may also offer an optional short holiday term in December.  Scholarships are available and no student will be denied participation for inability to pay.</li>
+	<li class="mb3"><strong>How much is this ensemble?</strong> Beginner and intermediate classes are ${{ site.Data.terms.tuition }} per term, with three terms a year (Fall, Winter, and Spring) plus an optional Holiday Session; see <a href="#schedule">Schedule &amp; joining</a> for dates.  Scholarships are available and no student will be denied participation for inability to pay.</li>
       </ul>
       <h3 class="f3 f2-ns mb3">Material to look through before registration</h3>
       <ul class="pl3 measure lh-copy">

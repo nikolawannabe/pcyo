@@ -1,0 +1,4 @@
+{{- /* Returns the event page URL for a milestone with "event: <file name>", or "" when there is none (or it has expired). */ -}}
+{{- $url := "" -}}
+{{- with .event }}{{ with site.GetPage (printf "/events/%s" .) }}{{ $url = .RelPermalink }}{{ end }}{{ end -}}
+{{- return $url -}}

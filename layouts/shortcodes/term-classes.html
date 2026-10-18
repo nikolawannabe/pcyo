@@ -1,0 +1,22 @@
+{{- /* Class cards for one term, from data/classes.yaml. Usage: {{< term-classes "holiday" >}} */ -}}
+{{- $id := .Get 0 -}}
+{{- $term := index (where site.Data.terms.terms "id" $id) 0 -}}
+<section class="flex flex-wrap justify-center">
+{{- range $i, $c := site.Data.classes }}{{ if in ($c.terms | default (slice "fall" "winter" "spring")) $id }}
+  <article class="event-card w-100 w-50-m w-50-l pa3" aria-labelledby="class-title-{{ $i }}">
+    <h3 id="class-title-{{ $i }}" class="lh-title tc">{{ $c.name }}</h3>
+    <h4 class="mt1 mb2 tc">{{ $c.ages }}</h4>
+    {{- with $c.teacher }}
+    <p class="mt0 mb2 tc"><strong>with {{ . }}</strong></p>
+    {{- end }}
+    <h5 class="tc"><strong>{{ $c.town }}</strong></h5>
+    <div class="meta mb2">
+      <div><b>Description</b>: {{ $c.description }}</div>
+      <div><b>Schedule</b>: {{ partial "class-time.html" (dict "c" $c "style" "long") }}</div>
+      {{- with $c.location }}<div><b>Location</b>: {{ . }}</div>{{ end }}
+      {{- with $c.prereq }}<div><b>Prerequisite</b>: {{ . }}</div>{{ end }}
+      {{- with $term.tuition }}<div><b>Tuition</b>: {{ . }}</div>{{ end }}
+    </div>
+  </article>
+{{- end }}{{ end }}
+</section>
