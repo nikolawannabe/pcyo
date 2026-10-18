@@ -3,8 +3,6 @@ title: "Instruments"
 description: "All about instruments with the PCYO"
 draft: false
 ---
-[![Sprouts Violin Fund](/images/pcyo-sprouts-violin-fund.png)](https://www.paypal.com/donate/?hosted_button_id=EQWW6AWB5D9JG)
-
 # Sizing 
 
 This is to give you a general idea about sizing; do not go buy an instrument based on these ages as *your* child may be different.  Playing on an instrument that is too large can cause pain and damage to growing bodies, so please ensure a qualified teacher sizes your student before purchasing an instrument.
@@ -18,7 +16,7 @@ You can view a chart also at [sharmusic](https://sharmusic.com/pages/size-chart-
 # Instrument Library
 For ages 6+, the PCYO maintains a library of violins, violas, and cellos to loan to our students free of cost.  Students in the program contribute to the maintenance of these instruments by participating in regular fundraisers.
 
-For ages 3-6, the PCYO is starting a new instrument library of extra tiny instruments, but may need parents to rent or purchase their own instruments if we do not have what is needed.
+For ages 3-7, the PCYO is starting a new instrument library of extra tiny instruments for Suzuki Sprouts, but may need parents to rent or purchase their own instruments if we do not have what is needed.
 
 Please fill out the instrument request form in Jovial if you would like an instrument. Instruments will be loaned out on a first-come-first-served basis, and if we do not have your instrument, we may need to refer you elsewhere to rent your instrument at your cost.
 
@@ -36,14 +34,16 @@ Relevant documents:
 
 If families would like to rent from Rick at The Violin Shop, that is a great choice as he will have nice instruments you can rent at very reasonable prices. Rick [currently lists on his site violins at $22/mo](http://violinshopofportangeles.com/Rentals.html) and requires a 3 month rental fee to get started.  
 
-For Sprouts 2026 renting for 3-5 year olds, please don't give the instruments to your child until the teacher says they're ready, but you may want to inform Rick sooner you would like to rent starting in roughly February, so he can ensure he has what you need ready. 
+New Port Angeles Suzuki Sprouts starts the week of January 4th, 2027. If you plan to rent for your Sprouts student (ages 3-7), please let Rick know well before then so he can have the right size ready. Please don't give the instrument to your child until the teacher says they're ready.
 
-Rick has limited availability for violins 1/4 and larger and for cellos of all sizes so please contact him well in advance if you plan to rent.
+Click Music in Port Angeles also rents violins and violas. Please contact them to discuss what is available. 
+
+Ted Brown in Silverdale also suppplies rentals of all instruments we use.
 
 # Purchasing New Instruments
 
 ## In Person
-If you are considering purchasing violins, violas, or cellos locally, please contact Rick from the Violin Shop. Beware students grow quickly and renting may be a more cost-effective option.  If you buy from Rick, you will be sure to get a quality instrument.
+If you are considering purchasing violins, violas, or cellos locally, please contact Rick from the Violin Shop or Click Music. Beware students grow quickly and renting may be a more cost-effective option.  If you buy from Rick, you will be sure to get a quality instrument.
 
 ## Online
 If you are considering purchasing instruments online instead, some reasonable options include Fiddlerman's OB1 and Shar Music's Hoffman Amadeus outfits ($300-400).  Shar instruments generally should have the bridge adjusted by Rick as they arrive far too high which make the kids fingers hurt, adding ~40-60 to the price.  They could also use better strings as the ones that ship with them are poor quality ($30), so I really think the cost of the Fiddlerman and the Shar instruments when you get to playable are probably very similar. Fiddlerman I can't say for sure how the bridges come but the instruments are considered good quality and the strings are fine for beginners.  
