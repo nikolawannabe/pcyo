@@ -1,0 +1,16 @@
+/*
+  PCYO brand colors (see the style guide at /branding/), as CSS variables for every page.
+  Loaded by the Ananke theme through `custom_css` in hugo.toml, before the stylesheets that use them.
+  SVG icons and inline styles in scripts can use them too, e.g. style="fill: var(--pcyo-purple)".
+*/
+:root {
+  --brand-blue: #1e90ff;      /* Primary: Dodger Blue */
+  --brand-purple: #9747ff;    /* Secondary: Electric Purple */
+  --brand-green: #00b100;     /* Accent */
+  --brand-yellow: #fff5c5;    /* Background: Warm Yellow */
+  --brand-gold: #fec567;      /* Accent: Golden Sun */
+
+  /* Group colors: PCYO concerts and events, and our partner the Sequim Community Orchestra (SCO). */
+  --pcyo-purple: #7a3fa0;     /* deeper than Electric Purple on purpose: reads better on the small badges */
+  --sco-navy: #103742;        /* from the SCO site colors (assets/css/custom-colors.scss) */
+}

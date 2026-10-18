@@ -1,0 +1,29 @@
+{{- /*
+  Style guide section: the PCYO and SCO badges. Usage in content/branding.html: {{< brand-groups >}}
+  Groups come from data/groups.yaml, colors from assets/ananke/css/brand.css, icons from concert-icons.html.
+*/ -}}
+{{ partial "concert-icons.html" . }}
+<section class="mb5">
+  <h2 class="f3 mb3">Group Badges</h2>
+  <p>
+    Every concert or event is marked with the group putting it on. The badges appear on event cards, event pages,
+    and the PCYO and SCO rows of the calendar on the classes page. A joint event shows both badges, host first.
+    Set the group with <code>org</code> in <code>data/terms.yaml</code> (or in an event's front matter),
+    e.g. <code>org: SCO</code> or <code>org: [SCO, PCYO]</code>.
+  </p>
+  <div class="flex flex-wrap">
+    {{- range site.Data.groups }}
+      {{- $hex := partial "brand-color.html" .color_var }}
+      {{- $contrast := partial "contrast-ratio.html" (dict "a" $hex "b" "#ffffff") }}
+      <div class="w-100 w-50-l pa3 flex items-start">
+        <svg class="flex-none mr3" width="48" height="48" viewBox="-11 -11 22 22" role="img" aria-label="{{ .name }} badge"><use href="#ico-concert-{{ .id }}" x="-11" y="-11" width="22" height="22"/></svg>
+        <p class="f6 mt0">
+          <strong class="event-tile__org--{{ .id }} f5">{{ .name }}</strong>: {{ .full_name }}<br/>
+          Badge: {{ .icon }} on {{ $hex }}<br/>
+          White on this color: {{ printf "%.1f" $contrast.ratio }}:1 ({{ $contrast.level }})<br/>
+          <span class="i">{{ .note }}</span>
+        </p>
+      </div>
+    {{- end }}
+  </div>
+</section>

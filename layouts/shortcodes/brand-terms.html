@@ -1,0 +1,34 @@
+{{- /*
+  Style guide section: term colors and seasonal icons. Usage in content/branding.html: {{< brand-terms >}}
+  Terms come from data/terms.yaml; each sample is the real event date badge and label (event-badge.html,
+  event-labels.html), styled by assets/ananke/css/events.css.
+*/ -}}
+{{ partial "term-icons.html" . }}
+<section class="mb5">
+  <h2 class="f3 mb3">Term Colors and Icons</h2>
+  <p>
+    Each term has its own color and seasonal icon, set in <code>data/terms.yaml</code> and updated once a year.
+    They color the term bars on the classes page calendar, the class cards for each term, and the date badge,
+    label, links and buttons of every event in that term. Events outside any term use Dodger Blue.
+    The term colors are separate from the brand palette; they still need to meet WCAG AA contrast with white,
+    since white text sits on them and they are used for small text on white.
+  </p>
+  <div class="flex flex-wrap">
+    {{- range site.Data.terms.terms }}
+      {{- $start := time .start }}
+      {{- $contrast := partial "contrast-ratio.html" (dict "a" .color "b" "#ffffff") }}
+      <div class="w-100 w-50-l pa3">
+        <div class="event-tile flex bg-white br3 overflow-hidden" style="{{ printf "--term: %s" .color | safeCSS }}">
+          {{- partial "event-badge.html" (dict "info" (dict "start" $start "term" .)) }}
+          <div class="pa3 f6">
+            {{- partial "event-labels.html" (dict "term" . "orgs" (slice)) }}
+            <p class="mt0 mb1">Color: {{ .color }} · Icon: {{ .icon | default "none" }}{{ with .sprinkle }}, sprinkled with {{ . }}s{{ end }}</p>
+            <p class="mt0 mb1">White on this color: {{ printf "%.1f" $contrast.ratio }}:1 ({{ $contrast.level }})</p>
+            {{- if .hidden }}<p class="mt0 mb0 i">Hidden this year (not shown on the site).</p>{{ end }}
+            {{- if .optional }}<p class="mt0 mb0 i">Optional term.</p>{{ end }}
+          </div>
+        </div>
+      </div>
+    {{- end }}
+  </div>
+</section>

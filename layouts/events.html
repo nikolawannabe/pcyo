@@ -1,31 +1,36 @@
 {{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
 {{ define "main" }}
-  <div class="flex-l mt2 mw8 center">
-    <article class="center cf pv5 ph3 ph4-ns mw7">
-      <header>
-        <h1 class="f1">
-          {{ .Title }}
-        </h1>
-      </header>
-      <section>
-        <div class="mw8 center br3 pa3 shadow-4">
-            <p class="lh-copy">{{ .Content }}</p>
+  {{- /*
+    One event's page (layout = "events"): the same card as on /events/, larger, with the full description.
+    Styles are in assets/ananke/css/events.css.
+  */ -}}
+  {{ partial "event-icons.html" . }}
+  {{- $info := partial "event-info.html" . }}
+  {{- $calendarUrl := partial "google-calendar-url.html" . }}
+  {{- $sticker := partial "event-sticker.html" . }}
 
-            <div class="mt4">
-                <h3 class="f4">Location</h3>
-                <p class="f5"><a href="https://www.google.com/maps/search/?api=1&query={{ .Params.Location }}">{{ .Params.Location }}</a>
-</p>
-            </div>
+  <div class="mw7 center ph3 pv4 pv5-ns">
+    {{- with .Parent }}
+    <a href="{{ .RelPermalink }}" class="f6 link dim black dib mb3">← All events</a>
+    {{- end }}
 
-            <div class="mt4">
-                <h3 class="f4">Event Dates</h3>
-                <p class="f5"><strong>Start:</strong> {{ .Params.EventStartDate | time.Format "Jan 2, 2006 3:04PM" }}</p>
-                <p class="f5"><strong>End:</strong> {{ .Params.EventEndDate | time.Format "Jan 2, 2006 3:04PM" }}</p>
-            </div>
-	    <a class="f6 link dim ph3 pv2 mb2 dib white bg-dark-blue" href='https://calendar.google.com/calendar/render?action=TEMPLATE&text={{ .Title }}&dates={{ .Params.EventStartDate | time.Format "20060102T150405" }}/{{ .Params.EventEndDate | time.Format "20060102T150405" }}&details={{ .Content }}&location={{ .Params.Location }}&trp=false&crm=false'>Add to Google Calendar</a>
+    <article class="event-tile flex flex-column flex-row-ns bg-white br3 overflow-hidden"{{ with $info.color }} style="{{ printf "--term: %s" . | safeCSS }}"{{ end }}>
+      {{- partial "event-badge.html" (dict "info" $info "large" true) }}
+      <div class="pa3 pa4-ns flex-auto">
+        {{- partial "event-labels.html" $info }}
+        <h1 class="event-tile__title event-tile__title--page f2 fw6 mt0 mb2 lh-title">{{ .Title }}</h1>
+        {{- partial "event-when.html" (dict "info" $info "class" "f4 black mt0 mb2 lh-copy") }}
+        {{- partial "event-location.html" (dict "location" .Params.location "link" true "class" "f5 black mt0 mb3 lh-copy" "pinSize" 16) }}
+
+        <div class="event-tile__body f5 black lh-copy nested-copy-line-height nested-links">
+          {{- with $sticker }}{{ partial "event-sticker-image.html" . }}{{ end }}
+          {{ .Content }}
         </div>
-       </section>
+
+        {{- with $calendarUrl }}
+        <a class="event-tile__button f6 fw6 link dim br-pill white ph3 pv2 dib mt3" href="{{ . }}">Add to Google Calendar</a>
+        {{- end }}
+      </div>
     </article>
   </div>
 {{ end }}
-

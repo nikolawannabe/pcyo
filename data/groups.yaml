@@ -1,0 +1,15 @@
+# The groups that put on concerts and events, shown as badges on event cards, event pages and the
+# /classes/ timeline. The id matches "org" in data/terms.yaml (lowercased), the icon #ico-concert-<id>
+# (layouts/partials/concert-icons.html) and the color variable in assets/ananke/css/brand.css.
+- id: pcyo
+  name: PCYO
+  full_name: Peninsula Community Youth Orchestra
+  color_var: pcyo-purple
+  icon: the PCYO note logo (the "Simple" logo) in white
+  note: Deeper than Electric Purple on purpose, so the small badges read well.
+- id: sco
+  name: SCO
+  full_name: Sequim Community Orchestra
+  color_var: sco-navy
+  icon: two beamed notes
+  note: Navy from the SCO site colors. The icon is a placeholder, to be replaced.

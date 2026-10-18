@@ -1,0 +1,22 @@
+{{- /*
+  Event card for the /events/ list and the home page: date badge, term/PCYO/SCO labels, title,
+  date and time, location, a short summary and a link to the event page.
+  Pages using it include partials/event-icons.html once; styles are in assets/ananke/css/events.css.
+*/ -}}
+{{- $info := partial "event-info.html" . -}}
+{{- /* plainify leaves entities like &rsquo; in place; unescape them so they aren't escaped twice */ -}}
+{{- $summary := .Summary | plainify | htmlUnescape | strings.TrimSpace | truncate 220 -}}
+
+<article class="event-tile event-tile--hover flex bg-white br3 overflow-hidden mb4"{{ with $info.color }} style="{{ printf "--term: %s" . | safeCSS }}"{{ end }}>
+  {{- partial "event-badge.html" (dict "info" $info "href" .RelPermalink) }}
+  <div class="pa3 pa4-ns flex-auto">
+    {{- partial "event-labels.html" $info }}
+    <h2 class="event-tile__title f3 fw6 mt0 mb2 lh-title">
+      <a href="{{ .RelPermalink }}" class="link near-black dim">{{ .Title }}</a>
+    </h2>
+    {{- partial "event-when.html" (dict "info" $info) }}
+    {{- partial "event-location.html" (dict "location" .Params.location) }}
+    <p class="f5 black lh-copy mt0 mb3">{{ $summary }}</p>
+    <a href="{{ .RelPermalink }}" class="event-tile__link link f6 fw6">Details &amp; calendar&nbsp;→</a>
+  </div>
+</article>

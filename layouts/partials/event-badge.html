@@ -1,0 +1,40 @@
+{{- /*
+  Date badge in the event's term color, with the term's seasonal icons around the date
+  (like the term bars on the /classes/ timeline). Icon placement and sizes are in assets/ananke/css/events.css.
+  Params:
+    info   dict from event-info.html
+    href   optional: makes the badge a link
+    large  optional: the bigger badge used on the event page
+*/ -}}
+{{- $icon := "" -}}
+{{- $sprinkle := "" -}}
+{{- with .info.term }}{{ $icon = .icon | default "" }}{{ $sprinkle = .sprinkle | default "" }}{{ end -}}
+
+{{- /* Six icon slots around the date. Snowflakes mix three shapes; other icons repeat one shape. */ -}}
+{{- $slotIcons := slice $icon $icon $icon $icon $icon $icon -}}
+{{- if eq $icon "snowflake" }}{{ $slotIcons = slice "snowflake" "snowflake-2" "snowflake-3" "snowflake-2" "snowflake" "snowflake-3" }}{{ end -}}
+
+{{- with .info.start -}}
+{{- $class := print "event-tile__badge flex flex-column items-center justify-center tc white ph3 pv3"
+      (cond (default false $.large) " event-tile__badge--large" "")
+      (cond (ne $icon "") (print " event-tile__badge--icon-" $icon) "") }}
+{{- if $.href }}
+<a href="{{ $.href }}" class="{{ $class }} link" tabindex="-1" aria-hidden="true">
+{{- else }}
+<div class="{{ $class }}" aria-hidden="true">
+{{- end }}
+  {{- if $icon }}
+    {{- range $i, $slotIcon := $slotIcons }}
+  <svg class="event-tile__deco event-tile__deco--{{ add $i 1 }}" focusable="false"><use href="#ico-term-{{ $slotIcon }}" width="100%" height="100%"/></svg>
+    {{- end }}
+  {{- end }}
+  {{- if $sprinkle }}
+    {{- range $n := seq 10 }}
+  <svg class="event-tile__sprinkle event-tile__sprinkle--{{ $n }}" focusable="false"><use href="#ico-term-{{ $sprinkle }}" width="100%" height="100%"/></svg>
+    {{- end }}
+  {{- end }}
+  <span class="relative f6 fw6 ttu tracked">{{ .Format "Jan" }}</span>
+  <span class="relative event-tile__day fw7 lh-solid">{{ .Format "2" }}</span>
+  <span class="relative f7 o-80">{{ .Format "Mon" }}</span>
+{{ if $.href }}</a>{{ else }}</div>{{ end }}
+{{- end -}}

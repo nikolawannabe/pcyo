@@ -1,0 +1,121 @@
+/*
+  Event cards (/events/, home page) and event pages.
+  Loaded by the Ananke theme through `custom_css` in hugo.toml.
+
+  Each card sets --term to its term's color from data/terms.yaml (see layouts/partials/event-info.html);
+  events outside any term use the brand blue. Brand and group colors come from brand.css.
+*/
+
+.event-tile {
+  --term: var(--brand-blue);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 4px 14px rgba(0, 0, 0, .06);
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+
+/* Cards in a list lift slightly on hover; the card on an event page does not. */
+.event-tile--hover:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1), 0 10px 24px rgba(0, 0, 0, .08);
+  transform: translateY(-1px);
+}
+
+.event-tile__title { font-family: "Crimson Text", serif; }
+/* The event page's title matches other page titles: Dodger Blue (large text only: it is low-contrast). */
+.event-tile__title--page { color: var(--brand-blue); }
+.event-tile__term { color: var(--term); }
+.event-tile__org--pcyo { color: var(--pcyo-purple); }
+.event-tile__org--sco { color: var(--sco-navy); }
+.event-tile__pin { margin-top: .2rem; }
+.event-tile__link { color: var(--term); }
+.event-tile__link:hover { text-decoration: underline; }
+.event-tile__body a { color: var(--term); }
+.event-tile__button { background-color: var(--term); }
+
+/* Sticker on PCYO event pages (data/stickers.yaml): beside the description, or centered above it on phones. */
+.event-tile__sticker {
+  float: right;
+  width: 10rem;
+  height: auto;
+  margin: 0 0 1rem 1rem;
+}
+
+
+/* ---- Date badge ---------------------------------------------------------------------------- */
+
+.event-tile__badge {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--term);
+  min-width: 5.5rem;
+}
+.event-tile__badge--large { min-width: 7.5rem; }
+
+.event-tile__day { font-size: 2.5rem; font-family: "Crimson Text", serif; }
+.event-tile__badge--large .event-tile__day { font-size: 3.25rem; }
+
+
+/* ---- Seasonal icons on the badge -------------------------------------------------------------
+   Same idea as the term bars on the /classes/ timeline: a few term icons drifting around the date.
+   Each icon slot sets its position, --size (px), --turn (rotation) and opacity. */
+
+.event-tile__deco {
+  position: absolute;
+  pointer-events: none;
+  color: #fff; /* maple and snowflakes are drawn in currentColor */
+  width: calc(var(--size) * var(--deco-scale, 1) * var(--deco-large, 1));
+  height: calc(var(--size) * var(--deco-scale, 1) * var(--deco-large, 1));
+  transform: rotate(var(--turn, 0deg));
+}
+.event-tile__deco--1 { left: 8%;  top: 5%;  --size: 15px; --turn: -28deg; opacity: .5; }
+.event-tile__deco--2 { left: 68%; top: 9%;  --size: 12px; --turn: 18deg;  opacity: .4; }
+.event-tile__deco--3 { left: 4%;  top: 44%; --size: 11px; --turn: 26deg;  opacity: .38; }
+.event-tile__deco--4 { left: 76%; top: 50%; --size: 12px; --turn: -20deg; opacity: .38; }
+.event-tile__deco--5 { left: 12%; top: 82%; --size: 13px; --turn: -12deg; opacity: .46; }
+.event-tile__deco--6 { left: 64%; top: 84%; --size: 15px; --turn: 32deg;  opacity: .44; }
+
+.event-tile__badge--large { --deco-large: 1.3; }
+
+/* Roses keep their own colors and are small, so show them bigger and stronger. */
+.event-tile__badge--icon-rose { --deco-scale: 1.3; }
+.event-tile__badge--icon-rose .event-tile__deco { opacity: .85; }
+
+/* Holiday star: just two full-strength stars (the twinkles below fill the rest). */
+.event-tile__badge--icon-star .event-tile__deco { opacity: 1; --turn: 0deg; }
+.event-tile__badge--icon-star .event-tile__deco--1 { left: 62%; top: 5%;  --size: 20px; }
+.event-tile__badge--icon-star .event-tile__deco--2 { left: 8%;  top: 80%; --size: 15px; }
+.event-tile__badge--icon-star .event-tile__deco--3,
+.event-tile__badge--icon-star .event-tile__deco--4,
+.event-tile__badge--icon-star .event-tile__deco--5,
+.event-tile__badge--icon-star .event-tile__deco--6 { display: none; }
+
+/* "sprinkle" (e.g. Holiday twinkles): small icons scattered over the badge, alternating white and gold. */
+.event-tile__sprinkle {
+  position: absolute;
+  pointer-events: none;
+  width: var(--size);
+  height: var(--size);
+  color: #ffe082;
+  opacity: .75;
+}
+.event-tile__sprinkle--1, .event-tile__sprinkle--4, .event-tile__sprinkle--7, .event-tile__sprinkle--10 { color: #fff; }
+.event-tile__sprinkle--1, .event-tile__sprinkle--3, .event-tile__sprinkle--5, .event-tile__sprinkle--7, .event-tile__sprinkle--9 { opacity: .95; }
+.event-tile__sprinkle--1  { left: 10%; top: 30%; --size: 6px; }
+.event-tile__sprinkle--2  { left: 80%; top: 30%; --size: 5px; }
+.event-tile__sprinkle--3  { left: 22%; top: 92%; --size: 5px; }
+.event-tile__sprinkle--4  { left: 86%; top: 70%; --size: 6px; }
+.event-tile__sprinkle--5  { left: 6%;  top: 62%; --size: 4px; }
+.event-tile__sprinkle--6  { left: 40%; top: 4%;  --size: 5px; }
+.event-tile__sprinkle--7  { left: 52%; top: 93%; --size: 4px; }
+.event-tile__sprinkle--8  { left: 88%; top: 90%; --size: 4px; }
+.event-tile__sprinkle--9  { left: 30%; top: 18%; --size: 3.5px; }
+.event-tile__sprinkle--10 { left: 74%; top: 62%; --size: 3.5px; }
+
+
+/* ---- Phones ---------------------------------------------------------------------------------- */
+
+@media (max-width: 30em) {
+  .event-tile__badge { min-width: 4.25rem; padding-left: .5rem; padding-right: .5rem; }
+  .event-tile__badge--large { min-width: 5rem; }
+  .event-tile__day,
+  .event-tile__badge--large .event-tile__day { font-size: 2rem; }
+  .event-tile__sticker { float: none; display: block; margin: 0 auto 1rem; }
+}

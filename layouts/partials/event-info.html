@@ -1,0 +1,50 @@
+{{- /*
+  Facts about one event page, used by the event cards and the event page. No markup here.
+
+  Returns a dict:
+    start, end  times from eventStartDate / eventEndDate ("" when missing)
+    term        the data/terms.yaml term the event belongs to, or false (see below)
+    color       that term's color, or "" (the stylesheet's default blue is used)
+    orgs        the groups putting it on, as lowercase ids: ["pcyo"], ["sco"], ["sco" "pcyo"] or [] (see below)
+
+  Term: the most recent term that started on or before the event's start date, as long as that term ended
+  no more than $daysAfterTermEnd days earlier (so a concert the day after a term ends still counts).
+
+  Orgs, first match wins (one name, or a list for a joint event; see concert-orgs.html):
+    1. `org = "SCO"` or `org = ["SCO", "PCYO"]` in the event's front matter
+    2. the "org" of the data/terms.yaml milestone whose "event" is this file's name
+    3. a guess from the title: "Sequim Community Orchestra" or "SCO" → SCO, "PCYO" → PCYO
+*/ -}}
+{{- $daysAfterTermEnd := 14 -}}
+
+{{- $start := "" -}}
+{{- $end := "" -}}
+{{- with .Params.eventStartDate }}{{ $start = time . }}{{ end -}}
+{{- with .Params.eventEndDate }}{{ $end = time . }}{{ end -}}
+
+{{- /* Term */ -}}
+{{- $term := false -}}
+{{- with $start -}}
+  {{- $day := time (.Format "2006-01-02") -}}   {{- /* the date alone, to compare with the terms' dates */ -}}
+  {{- range where site.Data.terms.terms "hidden" "!=" true -}}
+    {{- $lastDay := (time .end).AddDate 0 0 $daysAfterTermEnd -}}
+    {{- if and (not ($day.Before (time .start))) (not ($day.After $lastDay)) }}{{ $term = . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $color := "" -}}
+{{- with $term }}{{ $color = .color }}{{ end -}}
+
+{{- /* Orgs */ -}}
+{{- $orgs := partial "concert-orgs.html" .Params.org -}}
+{{- if not $orgs -}}
+  {{- $fileName := "" }}{{ with .File }}{{ $fileName = .ContentBaseName }}{{ end -}}
+  {{- range site.Data.terms.milestones -}}
+    {{- if and $fileName (eq (.event | default "") $fileName) }}{{ $orgs = partial "concert-orgs.html" (.org | default "PCYO") }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $orgs -}}
+  {{- if or (strings.Contains .Title "Sequim Community Orchestra") (findRE `\bSCO\b` .Title) }}{{ $orgs = slice "sco" }}
+  {{- else if strings.Contains .Title "PCYO" }}{{ $orgs = slice "pcyo" }}{{ end -}}
+{{- end -}}
+
+{{- return dict "start" $start "end" $end "term" $term "color" $color "orgs" $orgs -}}

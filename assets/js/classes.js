@@ -465,17 +465,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // How a key date is marked on its day in the grid.
   const MARK_STYLES = {
-    pcyo: 'outline:2px solid #7a3fa0;outline-offset:-2px',
-    sco: 'outline:2px solid #103742;outline-offset:-2px',
+    pcyo: 'outline:2px solid var(--pcyo-purple);outline-offset:-2px',   // group colors from brand.css
+    sco: 'outline:2px solid var(--sco-navy);outline-offset:-2px',
     registration: 'border-radius:50%;box-shadow:inset 0 0 0 2px #1d6b36',
     instrument: 'box-shadow:inset 0 -4px 0 #8a4a14'
   };
 
-  // Concerts are marked by organisation (PCYO or SCO); other dates by type.
-  const markKind = milestone =>
-    milestone.type === 'concert' ? (milestone.org || 'PCYO').toLowerCase() : milestone.type;
-  const markIcon = milestone =>
-    milestone.type === 'concert' ? 'concert-' + markKind(milestone) : milestone.type;
+  // Concerts are marked by organisation; other dates by type. A concert's "orgs" lists its groups, host first
+  // (e.g. ["sco", "pcyo"] for a joint concert; filled in by classes.html). Its day in the grid uses the host's style,
+  // and its note shows every group's icon.
+  const markKinds = milestone => (milestone.type === 'concert' ? milestone.orgs : [milestone.type]);
+  const markKind = milestone => markKinds(milestone)[0];
+  const markIcons = milestone =>
+    markKinds(milestone).map(kind => (milestone.type === 'concert' ? 'concert-' + kind : kind));
 
   const dayKey = date => date.toDateString();
 
@@ -616,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = milestone.url
         ? `<a class="link blue underline-hover" href="${milestone.url}">${milestone.label}</a>`
         : milestone.label;
-      notes.push({ date, icon: iconHtml(markIcon(milestone)), text: `${shortDate(date)}: ${label}` });
+      notes.push({ date, icon: markIcons(milestone).map(iconHtml).join(''), text: `${shortDate(date)}: ${label}` });
     });
 
     if (!notes.length) return '';

@@ -1,0 +1,38 @@
+{{- /*
+  Which sticker (data/stickers.yaml) an event page shows, or false for none. No markup here.
+  Param: the event page.
+
+  Only events hosted by the groups in data/stickers.yaml get one (see event-has-sticker.html).
+  The event's `sticker` front matter wins; otherwise the stickers rotate: the event's position among the
+  sticker events, by start date, picks one, so back-to-back concerts show different stickers.
+  Returns the data entry plus "image": the image resource from assets/stickers/.
+*/ -}}
+{{- $stickers := site.Data.stickers.stickers -}}
+{{- $page := . -}}
+{{- $sticker := false -}}
+
+{{- if and $stickers (partial "event-has-sticker.html" $page) -}}
+  {{- with $page.Params.sticker -}}
+    {{- with where $stickers "file" . }}{{ $sticker = index . 0 }}{{ else }}{{ warnf "%s: sticker %q is not in data/stickers.yaml" $page.File.Path . }}{{ end -}}
+  {{- else -}}
+    {{- $position := 0 -}}
+    {{- $count := 0 -}}
+    {{- range sort (where site.RegularPages "Section" "events") ".Params.eventStartDate" -}}
+      {{- if partial "event-has-sticker.html" . -}}
+        {{- if eq . $page }}{{ $position = $count }}{{ end -}}
+        {{- $count = add $count 1 -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $sticker = index $stickers (mod $position (len $stickers)) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $sticker -}}
+  {{- with resources.Get (print "stickers/" .file) -}}
+    {{- $sticker = merge $sticker (dict "image" .) -}}
+  {{- else -}}
+    {{- warnf "sticker %q is in data/stickers.yaml but not in static/merchandise/Sticker/transparent/" $sticker.file -}}
+    {{- $sticker = false -}}
+  {{- end -}}
+{{- end -}}
+{{- return $sticker -}}

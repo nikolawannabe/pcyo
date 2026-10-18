@@ -70,6 +70,7 @@ breaks:
 
 # Marked on the calendar. type: concert | registration | instrument
 # Concerts also need org: PCYO or SCO (each gets its own lane on the chart).
+#   A joint event lists both, host first: org: [SCO, PCYO]. It shows in both lanes and gets both badges.
 # event: the file name in content/events (without .md); the chart and calendar link to that page while it is live.
 milestones:
   - { date: 2026-08-30, type: registration, label: "Fall Registration (General) closes" }
@@ -79,10 +80,10 @@ milestones:
   - { date: 2026-11-09, type: concert, org: PCYO, label: "Sequim Kids Fall Concert, 5pm", event: 2026-PCYO-Fall-Sequim-Concert }
   - { date: 2026-11-13, type: concert, org: PCYO, label: "PA Kids Fall Concert, 4pm", event: 2026-PCYO-Fall-PA-Concert }
   - { date: 2026-11-14, type: concert, org: SCO, label: "SCO Fall Concert and Bake Sale, 7pm", event: 2026-SCO-Fall-Concert }
-  - { date: 2026-12-12, type: concert, org: SCO, label: "Holiday Market", event: 2026-SCO-Holiday-Market }
+  - { date: 2026-12-12, type: concert, org: [SCO, PCYO], label: "Holiday Market", event: 2026-SCO-Holiday-Market }
   - { date: 2026-12-18, type: concert, org: PCYO, label: "Holiday Party, 6pm", event: 2026-PCYO-Holiday-Concert }
   - { date: 2027-02-01, type: registration, label: "Spring Registration opens" }
-  - { date: 2027-02-27, type: concert, org: SCO, label: "SCO Family Concert and Bake Sale, 2pm", event: 2027-SCO-Family-Concert }
+  - { date: 2027-02-27, type: concert, org: [SCO, PCYO], label: "SCO Family Concert and Bake Sale, 2pm", event: 2027-SCO-Family-Concert }
   - { date: 2027-03-15, type: registration, label: "Fall 2027 Early Registration opens" }
   - { date: 2027-05-15, type: concert, org: SCO, label: "SCO Spring Concert and Bake Sale, 7pm", event: 2027-SCO-Spring-Concert }
   - { date: 2027-05-22, type: concert, org: PCYO, label: "Kids End of Year Concert, 4pm", event: 2027-PCYO-End-of-Year-Concert }

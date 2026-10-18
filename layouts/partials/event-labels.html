@@ -1,0 +1,21 @@
+{{- /*
+  Term label (icon + name, in the term color) and a PCYO/SCO concert badge for each group putting the event on
+  (both for a joint event). Param: the dict from event-info.html.
+*/ -}}
+{{- $info := . -}}
+{{- if or $info.term $info.orgs }}
+<p class="f6 fw6 mt0 mb2 flex flex-wrap items-center">
+  {{- with $info.term }}
+  <span class="event-tile__term inline-flex items-center mr3">
+    {{- with .icon }}<svg class="mr1 flex-none" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ico-term-{{ . }}" width="16" height="16"/></svg>{{ end -}}
+    {{ .name }}
+  </span>
+  {{- end }}
+  {{- range $info.orgs }}
+  <span class="event-tile__org event-tile__org--{{ . }} inline-flex items-center mr2">
+    <svg class="mr1 flex-none" width="16" height="16" viewBox="-11 -11 22 22" aria-hidden="true" focusable="false"><use href="#ico-concert-{{ . }}" x="-11" y="-11" width="22" height="22"/></svg>
+    {{- upper . -}}
+  </span>
+  {{- end }}
+</p>
+{{- end -}}

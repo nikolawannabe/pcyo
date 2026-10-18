@@ -1,0 +1,16 @@
+{{- /*
+  Map pin and location. Params: location (text), link (optional: link real addresses to Google Maps),
+  class (optional classes for the paragraph), pinSize (optional, px).
+  Only text containing a number is linked, so "Location to be announced" stays plain.
+*/ -}}
+{{- with .location }}
+{{- $location := . }}
+<p class="{{ $.class | default "f6 black mt0 mb3 lh-copy" }} flex items-start">
+  <svg class="event-tile__pin mr1 flex-none" width="{{ $.pinSize | default 14 }}" height="{{ $.pinSize | default 14 }}" aria-hidden="true" focusable="false"><use href="#ico-pin"/></svg>
+  {{- if and $.link (findRE `\d` $location) }}
+  <a class="event-tile__link link" href="https://www.google.com/maps/search/?{{ querify "api" 1 "query" $location | safeURL }}">{{ $location }}</a>
+  {{- else }}
+  <span>{{ $location }}</span>
+  {{- end }}
+</p>
+{{- end -}}

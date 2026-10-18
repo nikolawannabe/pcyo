@@ -1,0 +1,15 @@
+{{- /*
+  Which groups put on a concert, as a list of lowercase ids, e.g. ["sco" "pcyo"].
+  Takes an "org" value from data/terms.yaml or event front matter: one name ("SCO") or a list for a joint
+  event (["SCO", "PCYO"], host first). Returns an empty list when given nothing.
+  Ids match the icons (#ico-concert-<id>) and styles (.event-tile__org--<id>).
+*/ -}}
+{{- $orgs := slice -}}
+{{- with . -}}
+  {{- if reflect.IsSlice . -}}
+    {{- range . }}{{ $orgs = $orgs | append (lower .) }}{{ end -}}
+  {{- else -}}
+    {{- $orgs = slice (lower .) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $orgs -}}

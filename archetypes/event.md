@@ -1,8 +1,11 @@
----
-date: {{ .Date }}
-type: event
-location: ""
-event_start_date: ""
-event_end_date: ""
-weight: 12
----
++++
+date = '{{ .Date }}'
+draft = true
+title = '{{ replace .File.ContentBaseName "-" " " | title }}'
+expiryDate = '{{ .Date }}'
+type =  "event"
+location =  ""
+eventStartDate = "{{ .Date }}"
+eventEndDate = "{{ .Date }}"
+layout = "events"
++++

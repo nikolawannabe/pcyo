@@ -1,0 +1,11 @@
+{{- /*
+  The hex value of a color variable defined in assets/ananke/css/brand.css, e.g. "pcyo-purple" → "#7a3fa0".
+  Lets the style guide show the real values without copying them. Returns "" if the variable isn't a plain hex.
+*/ -}}
+{{- $hex := "" -}}
+{{- with resources.Get "ananke/css/brand.css" -}}
+  {{- with findRESubmatch (printf `--%s:\s*(#[0-9a-fA-F]{6})` $) .Content 1 -}}
+    {{- $hex = lower (index (index . 0) 1) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $hex -}}

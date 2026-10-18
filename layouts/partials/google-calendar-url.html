@@ -1,0 +1,23 @@
+{{- /*
+  "Add to Google Calendar" link for an event page, or "" when the event has no start or end time.
+  Times are sent without a time zone, so Google reads them in the viewer's calendar time zone.
+*/ -}}
+{{- $start := "" -}}
+{{- $end := "" -}}
+{{- with .Params.eventStartDate }}{{ $start = time . }}{{ end -}}
+{{- with .Params.eventEndDate }}{{ $end = time . }}{{ end -}}
+
+{{- $url := "" -}}
+{{- if and $start $end -}}
+  {{- $format := "20060102T150405" -}}
+  {{- $query := querify
+        "action" "TEMPLATE"
+        "text" .Title
+        "dates" (printf "%s/%s" ($start.Format $format) ($end.Format $format))
+        "details" (.Content | plainify | htmlUnescape | strings.TrimSpace)
+        "location" (.Params.location | default "")
+        "trp" "false"
+        "crm" "false" -}}
+  {{- $url = printf "https://calendar.google.com/calendar/render?%s" $query -}}
+{{- end -}}
+{{- return $url -}}

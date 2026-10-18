@@ -1,0 +1,8 @@
+{{- /*
+  Whether an event page gets a sticker: its host (the first group in its org list) is one of
+  data/stickers.yaml "groups". So with groups: [pcyo], a joint SCO/PCYO concert hosted by SCO gets none.
+  Param: the event page.
+*/ -}}
+{{- $groups := site.Data.stickers.groups | default slice -}}
+{{- $orgs := (partial "event-info.html" .).orgs -}}
+{{- return and $orgs (in $groups (index $orgs 0)) -}}

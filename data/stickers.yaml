@@ -1,0 +1,17 @@
+# Square stickers shown on event pages (see the Sticker Collection on /branding/).
+# Each event page hosted by these groups gets one sticker, rotating through the list in date order,
+# so back-to-back concerts show different stickers. The host is the first group in an event's org list,
+# so joint concerts hosted by SCO get none. An event can pick one with `sticker = "Cello Sticker.png"`.
+# Files are the versions without the yellow background, in static/merchandise/Sticker/transparent/
+# (mounted into assets/stickers/ in hugo.toml so Hugo can resize them). They were made from the originals in
+# static/merchandise/Sticker/ with scripts/remove-sticker-background.py.
+groups: [pcyo]         # ids from data/groups.yaml
+stickers:
+  - file: Bass Sticker.png
+    alt: "Peninsula Community Youth Orchestra sticker: two bunnies playing a string bass"
+  - file: Cello Sticker.png
+    alt: "Peninsula Community Youth Orchestra sticker: a cat playing the cello"
+  - file: Violin Sticker.png
+    alt: "Peninsula Community Youth Orchestra sticker: a cat playing the violin"
+  - file: pcyo-rounded-bg.png
+    alt: "Peninsula Community Youth Orchestra sticker: sun over green mountains with music notes. Perform, Inspire, Educate!"

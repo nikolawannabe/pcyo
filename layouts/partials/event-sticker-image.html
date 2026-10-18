@@ -1,0 +1,14 @@
+{{- /*
+  A sticker on an event page, resized for the web (the originals are 2048px PNGs).
+  Param: the dict from event-sticker.html. Size and placement: .event-tile__sticker in assets/ananke/css/events.css.
+  It shows at 10rem (160px) wide; the larger copies are for high-resolution screens.
+*/ -}}
+{{- $image := .image -}}
+{{- $srcset := slice -}}
+{{- range slice 160 320 480 -}}
+  {{- $copy := $image.Resize (print . "x webp") -}}
+  {{- $srcset = $srcset | append (print $copy.RelPermalink " " . "w") -}}
+{{- end -}}
+{{- $fallback := $image.Resize "320x webp" }}
+<img class="event-tile__sticker" src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $srcset ", " }}" sizes="10rem"
+     width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ .alt }}" loading="lazy">

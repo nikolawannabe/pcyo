@@ -15,25 +15,14 @@
 {{- $px := div $W $total -}}
 {{- $barY := 74.0 -}}{{- $barH := 40.0 -}}
 {{ partial "term-icons.html" . }}
+{{ partial "concert-icons.html" . }}
 <div class="overflow-x-auto mb3">
 <svg id="termTimeline" viewBox="0 0 1080 150" role="img" style="min-width:760px;width:100%;font-family:inherit"
      data-lane0="{{ add $barY (add $barH 22) }}"
      data-t0="{{ $t0.Format "2006-01-02" }}" data-px="{{ $px }}" data-left="{{ $L }}" data-right="{{ add $L $W }}"
      aria-label="{{ $D.year }} PCYO calendar: {{ range $i, $t := $terms }}{{ if $i }}; {{ end }}{{ $t.name }}{{ if $t.optional }} (optional){{ end }} {{ (time $t.start).Format "Jan 2" }} to {{ (time $t.end).Format "Jan 2" }}{{ end }}">
   <defs>
-    {{- /* marker badges (viewBox -11 -11 22 22) */}}
-    <symbol id="ico-concert-pcyo" viewBox="-11 -11 22 22" overflow="visible">
-      <circle r="10" fill="#7a3fa0" stroke="#fff" stroke-width="1.5"/>
-      <ellipse cx="-2" cy="4" rx="3.2" ry="2.4" transform="rotate(-20 -2 4)" fill="#fff"/>
-      <path d="M0.9,3.6 V-6.2 c2.6,0.8 4.6,2.6 4,5.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="ico-concert-sco" viewBox="-11 -11 22 22" overflow="visible">
-      <circle r="10" fill="#103742" stroke="#fff" stroke-width="1.5"/>
-      <ellipse cx="-4" cy="4.2" rx="2.6" ry="2" transform="rotate(-20 -4 4.2)" fill="#fff"/>
-      <ellipse cx="3.4" cy="2.8" rx="2.6" ry="2" transform="rotate(-20 3.4 2.8)" fill="#fff"/>
-      <path d="M-1.8,3.8 V-5 L5.6,-6.4 V2.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M-1.8,-5 L5.6,-6.4 V-4.2 L-1.8,-2.8 z" fill="#fff"/>
-    </symbol>
+    {{- /* marker badges (viewBox -11 -11 22 22); the PCYO/SCO concert badges are in partials/concert-icons.html */}}
     <symbol id="ico-off-all" viewBox="-11 -11 22 22" overflow="visible">
       <circle r="10" fill="#5b6b7a" stroke="#fff" stroke-width="1.5"/>
       <path d="M2.6,-6.4 a6.6,6.6 0 1,0 3.8,9.8 a5.4,5.4 0 1,1 -3.8,-9.8 z" fill="#fff"/>
@@ -163,24 +152,35 @@
   {{- end }}
 
   {{- /* lanes: PCYO concerts, SCO concerts, other dates. The script shows only lanes with ticked markers. */ -}}
-  {{- $lanes := slice (dict "id" "off" "label" "Days off" "color" "#5b6b7a") (dict "id" "pcyo" "label" "PCYO" "color" "#7a3fa0") (dict "id" "sco" "label" "SCO" "color" "#103742") (dict "id" "dates" "label" "Dates" "color" "#777") }}
+  {{- /* lane colors: the group colors come from brand.css */ -}}
+  {{- $lanes := slice (dict "id" "off" "label" "Days off" "color" "#5b6b7a") (dict "id" "pcyo" "label" "PCYO" "color" "var(--pcyo-purple)") (dict "id" "sco" "label" "SCO" "color" "var(--sco-navy)") (dict "id" "dates" "label" "Dates" "color" "#777") }}
   {{- range $lanes }}
-  <g class="tl-lane" data-lane="{{ .id }}" style="display:none">
-    <line x1="{{ $L }}" x2="{{ add $L $W }}" y1="0" y2="0" stroke="{{ .color }}" stroke-opacity="0.3" stroke-dasharray="2 4"/>
-    <rect x="{{ add $L 2 }}" y="-8" width="{{ add 12 (mul 6.6 (len .label)) }}" height="16" rx="8" fill="{{ .color }}"/>
+  <g class="tl-lane" data-lane="{{ .id }}" style="display:none; {{ printf "--lane: %s" .color | safeCSS }}">
+    <line x1="{{ $L }}" x2="{{ add $L $W }}" y1="0" y2="0" style="stroke: var(--lane)" stroke-opacity="0.3" stroke-dasharray="2 4"/>
+    <rect x="{{ add $L 2 }}" y="-8" width="{{ add 12 (mul 6.6 (len .label)) }}" height="16" rx="8" style="fill: var(--lane)"/>
     <text x="{{ add $L 8 }}" y="4" font-size="10.5" font-weight="700" fill="#fff" letter-spacing=".5">{{ .label }}</text>
   </g>
   {{- end }}
+  {{- /* Concerts go in their group's lane; a joint concert gets a badge in each group's lane. Only the first
+         badge (data-icos lists all its icons) goes in the dates list under the chart; the others are data-copy. */ -}}
   {{- range sort $D.milestones "date" }}
+    {{- $m := . -}}
     {{- $d := time .date -}}
     {{- $x := add $L (mul $px (add (div ($d.Sub $t0).Hours 24.0) 0.5)) -}}
-    {{- $lane := cond (eq .type "concert") (lower (.org | default "PCYO")) "dates" -}}
-    {{- $ico := cond (eq .type "concert") (printf "concert-%s" $lane) .type -}}
-    <g class="tl-m tl-hit" data-type="{{ .type }}" data-lane="{{ $lane }}" data-ico="{{ $ico }}" data-x="{{ $x }}" data-date="{{ $d.Format "2006-01-02" }}" data-info="{{ .label }} · {{ $d.Format "Mon, Jan 2, 2006" }}"{{ with partial "milestone-url.html" . }} data-url="{{ . }}"{{ end }} tabindex="0" role="button" transform="translate({{ $x }},140)">
-      <title>{{ .label }}: {{ $d.Format "Mon Jan 2" }}</title>
+    {{- $url := partial "milestone-url.html" . -}}
+    {{- $lanes := slice "dates" }}{{ $icos := slice .type -}}
+    {{- if eq .type "concert" -}}
+      {{- $lanes = partial "concert-orgs.html" (.org | default "PCYO") -}}
+      {{- $icos = slice }}{{ range $lanes }}{{ $icos = $icos | append (printf "concert-%s" .) }}{{ end -}}
+    {{- end -}}
+    {{- range $i, $lane := $lanes }}
+    {{- $ico := index $icos $i }}
+    <g class="tl-m tl-hit" data-type="{{ $m.type }}" data-lane="{{ $lane }}" data-ico="{{ $ico }}"{{ if $i }} data-copy="true"{{ else }} data-icos="{{ delimit $icos " " }}"{{ end }} data-x="{{ $x }}" data-date="{{ $d.Format "2006-01-02" }}" data-info="{{ $m.label }} · {{ $d.Format "Mon, Jan 2, 2006" }}"{{ with $url }} data-url="{{ . }}"{{ end }} tabindex="0" role="button" transform="translate({{ $x }},140)">
+      <title>{{ $m.label }}: {{ $d.Format "Mon Jan 2" }}</title>
       <circle class="ring" r="15.5" fill="#fff" stroke="#c4001a" stroke-width="2"/>
       <g class="ico"><use href="#ico-{{ $ico }}" x="-11" y="-11" width="22" height="22"/></g>
     </g>
+    {{- end }}
   {{- end }}
   {{- /* days off: a badge at the first day, with a bar showing how long the break lasts */ -}}
   {{- range $D.breaks }}
@@ -311,13 +311,16 @@
       document.getElementById('todayLine').setAttribute('y2', bottom + 4);
       document.getElementById('todayText').setAttribute('y', bottom + 16);
       svg.setAttribute('viewBox', '0 0 1080 ' + (bottom + 24));
-      // dates list under the chart (days off stay out of it: tap one to see them all)
+      // dates list under the chart (days off stay out of it: tap one to see them all).
+      // A joint concert is listed once, with each group's icon.
       list.innerHTML = '';
-      on.filter(function (m) { return m.dataset.type !== 'off'; }).forEach(function (m) {
+      on.filter(function (m) { return m.dataset.type !== 'off' && !m.dataset.copy; }).forEach(function (m) {
         var q = m.dataset.date.split('-').map(Number), past = new Date(q[0], q[1] - 1, q[2]) < today;
         var li = document.createElement('li');
         li.className = past ? 'moon-gray' : '';
-        li.innerHTML = '<svg width="16" height="16" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid"><use href="#ico-' + m.dataset.ico + '" x="-11" y="-11" width="22" height="22"/></svg>';
+        li.innerHTML = (m.dataset.icos || m.dataset.ico).split(' ').map(function (ico) {
+          return '<svg width="16" height="16" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid"><use href="#ico-' + ico + '" x="-11" y="-11" width="22" height="22"/></svg>';
+        }).join('');
         li.appendChild(linked(m));
         list.appendChild(li);
       });

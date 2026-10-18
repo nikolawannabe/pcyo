@@ -118,6 +118,12 @@
 </article>
 {{- /* class times are written from days / start / length (see layouts/partials/class-time.html) */ -}}
 {{- $cls := slice }}{{ range site.Data.classes }}{{ $cls = $cls | append (merge . (dict "time" (partial "class-time.html" (dict "c" . "style" "short")))) }}{{ end }}
-{{- $ms := slice }}{{ range $T.milestones }}{{ $ms = $ms | append (merge . (dict "url" (partial "milestone-url.html" .))) }}{{ end }}
+{{- /* milestones get their event page "url" and, for concerts, "orgs": a list of group ids, e.g. ["sco" "pcyo"] (see concert-orgs.html) */ -}}
+{{- $ms := slice }}
+{{- range $T.milestones }}
+  {{- $extra := dict "url" (partial "milestone-url.html" .) }}
+  {{- if eq .type "concert" }}{{ $extra = merge $extra (dict "orgs" (partial "concert-orgs.html" (.org | default "PCYO"))) }}{{ end }}
+  {{- $ms = $ms | append (merge . $extra) }}
+{{- end }}
 <script type="application/json" id="pcyo-data">{{ dict "terms" $terms "termLength" $T.term_length "milestones" $ms "breaks" $T.breaks "classes" $cls | jsonify | safeJS }}</script>
 {{ with resources.Get "js/classes.js" }}<script src="{{ .RelPermalink }}"></script>{{ end }}

@@ -1,0 +1,16 @@
+{{- /*
+  "Monday, November 9, 2026 · 5 – 6 PM" (text from event-time-text.html).
+  Params: info (dict from event-info.html), class (optional classes for the paragraph).
+*/ -}}
+{{- with .info.start }}
+  {{- $text := partial "event-time-text.html" $.info }}
+  <p class="{{ $.class | default "f5 black mt0 mb1 lh-copy" }}">
+    <time datetime="{{ .Format "2006-01-02T15:04:05Z07:00" }}">
+      <span class="fw6">{{ $text.date }}</span>
+      {{- with $text.time }}
+      <span class="ph1">·</span>
+      <span class="nowrap">{{ . }}</span>
+      {{- end }}
+    </time>
+  </p>
+{{- end -}}

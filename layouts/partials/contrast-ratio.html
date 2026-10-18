@@ -1,0 +1,30 @@
+{{- /*
+  WCAG contrast ratio between two colors given as "#rrggbb", e.g. (dict "a" "#ffffff" "b" "#7a3fa0") → 6.9.
+  Returns a dict: ratio (rounded to 1 decimal) and level:
+    "AA"            4.5 or more: fine for any text
+    "AA large text" 3 to 4.5: only large text (about 24px, or 19px bold) and icons
+    "Fails"         below 3
+  Formula: https://www.w3.org/TR/WCAG21/#dfn-contrast-ratio
+*/ -}}
+{{- $luminances := slice -}}
+{{- range slice .a .b -}}
+  {{- $hex := strings.TrimPrefix "#" . -}}
+  {{- /* relative luminance: each of red, green, blue, linearized and weighted by how bright it looks */ -}}
+  {{- $luminance := 0.0 -}}
+  {{- range $i, $weight := slice 0.2126 0.7152 0.0722 -}}
+    {{- $byte := int (print "0x" (substr $hex (mul $i 2) 2)) -}}
+    {{- $value := div (float $byte) 255.0 -}}
+    {{- $linear := div $value 12.92 -}}
+    {{- if gt $value 0.04045 }}{{ $linear = math.Pow (div (add $value 0.055) 1.055) 2.4 }}{{ end -}}
+    {{- $luminance = add $luminance (mul $weight $linear) -}}
+  {{- end -}}
+  {{- $luminances = $luminances | append $luminance -}}
+{{- end -}}
+
+{{- $lighter := math.Max (index $luminances 0) (index $luminances 1) -}}
+{{- $darker := math.Min (index $luminances 0) (index $luminances 1) -}}
+{{- $ratio := div (add $lighter 0.05) (add $darker 0.05) -}}
+
+{{- $level := "Fails" -}}
+{{- if ge $ratio 4.5 }}{{ $level = "AA" }}{{ else if ge $ratio 3.0 }}{{ $level = "AA large text" }}{{ end -}}
+{{- return dict "ratio" (div (math.Round (mul $ratio 10)) 10.0) "level" $level -}}

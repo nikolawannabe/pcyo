@@ -1,0 +1,41 @@
+{{- /*
+  When an event happens, as plain text. No markup here (layouts/partials/event-when.html displays it).
+  Param: the dict from event-info.html (uses .start and .end).
+
+  Returns a dict:
+    date  "Monday, November 9, 2026", or for a multi-day event the whole span:
+          "Sat, Dec 12, 10:30 AM – Sun, Dec 13, 2026, 3 PM"
+    time  "5 – 6 PM", "10 AM – 3 PM", "7:30 – 9 PM" or "5 PM"; "" for a multi-day event
+  Times drop ":00", and AM/PM is written once when both ends share it.
+*/ -}}
+{{- /* non-breaking space: keeps "5 PM" and "5 – 6" from wrapping apart */ -}}
+{{- $nbsp := htmlUnescape "&nbsp;" -}}
+{{- $dash := print $nbsp "–" $nbsp -}}
+{{- $date := "" -}}
+{{- $time := "" -}}
+
+{{- with .start -}}
+  {{- $start := . -}}
+  {{- $end := $.end | default $start -}}
+  {{- /* hour and minutes, dropping ":00": 5:00 → "5", 7:30 → "7:30" */ -}}
+  {{- $startClock := strings.TrimSuffix ":00" ($start.Format "3:04") -}}
+  {{- $endClock := strings.TrimSuffix ":00" ($end.Format "3:04") -}}
+  {{- $startAmPm := $start.Format "PM" -}}
+  {{- $endAmPm := $end.Format "PM" -}}
+
+  {{- if ne ($start.Format "2006-01-02") ($end.Format "2006-01-02") -}}
+    {{- /* multi-day event: the whole span goes in the date */ -}}
+    {{- $date = print ($start.Format "Mon, Jan 2") ", " $startClock " " $startAmPm $dash ($end.Format "Mon, Jan 2, 2006") ", " $endClock " " $endAmPm -}}
+  {{- else -}}
+    {{- $date = $start.Format "Monday, January 2, 2006" -}}
+    {{- if $end.Equal $start -}}
+      {{- $time = print $startClock $nbsp $startAmPm -}}
+    {{- else if eq $startAmPm $endAmPm -}}
+      {{- $time = print $startClock $dash $endClock $nbsp $endAmPm -}}
+    {{- else -}}
+      {{- $time = print $startClock $nbsp $startAmPm $dash $endClock $nbsp $endAmPm -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return dict "date" $date "time" $time -}}
