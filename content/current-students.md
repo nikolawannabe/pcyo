@@ -23,6 +23,8 @@ title = 'Current Students'
 - [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
 
 
-Classes in Sequim are held at [Swisher Hall](https://www.google.com/maps/search/?api=1&query=506%20N%20Blake%20Ave,%20Sequim,%20WA%2098382).
+### Where classes meet
 
-Port Angeles classes are held at [First United Methodist Church](https://maps.app.goo.gl/11qt4rfRE6qrkPZK6).
+{{< class-locations >}}
+
+Days, times and term dates for every class are on the [Classes](/classes/) page.

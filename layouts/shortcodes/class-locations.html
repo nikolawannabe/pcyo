@@ -1,0 +1,13 @@
+{{- /* Where each class meets, grouped by town and building, from data/classes.yaml.
+       Usage in any page: {{< class-locations >}} */ -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+{{- range $town := slice "Sequim" "Port Angeles" }}
+<p class="mb1"><strong>{{ $town }}</strong></p>
+<ul class="mt0">
+  {{- $places := slice }}{{ range where site.Data.classes "town" $town }}{{ if and .location (not (eq (delimit (.terms | default $regular) ",") "holiday")) }}{{ $places = $places | append .location }}{{ end }}{{ end }}
+  {{- range uniq $places }}{{ $place := . }}
+  <li><a href="https://www.google.com/maps/search/?api=1&query={{ printf "%s, WA" $place | urlquery }}">{{ $place }}</a>:
+    {{ $names := slice }}{{ range where site.Data.classes "town" $town }}{{ if and (eq .location $place) (not (eq (delimit (.terms | default $regular) ",") "holiday")) }}{{ $names = $names | append .name }}{{ end }}{{ end }}{{ delimit $names ", " }}</li>
+  {{- end }}
+</ul>
+{{- end }}

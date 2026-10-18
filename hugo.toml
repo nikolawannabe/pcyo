@@ -3,6 +3,9 @@ languageCode = 'en-us'
 title = 'Peninsula Community Youth Orchestra'
 theme = 'ananke'
 
+# Don't generate /tags/, /categories/ and their term pages
+disableKinds = ["taxonomy", "term"]
+
 [[menu.main]]
 name = "Events"
 pageRef = "events" # Reference to the folder

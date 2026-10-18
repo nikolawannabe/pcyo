@@ -1,0 +1,389 @@
+{{- /*
+  Year-at-a-glance timeline drawn from data/terms.yaml and data/classes.yaml.
+  Nothing here needs editing year to year.
+*/ -}}
+{{- $D := site.Data.terms -}}
+{{- $terms := where $D.terms "hidden" "!=" true -}}
+{{- $classes := site.Data.classes -}}
+{{- $first := time (index $terms 0).start -}}
+{{- $lastEnd := time (index (last 1 $terms) 0).end -}}
+{{- range $D.milestones }}{{ $d := time .date }}{{ if $d.After $lastEnd }}{{ $lastEnd = $d }}{{ end }}{{ if $d.Before $first }}{{ $first = $d }}{{ end }}{{ end -}}
+{{- $t0 := time (printf "%d-%02d-01" $first.Year (int $first.Month)) -}}
+{{- $t1 := (time (printf "%d-%02d-01" $lastEnd.Year (int $lastEnd.Month))).AddDate 0 1 0 -}}
+{{- $total := div ($t1.Sub $t0).Hours 24.0 -}}
+{{- $W := 1060.0 -}}{{- $L := 10.0 -}}
+{{- $px := div $W $total -}}
+{{- $barY := 74.0 -}}{{- $barH := 40.0 -}}
+{{ partial "term-icons.html" . }}
+<div class="overflow-x-auto mb3">
+<svg id="termTimeline" viewBox="0 0 1080 150" role="img" style="min-width:760px;width:100%;font-family:inherit"
+     data-lane0="{{ add $barY (add $barH 22) }}"
+     data-t0="{{ $t0.Format "2006-01-02" }}" data-px="{{ $px }}" data-left="{{ $L }}" data-right="{{ add $L $W }}"
+     aria-label="{{ $D.year }} PCYO calendar: {{ range $i, $t := $terms }}{{ if $i }}; {{ end }}{{ $t.name }}{{ if $t.optional }} (optional){{ end }} {{ (time $t.start).Format "Jan 2" }} to {{ (time $t.end).Format "Jan 2" }}{{ end }}">
+  <defs>
+    {{- /* marker badges (viewBox -11 -11 22 22) */}}
+    <symbol id="ico-concert-pcyo" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#7a3fa0" stroke="#fff" stroke-width="1.5"/>
+      <ellipse cx="-2" cy="4" rx="3.2" ry="2.4" transform="rotate(-20 -2 4)" fill="#fff"/>
+      <path d="M0.9,3.6 V-6.2 c2.6,0.8 4.6,2.6 4,5.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ico-concert-sco" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#103742" stroke="#fff" stroke-width="1.5"/>
+      <ellipse cx="-4" cy="4.2" rx="2.6" ry="2" transform="rotate(-20 -4 4.2)" fill="#fff"/>
+      <ellipse cx="3.4" cy="2.8" rx="2.6" ry="2" transform="rotate(-20 3.4 2.8)" fill="#fff"/>
+      <path d="M-1.8,3.8 V-5 L5.6,-6.4 V2.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M-1.8,-5 L5.6,-6.4 V-4.2 L-1.8,-2.8 z" fill="#fff"/>
+    </symbol>
+    <symbol id="ico-off-all" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#5b6b7a" stroke="#fff" stroke-width="1.5"/>
+      <path d="M2.6,-6.4 a6.6,6.6 0 1,0 3.8,9.8 a5.4,5.4 0 1,1 -3.8,-9.8 z" fill="#fff"/>
+      <path d="M4.2,-5.6 h2.6 l-2.6,2.8 h2.6" fill="none" stroke="#fff" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ico-off-teacher" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#fff" stroke="#5b6b7a" stroke-width="2"/>
+      <path d="M2.6,-6.4 a6.6,6.6 0 1,0 3.8,9.8 a5.4,5.4 0 1,1 -3.8,-9.8 z" fill="#5b6b7a"/>
+      <path d="M4.2,-5.6 h2.6 l-2.6,2.8 h2.6" fill="none" stroke="#5b6b7a" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ico-registration" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#fff" stroke="#1d6b36" stroke-width="2"/>
+      <rect x="-4.6" y="-5" width="9.2" height="11" rx="1.8" fill="#dff3e4" stroke="#1d6b36" stroke-width="1.4"/>
+      <rect x="-2.4" y="-6.6" width="4.8" height="2.8" rx="1" fill="#1d6b36"/>
+      <path d="M-2.4,0.6 l1.8,2 l3.4,-4" fill="none" stroke="#1d6b36" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ico-instrument" viewBox="-11 -11 22 22" overflow="visible">
+      <circle r="10" fill="#fff" stroke="#8a4a14" stroke-width="2"/>
+      <g transform="rotate(30)">
+        <rect x="-0.8" y="-8.4" width="1.6" height="6" rx="0.8" fill="#8a4a14"/>
+        <circle cy="-8.2" r="1.3" fill="#8a4a14"/>
+        <path d="M0,-3.4 c2.6,0 3.4,1.2 2.4,2.6 c-0.6,0.8 -0.4,1.4 0.6,2.2 c1.6,1.4 0.8,4.4 -3,4.4 c-3.8,0 -4.6,-3 -3,-4.4 c1,-0.8 1.2,-1.4 0.6,-2.2 c-1,-1.4 -0.2,-2.6 2.4,-2.6 z" fill="#d98a3a" stroke="#8a4a14" stroke-width="1"/>
+        <path d="M-1.4,0.4 v2.6 M1.4,0.4 v2.6" stroke="#8a4a14" stroke-width="0.7" stroke-linecap="round"/>
+      </g>
+    </symbol>
+    <pattern id="hatch-makeup" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#fff" fill-opacity="0.35"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#fff" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  {{- /* month grid */ -}}
+  {{- $m := $t0 -}}
+  {{- range seq 24 -}}
+    {{- if $m.Before $t1 -}}
+      {{- $x := add $L (mul $px (div ($m.Sub $t0).Hours 24.0)) -}}
+      {{- $next := $m.AddDate 0 1 0 -}}
+      {{- $w := mul $px (div ($next.Sub $m).Hours 24.0) -}}
+      <line class="tl-grid" x1="{{ $x }}" y1="34" x2="{{ $x }}" y2="130" stroke="#000" stroke-opacity="0.12"/>
+      <text x="{{ add $x (div $w 2) }}" y="28" text-anchor="middle" font-size="13" fill="#555">{{ $m.Format "Jan" }}</text>
+      {{- $m = $next -}}
+    {{- end -}}
+  {{- end }}
+  <line class="tl-grid" x1="{{ add $L $W }}" y1="34" x2="{{ add $L $W }}" y2="130" stroke="#000" stroke-opacity="0.12"/>
+
+  <g id="todayMarker" style="display:none">
+    <line id="todayLine" y1="36" y2="134" stroke="#c4001a" stroke-width="2"/>
+    <text id="todayText" y="146" text-anchor="middle" font-size="11" font-weight="700" fill="#c4001a">Today</text>
+  </g>
+
+  {{- /* term bars */ -}}
+  {{- range $terms }}
+    {{- $s := time .start }}{{ $e := (time .end).AddDate 0 0 1 -}}
+    {{- $x := add $L (mul $px (div ($s.Sub $t0).Hours 24.0)) -}}
+    {{- $w := mul $px (div ($e.Sub $s).Hours 24.0) -}}
+    {{- $id := .id -}}{{- $sprinkle := .sprinkle -}}
+    <g class="tl-term" data-term="{{ .id }}" tabindex="0" role="button" aria-pressed="false" aria-label="Show {{ .name }} classes" data-info="{{ .name }}{{ if .optional }} (optional){{ end }}: {{ $s.Format "Mon, Jan 2" }} – {{ (time .end).Format "Mon, Jan 2" }}{{ with .note }} · {{ . }}{{ end }}">
+      <title>{{ .name }}{{ if .optional }} (optional){{ end }}: {{ $s.Format "Mon Jan 2" }} – {{ (time .end).Format "Mon Jan 2" }}{{ with .note }} · {{ . }}{{ end }}</title>
+      <rect class="tl-bar" x="{{ $x }}" y="{{ $barY }}" width="{{ $w }}" height="{{ $barH }}" rx="6" fill="{{ .color }}"/>
+      {{- with .makeup }}
+        {{- $ms := time .start }}{{ $me := (time .end).AddDate 0 0 1 -}}
+        <rect x="{{ add $L (mul $px (div ($ms.Sub $t0).Hours 24.0)) }}" y="{{ $barY }}" width="{{ mul $px (div ($me.Sub $ms).Hours 24.0) }}" height="{{ $barH }}" fill="url(#hatch-makeup)"><title>Make-up days: {{ $ms.Format "Jan 2" }} – {{ (time .end).Format "Jan 2" }}</title></rect>
+      {{- end }}
+      {{- /* days off inside this term cut through the bar (teacher-only days are fainter) */ -}}
+      {{- range $D.breaks }}{{ $bs := time .start }}{{ if and (not ($bs.Before $s)) ($bs.Before $e) }}
+        {{- $be := (time .end).AddDate 0 0 1 -}}
+        {{- $binfo := partial "term-break-info.html" (dict "b" . "terms" $terms "classes" $classes) -}}
+        <rect class="tl-off tl-hit" data-info="{{ $binfo }}" x="{{ add $L (mul $px (div ($bs.Sub $t0).Hours 24.0)) }}" y="{{ $barY }}" width="{{ math.Max (mul $px (div ($be.Sub $bs).Hours 24.0)) 2.5 }}" height="{{ $barH }}" fill="#fff" fill-opacity="{{ if eq .who "all" }}0.75{{ else }}0.35{{ end }}"><title>{{ $binfo }}</title></rect>
+      {{- end }}{{ end }}
+      {{- /* a few seasonal icons drifting on either side of the label, as if blown by a breeze (static) */ -}}
+      {{- with .icon }}{{ $ico := . -}}
+        {{- $variants := index (dict "snowflake" (slice "snowflake" "snowflake-2" "snowflake-3" "snowflake-2" "snowflake" "snowflake-3")) $ico | default (slice $ico $ico $ico $ico $ico $ico) -}}
+        {{- $boost := cond (eq $ico "rose") 1.9 1.0 -}}
+        {{- $grow := cond (eq $ico "rose") 1.5 1.0 -}}
+        {{- $mid := add $x (div $w 2) -}}
+        {{- $rot := slice -28 18 -12 32 -20 26 -}}
+        {{- $dy := slice 12 28 18 30 10 24 -}}
+        {{- $sz := slice 15 12 14 11 13 12 -}}
+        {{- $op := slice 0.5 0.4 0.46 0.36 0.44 0.38 -}}
+        {{- $spots := slice -}}
+        {{- range $side := slice -1 1 -}}
+          {{- $inner := add $mid (mul $side 52) -}}{{- $outer := add $mid (mul $side (sub (div $w 2) 8)) -}}
+          {{- $room := mul $side (sub $outer $inner) -}}
+          {{- $k := int (math.Max 0 (math.Min 3 (math.Floor (div $room 22)))) -}}
+          {{- range $j, $_ := seq $k }}{{ $spots = $spots | append (add $inner (mul $side (mul $room (div (add (float $j) 0.5) $k)))) }}{{ end -}}
+        {{- end }}
+        {{- $narrow := not $spots -}}
+        {{- /* narrow bar (Holiday): one icon under the name instead */ -}}
+        {{- if $narrow }}{{ $spots = slice (add $x (div $w 2)) }}{{ $dy = slice 28 }}{{ $sz = slice 19 }}{{ $op = slice 1.0 }}{{ $rot = slice 0 }}{{ $boost = 1.0 }}{{ $grow = 1.0 }}{{ end }}
+      {{- /* "sprinkle": lots of little stars scattered around the bar (Holiday) */ -}}
+      {{- with $sprinkle }}{{ $sp := . }}
+      {{- $pts := slice (slice 0.07 0.50 4.5) (slice 0.17 0.80 3.5) (slice 0.29 0.62 5.5) (slice 0.71 0.62 5.5) (slice 0.83 0.80 3.5) (slice 0.93 0.50 4.5) (slice 0.10 0.22 3) (slice 0.90 0.22 3) (slice 0.23 0.95 3) (slice 0.77 0.95 3) (slice 0.04 0.84 3) (slice 0.96 0.84 3) (slice 0.37 0.90 3.5) (slice 0.63 0.90 3.5) (slice 0.16 0.42 2.5) (slice 0.84 0.42 2.5) -}}
+      <g pointer-events="none">
+        {{- range $k, $pt := $pts }}{{ $px2 := add $x (mul $w (index $pt 0)) }}{{ $py2 := add $barY (mul $barH (index $pt 1)) }}{{ $sz2 := index $pt 2 }}
+        <use href="#ico-term-{{ $sp }}" x="{{ sub $px2 (div $sz2 2.0) }}" y="{{ sub $py2 (div $sz2 2.0) }}" width="{{ $sz2 }}" height="{{ $sz2 }}" color="{{ cond (eq (mod $k 3) 0) "#fff" "#ffe082" }}" opacity="{{ cond (eq (mod $k 2) 0) 0.95 0.75 }}"/>
+        {{- end }}
+      </g>
+      {{- end }}
+      <g pointer-events="none" color="#fff">
+        {{- range $i, $cx := $spots }}{{ if lt $i 6 }}
+          {{- $s := mul (index $sz $i) $grow }}{{ $cy := add $barY (index $dy $i) }}
+        <use href="#ico-term-{{ index $variants $i }}" x="{{ sub $cx (div (float $s) 2) }}" y="{{ sub $cy (div (float $s) 2) }}" width="{{ $s }}" height="{{ $s }}" opacity="{{ math.Min 0.95 (mul (index $op $i) $boost) }}" transform="rotate({{ index $rot $i }} {{ $cx }} {{ $cy }})"/>
+        {{- end }}{{ end }}
+      </g>
+      {{- end }}
+      {{- if .optional }}
+      <text x="{{ add $x (div $w 2) }}" y="{{ add $barY 15 }}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">{{ .short | default .name }}</text>
+      {{- if not .icon }}
+      <text x="{{ add $x (div $w 2) }}" y="{{ add $barY 31 }}" text-anchor="middle" font-size="10" fill="#fff">optional</text>
+      {{- end }}
+      {{- else }}
+      <text x="{{ add $x (div $w 2) }}" y="{{ add $barY 17 }}" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">{{ .name }}</text>
+      <text x="{{ add $x (div $w 2) }}" y="{{ add $barY 32 }}" text-anchor="middle" font-size="12" fill="#fff">{{ $s.Format "Jan 2" }} – {{ (time .end).Format "Jan 2" }}</text>
+      {{- end }}
+
+      {{- /* flag when brand-new beginners can start this term */ -}}
+      {{- $starts := slice -}}
+      {{- range $classes }}{{ if reflect.IsSlice .join }}{{ if in .join $id }}{{ $starts = $starts | append .name }}{{ end }}{{ end }}{{ end -}}
+      {{- with $starts }}
+      <g transform="translate({{ $x }},{{ sub $barY 6 }})">
+        <line x1="2" y1="0" x2="2" y2="-26" stroke="#103742" stroke-width="2"/>
+        <path d="M2,-26 L14,-21 L2,-16 Z" fill="#103742"/>
+        <text x="18" y="-17" font-size="12" font-weight="700" fill="#103742">New {{ delimit (uniq .) " & " }} start</text>
+      </g>
+      {{- end }}
+    </g>
+  {{- end }}
+
+  {{- /* lanes: PCYO concerts, SCO concerts, other dates. The script shows only lanes with ticked markers. */ -}}
+  {{- $lanes := slice (dict "id" "off" "label" "Days off" "color" "#5b6b7a") (dict "id" "pcyo" "label" "PCYO" "color" "#7a3fa0") (dict "id" "sco" "label" "SCO" "color" "#103742") (dict "id" "dates" "label" "Dates" "color" "#777") }}
+  {{- range $lanes }}
+  <g class="tl-lane" data-lane="{{ .id }}" style="display:none">
+    <line x1="{{ $L }}" x2="{{ add $L $W }}" y1="0" y2="0" stroke="{{ .color }}" stroke-opacity="0.3" stroke-dasharray="2 4"/>
+    <rect x="{{ add $L 2 }}" y="-8" width="{{ add 12 (mul 6.6 (len .label)) }}" height="16" rx="8" fill="{{ .color }}"/>
+    <text x="{{ add $L 8 }}" y="4" font-size="10.5" font-weight="700" fill="#fff" letter-spacing=".5">{{ .label }}</text>
+  </g>
+  {{- end }}
+  {{- range sort $D.milestones "date" }}
+    {{- $d := time .date -}}
+    {{- $x := add $L (mul $px (add (div ($d.Sub $t0).Hours 24.0) 0.5)) -}}
+    {{- $lane := cond (eq .type "concert") (lower (.org | default "PCYO")) "dates" -}}
+    {{- $ico := cond (eq .type "concert") (printf "concert-%s" $lane) .type -}}
+    <g class="tl-m tl-hit" data-type="{{ .type }}" data-lane="{{ $lane }}" data-ico="{{ $ico }}" data-x="{{ $x }}" data-date="{{ $d.Format "2006-01-02" }}" data-info="{{ .label }} · {{ $d.Format "Mon, Jan 2, 2006" }}"{{ with partial "milestone-url.html" . }} data-url="{{ . }}"{{ end }} tabindex="0" role="button" transform="translate({{ $x }},140)">
+      <title>{{ .label }}: {{ $d.Format "Mon Jan 2" }}</title>
+      <circle class="ring" r="15.5" fill="#fff" stroke="#c4001a" stroke-width="2"/>
+      <g class="ico"><use href="#ico-{{ $ico }}" x="-11" y="-11" width="22" height="22"/></g>
+    </g>
+  {{- end }}
+  {{- /* days off: a badge at the first day, with a bar showing how long the break lasts */ -}}
+  {{- range $D.breaks }}
+    {{- $bs := time .start }}{{ $be := (time .end).AddDate 0 0 1 -}}
+    {{- $x0 := add $L (mul $px (div ($bs.Sub $t0).Hours 24.0)) -}}
+    {{- $bw := mul $px (div ($be.Sub $bs).Hours 24.0) -}}
+    {{- $all := eq .who "all" -}}
+    {{- $binfo := partial "term-break-info.html" (dict "b" . "terms" $terms "classes" $classes) -}}
+    <g class="tl-m tl-hit" data-type="off" data-lane="off" data-ico="{{ if $all }}off-all{{ else }}off-teacher{{ end }}" data-x="{{ add $x0 (div $px 2) }}" data-x0="{{ $x0 }}" data-date="{{ $bs.Format "2006-01-02" }}" data-info="{{ $binfo }}" tabindex="0" role="button" transform="translate({{ $x0 }},140)">
+      <title>{{ $binfo }}</title>
+      <rect class="span" x="0" y="-4" width="{{ math.Max $bw 3 }}" height="8" rx="4" fill="#5b6b7a" fill-opacity="{{ if $all }}0.35{{ else }}0.15{{ end }}"/>
+      <circle class="ring" r="15.5" fill="#fff" stroke="#c4001a" stroke-width="2"/>
+      <g class="ico"><use href="#ico-{{ if $all }}off-all{{ else }}off-teacher{{ end }}" x="-11" y="-11" width="22" height="22"/></g>
+      {{- if not $all }}
+      <g class="who"><circle cx="8" cy="-8" r="5.5" fill="#c4001a" stroke="#fff" stroke-width="1"/><text x="8" y="-5.2" text-anchor="middle" font-size="7.5" font-weight="700" fill="#fff">{{ substr .who 0 1 }}</text></g>
+      {{- end }}
+    </g>
+  {{- end }}
+</svg>
+</div>
+<div id="tlControls" class="f6 mb1">
+  <span class="b mr2">Show:</span>
+  <button type="button" class="tl-toggle" data-show="concert" aria-pressed="false"><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid"><use href="#ico-concert-pcyo" x="-11" y="-11" width="22" height="22"/></svg><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1"><use href="#ico-concert-sco" x="-11" y="-11" width="22" height="22"/></svg>Concerts &amp; events</button>
+  <button type="button" class="tl-toggle" data-show="registration" aria-pressed="false"><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1"><use href="#ico-registration" x="-11" y="-11" width="22" height="22"/></svg>Registration dates</button>
+  <button type="button" class="tl-toggle" data-show="instrument" aria-pressed="false"><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1"><use href="#ico-instrument" x="-11" y="-11" width="22" height="22"/></svg>Instrument days</button>
+  <button type="button" class="tl-toggle" data-show="off" aria-pressed="true"><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid"><use href="#ico-off-all" x="-11" y="-11" width="22" height="22"/></svg><svg width="18" height="18" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1"><use href="#ico-off-teacher" x="-11" y="-11" width="22" height="22"/></svg>Days off</button>
+</div>
+<div class="f6 gray mb2">
+  <span class="dib mr3 nowrap"><span class="dib v-mid mr1" style="width:22px;height:12px;background:repeating-linear-gradient(45deg,#2f6db5 0 3px,#8fb3e0 3px 6px)"></span>Make-up days</span>
+  <span class="dib mr3 nowrap"><span class="dib v-mid mr1" style="width:2px;height:14px;background:#c4001a"></span>Today</span>
+</div>
+<p id="tlInfo" class="f5 mt0 mb2 pa2 br2 bg-white" aria-live="polite" hidden></p>
+<ul id="tlList" class="list pl0 f6 mt0 mb3" style="columns:16rem"></ul>
+<style>
+  #termTimeline .tl-hit, #termTimeline .tl-term { cursor: pointer; }
+  #termTimeline .tl-term:focus { outline: none; }
+  #termTimeline .tl-term:hover .tl-bar, #termTimeline .tl-term:focus .tl-bar { stroke: #c4001a; stroke-width: 3; }
+  #termTimeline.has-sel .tl-term:not(.sel) { opacity: .55; }
+  #termTimeline .tl-term.sel .tl-bar { stroke: #103742; stroke-width: 3; }
+  #termTimeline .tl-m { outline: none; }
+  #termTimeline .tl-m .ico { transform-box: fill-box; transform-origin: center; transition: transform .15s ease-out; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+  #termTimeline .tl-m:hover .ico, #termTimeline .tl-m:focus .ico, #termTimeline .tl-m.sel .ico { transform: scale(1.3); }
+  #termTimeline .tl-m .ring { display: none; }
+  #termTimeline .tl-m .span { pointer-events: none; }
+  #termTimeline .tl-m.sel .ring, #termTimeline .tl-m:focus .ring { display: inline; }
+  #tlList svg { margin-right: .3rem; }
+  .tl-toggle { display: inline-flex; align-items: center; gap: 1px; margin: 0 .4rem .4rem 0; padding: .2rem .6rem .2rem .3rem;
+    font: inherit; color: #555; background: transparent; border: 1px dashed #bbb; border-radius: 999px; cursor: pointer;
+    transition: background .15s, opacity .15s; }
+  .tl-toggle[aria-pressed="false"] { opacity: .5; }
+  .tl-toggle[aria-pressed="false"] svg { filter: grayscale(1); }
+  .tl-toggle[aria-pressed="true"] { background: #fff; border: 1px solid #c9c4b0; color: #222; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .tl-toggle:hover { opacity: 1; }
+  .tl-toggle:focus-visible { outline: 2px solid #c4001a; outline-offset: 2px; }
+  #tlList li { break-inside: avoid; padding: .1rem 0; }
+</style>
+<script>
+  (function () {
+    var svg = document.getElementById('termTimeline');
+    var p = svg.dataset.t0.split('-').map(Number);
+    var t0 = new Date(p[0], p[1] - 1, p[2]);
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var days = (today - t0) / 864e5;
+    var x = Number(svg.dataset.left) + days * Number(svg.dataset.px);
+    if (days >= 0 && x <= Number(svg.dataset.right)) {
+      var g = document.getElementById('todayMarker');
+      g.setAttribute('transform', 'translate(' + x + ',0)');
+      g.style.display = '';
+    }
+
+    // Show toggles (icon + text, on/off): remembered per visitor. They only affect this chart; the full calendar always shows everything.
+    var KEY = 'pcyo-timeline-show';
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('#tlControls [data-show]'));
+    function isOn(b) { return b.getAttribute('aria-pressed') === 'true'; }
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (saved) boxes.forEach(function (b) { b.setAttribute('aria-pressed', saved.indexOf(b.dataset.show) !== -1); });
+    } catch (e) {}
+    var markers = Array.prototype.slice.call(svg.querySelectorAll('.tl-m'));
+    var info = document.getElementById('tlInfo');
+    var list = document.getElementById('tlList');
+    var LANES = ['off', 'pcyo', 'sco', 'dates'], lane0 = Number(svg.dataset.lane0), GAP = 28, MIN = 23;
+
+    // a badge's text, linked to its event page when it has one
+    function linked(m) {
+      if (!m.dataset.url) return document.createTextNode(m.dataset.info);
+      var a = document.createElement('a');
+      a.href = m.dataset.url; a.className = 'link blue underline-hover'; a.textContent = m.dataset.info;
+      return a;
+    }
+    function apply() {
+      var show = boxes.filter(isOn).map(function (b) { return b.dataset.show; });
+      try { localStorage.setItem(KEY, JSON.stringify(show)); } catch (e) {}
+      // a picked item whose kind was just switched off: hide its details again
+      if (picked && show.indexOf(picked.classList.contains('tl-off') ? 'off' : picked.dataset.type) === -1) {
+        svg.querySelectorAll('.tl-m.sel').forEach(function (e) { e.classList.remove('sel'); });
+        info.textContent = '';
+        info.hidden = true;
+        allOff = false;
+        picked = null;
+      }
+      svg.querySelectorAll('.tl-off').forEach(function (r) { r.style.display = show.indexOf('off') !== -1 ? '' : 'none'; });
+      var on = markers.filter(function (m) { return show.indexOf(m.dataset.type) !== -1; })
+        .sort(function (a, b) { return a.dataset.date < b.dataset.date ? -1 : a.dataset.date > b.dataset.date ? 1 : 0; });
+      // each lane with something ticked gets its own row
+      var y = {}, n = 0;
+      LANES.forEach(function (id) {
+        var g = svg.querySelector('.tl-lane[data-lane="' + id + '"]');
+        var used = on.some(function (m) { return m.dataset.lane === id; });
+        g.style.display = used ? '' : 'none';
+        if (used) { y[id] = lane0 + n * GAP; g.setAttribute('transform', 'translate(0,' + y[id] + ')'); n++; }
+      });
+      // place badges; nudge right when two in a lane would overlap
+      var lastX = {};
+      markers.forEach(function (m) { m.style.display = 'none'; });
+      on.forEach(function (m) {
+        var id = m.dataset.lane, mx = Number(m.dataset.x);
+        if (lastX[id] !== undefined && mx - lastX[id] < MIN) mx = lastX[id] + MIN;
+        lastX[id] = mx;
+        m.setAttribute('transform', 'translate(' + mx + ',' + y[id] + ')');
+        var span = m.querySelector('.span');   // day-off bars stay on their real dates
+        if (span) span.setAttribute('x', Number(m.dataset.x0) - mx);
+        m.style.display = '';
+      });
+      // stretch the chart to fit the lanes
+      var bottom = n ? lane0 + (n - 1) * GAP + 16 : lane0 - 8;
+      svg.querySelectorAll('.tl-grid').forEach(function (l) { l.setAttribute('y2', bottom); });
+      document.getElementById('todayLine').setAttribute('y2', bottom + 4);
+      document.getElementById('todayText').setAttribute('y', bottom + 16);
+      svg.setAttribute('viewBox', '0 0 1080 ' + (bottom + 24));
+      // dates list under the chart (days off stay out of it: tap one to see them all)
+      list.innerHTML = '';
+      on.filter(function (m) { return m.dataset.type !== 'off'; }).forEach(function (m) {
+        var q = m.dataset.date.split('-').map(Number), past = new Date(q[0], q[1] - 1, q[2]) < today;
+        var li = document.createElement('li');
+        li.className = past ? 'moon-gray' : '';
+        li.innerHTML = '<svg width="16" height="16" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid"><use href="#ico-' + m.dataset.ico + '" x="-11" y="-11" width="22" height="22"/></svg>';
+        li.appendChild(linked(m));
+        list.appendChild(li);
+      });
+      document.dispatchEvent(new CustomEvent('pcyo:show', { detail: show }));
+    }
+    boxes.forEach(function (b) { b.addEventListener('click', function () { b.setAttribute('aria-pressed', !isOn(b)); apply(); }); });
+    window.pcyoShow = function () { return boxes.filter(isOn).map(function (b) { return b.dataset.show; }); };
+
+    // Tap / click / keyboard for details
+    var allOff = false;   // "Show all days off" expanded?
+    var picked = null;    // the badge or day-off bar whose details are showing
+    var offMarkers = markers.filter(function (m) { return m.dataset.type === 'off'; });
+    function offIcon(m) {
+      return '<svg width="16" height="16" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1"><use href="#ico-' + m.dataset.ico + '" x="-11" y="-11" width="22" height="22"/></svg>';
+    }
+    function pick(el) {
+      picked = el;
+      svg.querySelectorAll('.tl-m.sel').forEach(function (e) { e.classList.remove('sel'); });
+      if (el.classList.contains('tl-m')) el.classList.add('sel');
+      info.textContent = '';
+      info.appendChild(document.createTextNode(el.dataset.info));
+      if (el.dataset.url) {   // concerts with an event page
+        var a = document.createElement('a');
+        a.href = el.dataset.url; a.className = 'link blue underline ml2'; a.textContent = 'Event details';
+        info.appendChild(a);
+      }
+      info.hidden = false;
+      var isOff = el.dataset.type === 'off' || el.classList.contains('tl-off');
+      if (!isOff) return;
+      // a day off: offer the full list of days off under its details
+      var more = document.createElement('div');
+      more.className = 'mt2 f6';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pointer bn bg-transparent pa0 blue underline';
+      btn.setAttribute('aria-expanded', allOff);
+      btn.textContent = allOff ? 'Hide other days off' : 'Show all days off';
+      more.appendChild(btn);
+      if (allOff) {
+        var ul = document.createElement('ul');
+        ul.className = 'list pl0 mt2 mb0';
+        offMarkers.forEach(function (m) {
+          var li = document.createElement('li');
+          var q = m.dataset.date.split('-').map(Number);
+          li.className = 'pv1' + (m.dataset.info === el.dataset.info ? ' b' : '') + (new Date(q[0], q[1] - 1, q[2]) < today ? ' moon-gray' : '');
+          li.innerHTML = offIcon(m);
+          li.appendChild(document.createTextNode(m.dataset.info));
+          ul.appendChild(li);
+        });
+        more.appendChild(ul);
+      }
+      btn.addEventListener('click', function () { allOff = !allOff; pick(el); });
+      info.appendChild(more);
+    }
+    // Tapping a term bar shows that term's classes below (classes.js listens for 'pcyo:term').
+    function choose(term) { document.dispatchEvent(new CustomEvent('pcyo:term', { detail: term.dataset.term })); }
+    svg.addEventListener('click', function (e) {
+      var el = e.target.closest('.tl-hit'); if (el) pick(el);
+      var term = e.target.closest('.tl-term'); if (term) choose(term);
+    });
+    svg.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      if (e.target.closest('.tl-m')) { e.preventDefault(); pick(e.target.closest('.tl-m')); }
+      else if (e.target.classList.contains('tl-term')) { e.preventDefault(); choose(e.target); }
+    });
+    markers.forEach(function (m) { m.addEventListener('focus', function () { pick(m); }); });
+    apply();
+  })();
+</script>
