@@ -1,0 +1,81 @@
+/*
+  The full-year calendar (layouts/partials/year-calendar.html, drawn by assets/js/year-calendar.js),
+  on /classes/ and /current-students/: one small month grid per month, with that month's dates listed under it.
+*/
+.mini-month { width: 13.5rem; vertical-align: top; }
+.mini-month table { border-collapse: collapse; font-size: .7rem; }
+.mini-month td { width: 1.6rem; height: 1.5rem; text-align: center; }
+.cal-notes { font-size: .72rem; line-height: 1.3; color: var(--ink); }
+.cal-notes li { margin-bottom: .25rem; }
+.cal-notes li > *:first-child { margin-top: .1rem; }
+
+/* Today, in any month grid: a ring in the timeline's "Today" red (brand.css) */
+.mini-month td.cal-today { position: relative; }
+.mini-month td.cal-today::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 2px solid var(--today);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ---------- Days in the grids, the swatches in the date lists, and the key (assets/js/year-calendar.js) ----------
+   A term day is filled with its term's color (--term, from data/terms.yaml) under white numbers. Make-up days and
+   early starts are hatched in the same color. Without a --term (the key's samples) the brand blue stands in. */
+.cal-swatch { --swatch-size: 12px; width: var(--swatch-size); height: var(--swatch-size); background: var(--term); }
+.cal-day--term,
+.cal-day--hatched { background: var(--term, var(--brand-blue-text)); color: white; }
+.cal-day--hatched,
+.cal-swatch--hatched {
+  background: repeating-linear-gradient(45deg,
+    var(--term, var(--brand-blue-text)) 0 3px,
+    color-mix(in srgb, var(--term, var(--brand-blue-text)) 60%, transparent) 3px 6px);
+}
+.cal-day--off { color: var(--ink-muted); text-decoration: line-through; }   /* a term day nobody has class */
+.cal-day--teacher-off { opacity: .45; }                                    /* one teacher's day off */
+
+/* Key dates: outlined in the group's color, or marked by kind */
+.cal-mark { font-weight: 700; }
+.cal-mark--pcyo { outline: 2px solid var(--pcyo-purple); outline-offset: -2px; }
+.cal-mark--sco { outline: 2px solid var(--sco-navy); outline-offset: -2px; }
+.cal-mark--registration { border-radius: 50%; box-shadow: inset 0 0 0 2px var(--mark-registration); }
+.cal-mark--instrument { box-shadow: inset 0 -4px 0 var(--mark-instrument); }
+
+.cal-key { --key-size: 14px; width: var(--key-size); height: var(--key-size); font-size: 9px; line-height: var(--key-size); }
+.cal-key--bordered { border: 1px solid rgba(0, 0, 0, .15); }
+
+/* ---------- One month at a time (partials/month-calendar.html) ---------- */
+
+.month-now {
+  padding: 1rem 1.25rem 1.25rem;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.month-now__head { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+.month-now__heading { flex: 1; margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--ink-strong); }
+.month-now__step,
+.month-now__today {
+  min-width: 2rem;
+  min-height: 2rem;                    /* a comfortable tap target */
+  padding: 0 0.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.month-now__step:disabled { opacity: 0.35; cursor: default; }
+.month-now__step:focus-visible,
+.month-now__today:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.month-now__body { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-start; }
+/* the month grid, larger than in the full calendar */
+.month-now .month-now__grid { width: auto; }
+.month-now__grid table { font-size: 0.875rem; }
+.month-now__grid td { width: 2.2rem; height: 2rem; }
+.month-now__grid .f6 { font-size: 1rem; }
+.month-now__notes { flex: 1 1 14rem; min-width: 0; }
+.month-now__notes .cal-notes { font-size: 0.875rem; }
+.month-now__notes .cal-notes li { margin-bottom: 0.4rem; }

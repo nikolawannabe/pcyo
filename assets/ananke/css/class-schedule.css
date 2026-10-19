@@ -1,0 +1,43 @@
+/*
+  "Schedule & joining" section on every class page (layouts/partials/class-schedule.html):
+  one card per class, the term chips under it, and the town buttons above.
+  The chips' colors are in class-status.css; each chip's left edge is its term's color (--term, set from data/terms.yaml).
+*/
+.class-schedule { text-align: left; }
+
+.class-schedule__card {
+  margin-bottom: .8rem;
+  padding: .8rem 1rem;
+  border-radius: .5rem;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+.class-schedule__name { margin: 0 0 .2rem; font-size: 1.15rem; color: var(--ink-strong); }
+.class-schedule__holiday-only { font-size: .875rem; font-weight: 400; color: var(--term); }   /* 6.9:1 on white */
+.class-schedule__meta { font-size: .95rem; line-height: 1.5; }
+
+.class-schedule__terms { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+.class-schedule__term { border-left: 5px solid var(--term); padding-right: .55rem; }
+.class-schedule__term b { color: inherit; }
+.class-schedule__term-icon { margin-right: 3px; vertical-align: -2px; color: var(--term); }
+.class-status--start .class-schedule__term-icon { color: white; }   /* the term color would vanish on the green */
+
+/* Town buttons: remembered across class pages (assets/js/class-schedule.js) */
+.class-schedule__towns { display: flex; flex-wrap: wrap; gap: .4rem; }
+.class-schedule__town {
+  padding: .3rem .9rem;
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 999px;
+  background: white;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: .95rem;
+  cursor: pointer;
+}
+.class-schedule__town[aria-pressed="true"] {
+  border-color: var(--ink-strong);
+  background: var(--ink-strong);
+  color: white;
+  font-weight: 600;
+}
+.class-schedule__town:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }

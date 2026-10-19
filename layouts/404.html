@@ -1,0 +1,16 @@
+{{- /*
+  The "page not found" page (GitHub Pages serves it for any missing address).
+  Old links to family documents are sent on to the newest version (partials/parent-doc-redirects.html,
+  from data/parent-docs.yaml), since GitHub Pages can't redirect a missing file itself.
+*/ -}}
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $moves := partial "parent-doc-redirects.html" }}
+  <article class="center cf pv5 ph3 measure-wide-l">
+    <h1 id="notFoundTitle">This is not the page you were looking for</h1>
+    <p id="notFoundMoved" hidden>That document has a newer version. Taking you there now… If nothing happens, <a id="notFoundLink" href="/current-students/#class-materials">open it here</a>.</p>
+    <p>Looking for a handbook or policy? They're all on the <a href="/current-students/#class-materials">Current Students page</a>.</p>
+  </article>
+  <script type="application/json" id="pcyo-moves">{{ $moves | jsonify | safeJS }}</script>
+  {{ with resources.Get "js/moved-documents.js" }}<script src="{{ .RelPermalink }}"></script>{{ end }}
+{{ end }}

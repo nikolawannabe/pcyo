@@ -1,0 +1,8 @@
+{{- /*
+  A row of pill buttons. Takes a list of {label, url} from data/home.yaml; the first is drawn solid (the main action).
+*/ -}}
+<div class="home-buttons">
+  {{- range $i, $button := . }}
+  <a class="home-button {{ if eq $i 0 }}home-button--primary{{ end }}" href="{{ $button.url }}">{{ $button.label }}</a>
+  {{- end }}
+</div>

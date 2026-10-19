@@ -1,0 +1,67 @@
+# The 6+ Classes page (/classes/6-plus-classes/, layouts/classes/6-plus-classes.html): Beginner and Intermediate
+# Strings in Sequim and Port Angeles. Edit the words here. Class times and places come from data/classes.yaml,
+# tuition from data/terms.yaml ({tuition} below is replaced with it), the documents from data/parent-docs.yaml,
+# and teacher photos from the teachers list in data/home.yaml (matched by name).
+# The design is shared with the other class pages: see layouts/partials/class-page.html for every section it can have.
+
+crumb: 6+ Classes
+title: String classes for students 6+
+lede: Violin, viola, cello and bass for young students who can read, from the very first note through two years of intermediate playing, in Sequim and Port Angeles.
+photo:
+  file: sequim-beginners.jpg   # a web-sized copy of static/images/pcyo-kids-sequim-beginners.png
+  alt: Young beginners seated in rows playing violin from music stands in a Sequim class
+  focus: "50% 40%"
+buttons:            # the first is drawn solid (the main action)
+  - { label: Register on Jovial, url: "https://jovial.org/pcyo/hello" }
+  - { label: Join our mailing list, url: "https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073" }
+
+# The blue band of quick facts. {tuition} becomes the per-term tuition from data/terms.yaml.
+facts:
+  - { value: "6+", text: "for students who can read" }
+  - { value: "2×", text: "a week, Mondays and Wednesdays after school" }
+  - { value: "${tuition}", text: "per term, with scholarships for anyone who needs one" }
+  - { value: "4", text: "instruments: violin, viola, cello and bass" }
+
+path:
+  heading: Where these classes lead
+  steps:
+    - { when: Year 1, name: Beginner Strings, text: "First notes and first music reading. New beginners start in the fall." }
+    - { when: Years 2–3, name: Intermediate Strings, text: "Build real command of the instrument." }
+    - { when: Years 4+, name: Youth Orchestra, text: "Full orchestral music with peers.", url: /classes/youth-orchestra/ }
+
+teachers:
+  heading: Your teachers
+  people:
+    - name: Amber Roskamp
+      role: Sequim Beginner and Intermediate Strings
+      bio: Amber comes highly recommended from teaching elementary orchestra in the Port Angeles School District and has her Master of Music from the University of North Carolina Greensboro. We are more than lucky to welcome her to the team!
+    - name: Jesse Ahmann
+      role: Port Angeles Beginner and Intermediate Strings
+      bio: Jesse is an eminently skilled cellist and bass player who performs regularly as a professional musician with groups across a wide range of genres. He has 15 years of experience teaching orchestra students in schools, camps and private lessons, and his skill in composition and arranging lets him bring students' favorite music to life in class.
+
+# The classes shown in "Schedule & joining" (names from data/classes.yaml)
+schedule: [Beginner Strings, Intermediate Strings, 6+ Beginners, Intermediate & Youth Orchestra]
+
+faq:
+  heading: Questions families ask
+  items:            # q: the question; a: the answer (Markdown links work). {tuition} becomes the tuition.
+    - q: Who are these classes for?
+      a: Beginner and intermediate students, in both Port Angeles and Sequim. Students who can't read yet, or can't yet do focused work for 30 minutes, should join our [Sprouts](/classes/sprouts/) classes instead.
+    - q: My child is 6 or 7. Should they join a 6+ Beginner class or Suzuki Sprouts?
+      a: The two overlap on purpose, so each child can join the group that fits them best, whatever their age. 6+ Beginner classes teach violin, viola, cello or bass and start reading music right away, so they suit children who can read and are ready to focus for about 30–45 minutes. [Suzuki Sprouts](/classes/sprouts/#suzuki-sprouts) gently introduces violin through songs, games and movement, with parents taking part in every class, and is a great fit for children who aren't reading yet or who do best with short, active activities. Not sure? Email the registrar and we'll help you decide.
+    - q: When are classes?
+      a: Twice a week, Mondays and Wednesdays, after school (see [Schedule & joining](#schedule) for times and places). Port Angeles students who want extra support for their school orchestra classes may choose to come once a week.
+    - q: When can my student start?
+      a: The classes build through the year, so students with no musical background should join in the fall and plan to stay the whole year. Students switching instruments, or with school or private-lesson experience, may join mid-year or mid-term if there's room.
+    - q: How long will my student be in these classes?
+      a: About a year in Beginner Strings, then about two years mastering the basics in Intermediate Strings.
+    - q: Is my student too skilled for this group?
+      a: Students who have finished at least 3 years of classes (ours or school orchestra) or private lessons are likely ready for [Youth Orchestra](/classes/youth-orchestra/). High school students are likely ready for the [Sequim Community Orchestra](https://sequimcommunityorchestra.org).
+    - q: How much does it cost?
+      a: "${tuition} per term, with three terms a year (Fall, Winter and Spring) plus an optional Holiday Session; see [Schedule & joining](#schedule) for dates. Scholarships are available, and no student is turned away for inability to pay."
+
+documents:
+  heading: Read before you register
+  ids: [handbook-sequim-amber, handbook-port-angeles, policies-6-plus, instrument-care, cello-loan]   # from data/parent-docs.yaml
+
+contact: Questions about registration? Email our registrar.

@@ -25,9 +25,8 @@ Instruments not currently loaned to our students may be borrowed by other studen
 Parents may also borrow an instrument to play along with their student for a small maintenance fee that supports regularly stringing the instrument and bow maintenance.
 
 Relevant documents:
-- [Student Instrument Care Handbook And Violin/Viola Loan Policy](/Instrument%20Care.pdf)
-- [Cellos and Expensive Instrument Loan Policy](/cellos_and_expensive_instrument_policy.pdf)
-- [Non-Program Loan Policy (for non-students)](/Non-Program%20Loan%20Policy%20-%202025.pdf)
+- {{< parent-doc "instrument-care" "Student Instrument Care Handbook and Violin/Viola Loan Policy" >}}
+- {{< parent-doc "cello-loan" >}}
 
 
 # Renting
@@ -43,7 +42,7 @@ Ted Brown in Silverdale also suppplies rentals of all instruments we use.
 # Purchasing New Instruments
 
 ## In Person
-If you are considering purchasing violins, violas, or cellos locally, please contact Rick from the Violin Shop or Click Music. Beware students grow quickly and renting may be a more cost-effective option.  If you buy from Rick, you will be sure to get a quality instrument.
+If you are considering purchasing violins, violas, or cellos locally, please contact Rick from the Violin Shop, Click Music, or Ted Brown. Beware students grow quickly and renting may be a more cost-effective option.  If you buy from Rick, you will be sure to get a quality instrument.
 
 ## Online
 If you are considering purchasing instruments online instead, some reasonable options include Fiddlerman's OB1 and Shar Music's Hoffman Amadeus outfits ($300-400).  Shar instruments generally should have the bridge adjusted by Rick as they arrive far too high which make the kids fingers hurt, adding ~40-60 to the price.  They could also use better strings as the ones that ship with them are poor quality ($30), so I really think the cost of the Fiddlerman and the Shar instruments when you get to playable are probably very similar. Fiddlerman I can't say for sure how the bridges come but the instruments are considered good quality and the strings are fine for beginners.  

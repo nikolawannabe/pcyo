@@ -1,0 +1,24 @@
+{{- /*
+  "A path that grows with you": the levels a student moves through, in order.
+  Takes the "path" section of data/home.yaml. Styles: .home-path in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-band home-band--white" aria-labelledby="home-path-heading">
+  <div class="home-section">
+    <div class="home-section__intro">
+      <h2 class="home-heading" id="home-path-heading">{{ .heading }}</h2>
+      <p>{{ .intro }}</p>
+    </div>
+    <ol class="home-path">
+      {{- range .steps }}
+      <li class="home-path__step">
+        <h3 class="home-path__name">{{ .name }}</h3>
+        <p class="home-path__when">{{ .when }}</p>
+        <p class="home-path__text">{{ .text }}</p>
+      </li>
+      {{- end }}
+    </ol>
+    {{- with .note }}
+    <p class="home-section__more">{{ . }}</p>
+    {{- end }}
+  </div>
+</section>

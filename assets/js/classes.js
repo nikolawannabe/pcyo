@@ -1,5 +1,6 @@
 /*
- * The /classes/ page: term panel, filters, class table (phone: cards) and the full-year calendar.
+ * The /classes/ page: term panel, filters and class table (phone: cards).
+ * The full-year calendar under them has its own script (assets/js/year-calendar.js).
  *
  * Everything comes from data/terms.yaml and data/classes.yaml. Hugo writes that data into
  * <script id="pcyo-data"> in layouts/partials/classes.html, and this script draws the page from it.
@@ -15,8 +16,7 @@
  *   4. Filters: age slider, experience slider, search box, town buttons
  *   5. Drawing the term panel and the class list
  *   6. Choosing a term (chart, ‹ › buttons, /classes/#winter links)
- *   7. Full-year calendar
- *   8. Start
+ *   7. Start
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = JSON.parse(document.getElementById('pcyo-data').textContent);
   const terms = data.terms;              // visible terms, in date order
   const classes = data.classes;
-  const milestones = data.milestones;    // concerts, registration dates, instrument days
-  const breaks = data.breaks || [];      // days off
   const termLength = data.termLength;    // e.g. "about 8 weeks, with each class meeting once or twice a week"
 
   // Classes without a "terms" list meet in the three regular terms.
@@ -45,11 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // "Sep 14"
   function shortDate(date) {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  }
-
-  // "Sep 14" or "Nov 23 – Nov 27"
-  function dateRange(start, end) {
-    return start.getTime() === end.getTime() ? shortDate(start) : `${shortDate(start)} – ${shortDate(end)}`;
   }
 
   // Give each term real Date objects for its first and last day.
@@ -74,45 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
     return `<a class="term-link" href="#${termId}">${term.name.replace(' Term', '')}</a>`;
   }
 
-  // Can a new student sign up for this class in this term?
-  // Returns { key, label, title }: key picks the badge colour (see .badge-* in classes.html).
-  // The "join" field in classes.yaml is one of: open, skills, continuing, or a list of term ids.
+  // Can a new student sign up for this class in this term? Returns { key, label, title }.
+  // The words are worked out by Hugo (layouts/partials/class-join-status.html, the same partial the class pages use)
+  // and arrive in cls.status, one entry per term the class meets in; this only turns the term ids into links.
   function joinStatus(cls, termId) {
-    if (cls.join === 'open') {
-      return { key: 'open', label: 'Open to all' };
-    }
-    if (cls.join === 'skills') {
-      return { key: 'skills', label: 'Open with skills', title: cls.prereq };
-    }
-    if (Array.isArray(cls.join)) {
-      if (cls.join.includes(termId)) {
-        return { key: 'start', label: 'New students start' };
-      }
-      const when = cls.join.map(termLink).join(' or ');
-      return { key: 'cont', label: `Continuing only · new students join in ${when}` };
-    }
-    // join: continuing. "new_students" can point families to the term where newcomers start.
-    if (cls.new_students && termById[cls.new_students]) {
-      return { key: 'cont', label: `Continuing only · new students: see ${termLink(cls.new_students)} Term` };
-    }
-    return { key: 'cont', label: 'Continuing students only' };
+    const status = cls.status[termId];
+    const links = status.links.length ? status.links.map(termLink).join(' or ') + status.after : '';
+    return { key: status.key, label: status.text + links, title: status.title };
   }
 
+  // The badge's colours are in class-status.css (.class-status--open, --start, --skills, --cont).
   function joinBadge(status) {
     const tooltip = status.title ? ` title="Prerequisite: ${status.title}"` : '';
-    return `<span class="badge badge-${status.key}"${tooltip}>${status.label}</span>`;
+    return `<span class="class-status class-status--${status.key}"${tooltip}>${status.label}</span>`;
   }
 
-  // Experience range as families read it: "Any", "None", "New–1 yr", "1–3 yrs", "3+ yrs".
-  function experienceLabel(cls) {
-    const min = cls.exp_min == null ? 0 : cls.exp_min;
-    const max = cls.exp_max;            // missing = no upper limit
-    if (min === 0 && max == null) return 'Any';
-    if (min === 0 && max === 0) return 'None';
-    if (max == null) return `${min}+ yrs`;
-    if (min === 0) return `New–${max} ${max === 1 ? 'yr' : 'yrs'}`;
-    return `${min}–${max} yrs`;
-  }
+  // Experience range as families read it ("Any", "New–1 yr", "3+ yrs"): cls.exp_label, from
+  // layouts/partials/class-experience.html, so it matches the class pages.
 
   function mapLink(location) {
     const url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location + ', WA');
@@ -126,8 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hasClasses = term => classes.some(cls => termsOf(cls).includes(term.id));
 
-  // Start on the term happening now, or the next one with classes.
-  const firstTerm = terms.find(term => term.endDate >= today && hasClasses(term))
+  // Start on the term happening now, unless it's more than two weeks in: by then it's too late to join,
+  // so families see the next term with classes instead. After the last term, show the last one.
+  const SHOW_CURRENT_TERM_DAYS = 14;
+  const stillShowing = term => {
+    const cutoff = new Date(term.startDate);
+    cutoff.setDate(cutoff.getDate() + SHOW_CURRENT_TERM_DAYS);
+    return today <= cutoff && today <= term.endDate;
+  };
+  const firstTerm = terms.find(term => hasClasses(term) && (term.startDate > today || stillShowing(term)))
                  || terms.filter(hasClasses).pop();
 
   const state = {
@@ -171,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setAge(age) {
     state.age = age;
-    ageBox.classList.toggle('unset', age === null);   // .unset hides the slider handle
+    ageBox.classList.toggle('class-finder__filter--unset', age === null);   // hides the slider handle
     ageValue.textContent = ageText(age);
     ageInput.setAttribute('aria-valuetext', ageValue.textContent);
     ageClear.hidden = age === null;
@@ -225,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setExperience(years) {
     state.experience = years;
-    expBox.classList.toggle('unset', years === null);
+    expBox.classList.toggle('class-finder__filter--unset', years === null);
     expValue.textContent = experienceText(years);
     expInput.setAttribute('aria-valuetext', expValue.textContent);
     expClear.hidden = years === null;
@@ -322,10 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // The box under the chart: term name, dates, how long it is, who can join.
   function drawTermPanel(term) {
-    panel.style.borderLeftColor = term.color;
+    panel.style.setProperty('--term', term.color);   // the panel's left edge and icon (class-finder.css)
 
     const icon = term.icon
-      ? `<svg width="22" height="22" viewBox="-12 -12 24 24" aria-hidden="true" class="v-mid mr1" style="color:${term.color}">` +
+      ? `<svg width="22" height="22" viewBox="-12 -12 24 24" aria-hidden="true" class="v-mid mr1 class-finder__term-icon">` +
         `<use href="#ico-term-${term.icon}" x="-12" y="-12" width="24" height="24"/></svg>`
       : '';
     const optional = term.optional ? ' <span class="f6 normal">(optional)</span>' : '';
@@ -344,7 +322,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(cls => termsOf(cls).includes(term.id) && joinStatus(cls, term.id).key === 'start')
       .map(cls => `${cls.name} (${cls.town})`);
 
-    panelNote.innerHTML = length
+    // Some classes start before the term ("early" in terms.yaml), e.g. "Christine's … start a week early (Mar 22)."
+    const early = term.early ? `${term.early.label} (${shortDate(toDate(term.early.start))}). ` : '';
+
+    panelNote.innerHTML = length + early
       + (term.join_note ? term.join_note + ' ' : '')
       + (newClasses.length ? `<b>New this term:</b> ${newClasses.join(', ')}. ` : '')
       + (term.page ? `<a href="${term.page}">Details and registration</a>` : '');
@@ -392,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="pa2">${cls.town}</td>
         <td class="pa2"><a href="${cls.link}" class="link blue">${cls.name}</a></td>
         <td class="pa2">${cls.ages}</td>
-        <td class="pa2">${experienceLabel(cls)}</td>
+        <td class="pa2">${cls.exp_label}</td>
         <td class="pa2">${cls.time}</td>
         <td class="pa2">${joinBadge(status)}</td>
       </tr>
@@ -405,10 +386,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const location = cls.location ? `<div class="f6 mt1">${cls.location}</div>` : '';
     const prereq = cls.prereq ? `<div class="f6 i">Prerequisite: ${cls.prereq}</div>` : '';
     return `
-      <div style="color:#555" class="pa3 ba br2 b--black-10 bg-white mb2">
+      <div class="class-finder__card pa3 ba br2 b--black-10 bg-white mb2">
         <a href="${cls.link}" class="db b blue link mb1">${cls.name}</a>
         <div class="mb1">${joinBadge(status)}</div>
-        <div class="f6"><b>${cls.town}</b> · Ages ${cls.ages} · Experience: ${experienceLabel(cls)}</div>
+        <div class="f6"><b>${cls.town}</b> · Ages ${cls.ages} · Experience: ${cls.exp_label}</div>
         <div class="f6">${cls.time}</div>
         <div class="f6 mt1">${cls.description}</div>
         ${location}
@@ -457,197 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------------------------------------------------------------------------
-   * 7. Full-year calendar
-   *    One small grid per month, shaded by term, with days off and key dates marked, and a list
-   *    of that month's dates under each grid so nothing depends on hovering.
-   *    It always shows everything (the chart's Show toggles only affect the chart).
-   * ------------------------------------------------------------------------------------------- */
-
-  // How a key date is marked on its day in the grid.
-  const MARK_STYLES = {
-    pcyo: 'outline:2px solid var(--pcyo-purple);outline-offset:-2px',   // group colors from brand.css
-    sco: 'outline:2px solid var(--sco-navy);outline-offset:-2px',
-    registration: 'border-radius:50%;box-shadow:inset 0 0 0 2px #1d6b36',
-    instrument: 'box-shadow:inset 0 -4px 0 #8a4a14'
-  };
-
-  // Concerts are marked by organisation; other dates by type. A concert's "orgs" lists its groups, host first
-  // (e.g. ["sco", "pcyo"] for a joint concert; filled in by classes.html). Its day in the grid uses the host's style,
-  // and its note shows every group's icon.
-  const markKinds = milestone => (milestone.type === 'concert' ? milestone.orgs : [milestone.type]);
-  const markKind = milestone => markKinds(milestone)[0];
-  const markIcons = milestone =>
-    markKinds(milestone).map(kind => (milestone.type === 'concert' ? 'concert-' + kind : kind));
-
-  const dayKey = date => date.toDateString();
-
-  const makeupPattern = color => `repeating-linear-gradient(45deg,${color} 0 3px,${color}99 3px 6px)`;
-
-  function iconHtml(id) {
-    return `<svg width="14" height="14" viewBox="-11 -11 22 22" aria-hidden="true" class="v-mid mr1 flex-none">` +
-           `<use href="#ico-${id}" x="-11" y="-11" width="22" height="22"/></svg>`;
-  }
-
-  function swatchHtml(style) {
-    return `<span class="dib v-mid mr1 flex-none" style="width:12px;height:12px;${style}"></span>`;
-  }
-
-  function dayOffText(dayOff) {
-    return dayOff.who === 'all'
-      ? `No class: ${dayOff.label}`
-      : `No class for ${dayOff.who}'s classes: ${dayOff.label}`;
-  }
-
-  function drawYearCalendar() {
-    const box = document.getElementById('yearCalendar');
-    box.innerHTML = '';
-
-    // Look-ups by day: key dates, and which day off (if any) covers each day.
-    const milestonesByDay = {};
-    milestones.forEach(milestone => {
-      const key = dayKey(toDate(milestone.date));
-      (milestonesByDay[key] = milestonesByDay[key] || []).push(milestone);
-    });
-    const dayOffByDay = {};
-    breaks.forEach(dayOff => {
-      for (let date = toDate(dayOff.start); date <= toDate(dayOff.end); date.setDate(date.getDate() + 1)) {
-        dayOffByDay[dayKey(date)] = dayOff;
-      }
-    });
-
-    // Every month from the first term (or key date) to the last.
-    const allDates = terms.flatMap(term => [term.startDate, term.endDate])
-      .concat(milestones.map(milestone => toDate(milestone.date)));
-    const first = new Date(Math.min(...allDates));
-    const last = new Date(Math.max(...allDates));
-    const monthCount = (last.getFullYear() - first.getFullYear()) * 12 + last.getMonth() - first.getMonth() + 1;
-
-    for (let i = 0; i < monthCount; i++) {
-      const month = new Date(first.getFullYear(), first.getMonth() + i, 1);
-      const html = monthGrid(month, milestonesByDay, dayOffByDay) + monthNotes(month);
-      box.insertAdjacentHTML('beforeend', `<div class="mini-month ma2 pa2 bg-white br2">${html}</div>`);
-    }
-    box.insertAdjacentHTML('beforeend', calendarLegend());
-  }
-
-  // One month as a small table, Sunday to Saturday.
-  function monthGrid(month, milestonesByDay, dayOffByDay) {
-    const title = month.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    let html = `<div class="b tc f6 mb1">${title}</div><table><tr>`;
-    'SMTWTFS'.split('').forEach(letter => { html += `<td class="gray b">${letter}</td>`; });
-    html += '</tr><tr>';
-
-    // empty cells before the 1st
-    for (let i = 0; i < month.getDay(); i++) html += '<td></td>';
-
-    for (let date = new Date(month); date.getMonth() === month.getMonth(); date.setDate(date.getDate() + 1)) {
-      if (date.getDay() === 0 && date.getDate() !== 1) html += '</tr><tr>';   // new week
-
-      const isWeekday = date.getDay() > 0 && date.getDay() < 6;
-      const term = isWeekday && terms.find(t => date >= t.startDate && date <= t.endDate);
-      const dayOff = dayOffByDay[dayKey(date)];
-      const marks = milestonesByDay[dayKey(date)] || [];
-      const isMakeup = term && term.makeup &&
-        date >= toDate(term.makeup.start) && date <= toDate(term.makeup.end);
-
-      let style = '';
-      const tooltip = [];
-      if (term && dayOff && dayOff.who === 'all') {
-        // a term day nobody has class: crossed out
-        style = 'color:#999;text-decoration:line-through';
-        tooltip.push(dayOffText(dayOff));
-      } else if (term) {
-        style = `background:${isMakeup ? makeupPattern(term.color) : term.color};color:#fff`;
-        if (dayOff) {
-          // one teacher's day off: faded
-          style += ';opacity:.45';
-          tooltip.push(dayOffText(dayOff));
-        }
-        tooltip.push(isMakeup ? `${term.name} make-up day` : term.name);
-      } else if (dayOff) {
-        tooltip.push(dayOffText(dayOff));
-      }
-      marks.forEach(milestone => {
-        style += ';' + MARK_STYLES[markKind(milestone)] + ';font-weight:700';
-        tooltip.push(milestone.label);
-      });
-
-      html += `<td style="${style}" title="${tooltip.join(' · ')}">${date.getDate()}</td>`;
-    }
-    return html + '</tr></table>';
-  }
-
-  // The list of this month's dates under its grid: term starts and ends, make-up days, days off, key dates.
-  function monthNotes(month) {
-    const monthEnd = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-    const inMonth = (start, end = start) => start <= monthEnd && end >= month;
-    const notes = [];   // { date, icon, text }
-
-    terms.forEach(term => {
-      const swatch = swatchHtml(`background:${term.color}`);
-      if (inMonth(term.startDate)) {
-        notes.push({ date: term.startDate, icon: swatch,
-          text: `${shortDate(term.startDate)}: ${term.name} starts${term.optional ? ' (optional)' : ''}` });
-      }
-      if (inMonth(term.endDate)) {
-        notes.push({ date: term.endDate, icon: swatch, text: `${shortDate(term.endDate)}: ${term.name} ends` });
-      }
-      if (term.makeup) {
-        const start = toDate(term.makeup.start);
-        const end = toDate(term.makeup.end);
-        if (inMonth(start, end)) {
-          notes.push({ date: start, icon: swatchHtml(`background:${makeupPattern(term.color)}`),
-            text: `${dateRange(start, end)}: ${term.name} make-up days` });
-        }
-      }
-    });
-
-    breaks.forEach(dayOff => {
-      const start = toDate(dayOff.start);
-      const end = toDate(dayOff.end);
-      if (inMonth(start, end)) {
-        notes.push({ date: start, icon: iconHtml(dayOff.who === 'all' ? 'off-all' : 'off-teacher'),
-          text: `${dateRange(start, end)}: ${dayOffText(dayOff)}` });
-      }
-    });
-
-    milestones.forEach(milestone => {
-      const date = toDate(milestone.date);
-      if (!inMonth(date)) return;
-      // concerts with an event page link to it (url is filled in by classes.html)
-      const label = milestone.url
-        ? `<a class="link blue underline-hover" href="${milestone.url}">${milestone.label}</a>`
-        : milestone.label;
-      notes.push({ date, icon: markIcons(milestone).map(iconHtml).join(''), text: `${shortDate(date)}: ${label}` });
-    });
-
-    if (!notes.length) return '';
-    notes.sort((a, b) => a.date - b.date);
-    const items = notes.map(note => `<li class="flex items-start">${note.icon}<span>${note.text}</span></li>`);
-    return `<ul class="cal-notes list pl0 mt2 mb0">${items.join('')}</ul>`;
-  }
-
-  // The key under the calendar.
-  function calendarLegend() {
-    const item = (style, label, sample = '') =>
-      `<span class="dib mh2"><span class="dib v-mid mr1 tc" style="width:14px;height:14px;font-size:9px;line-height:14px;${style}">${sample}</span>${label}</span>`;
-
-    const termItems = terms.map(term => item(`background:${term.color}`, term.name + (term.optional ? ' (optional)' : '')));
-    const otherItems = [
-      item('color:#999;text-decoration:line-through;border:1px solid #ddd', 'No class', '9'),
-      item('background:#2f6db5;opacity:.45', 'No class for one teacher'),
-      item(`background:${makeupPattern('#2f6db5')}`, 'Make-up days'),
-      item(MARK_STYLES.pcyo, 'PCYO concert'),
-      item(MARK_STYLES.sco, 'SCO concert / event'),
-      item(MARK_STYLES.registration, 'Registration'),
-      item(MARK_STYLES.instrument, 'Instrument day')
-    ];
-    return `<div class="w-100 tc f6 mt2 lh-copy">${termItems.concat(otherItems).join('')}</div>`;
-  }
-
-
-  /* ---------------------------------------------------------------------------------------------
-   * 8. Start
+   * 7. Start
    * ------------------------------------------------------------------------------------------- */
 
   // Opened as /classes/#winter: start on that term and scroll to it.
@@ -659,5 +450,4 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     render();
   }
-  drawYearCalendar();
 });

@@ -1,0 +1,14 @@
+{{- /*
+  "Full 2026–2027 calendar": a collapsed box holding one small grid per month, with the term dates, days off
+  and key dates. assets/js/year-calendar.js draws it from the data written here (data/terms.yaml).
+  Takes nothing. Include once per page, on a page that also has the timeline (partials/term-timeline.html),
+  which draws the badge icons the calendar uses. Styles: assets/ananke/css/calendar.css.
+*/ -}}
+{{- $T := site.Data.terms -}}
+<details class="year-calendar mt4 f5">
+  <summary class="pointer b">Full {{ $T.year }} calendar</summary>
+  <div id="yearCalendar" class="flex flex-wrap justify-center items-start mt3"></div>
+</details>
+{{- $data := dict "terms" (where $T.terms "hidden" "!=" true) "milestones" (partial "calendar-milestones.html") "breaks" $T.breaks }}
+<script type="application/json" id="pcyo-calendar-data">{{ $data | jsonify | safeJS }}</script>
+{{ with resources.Get "js/year-calendar.js" }}<script src="{{ .RelPermalink }}"></script>{{ end }}

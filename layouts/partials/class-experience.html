@@ -1,0 +1,22 @@
+{{- /*
+  A class's experience range as families read it: "Any", "None", "New–1 yr", "1–3 yrs", "3+ yrs".
+  Logic only: returns the label and prints nothing.
+
+  Takes: one class from data/classes.yaml (uses exp_min and exp_max; no exp_max means no upper limit).
+  Used by class-schedule.html, and by classes.html, which hands the label to assets/js/classes.js,
+  so the class pages and the /classes/ table always say the same thing.
+*/ -}}
+{{- $min := .exp_min | default 0 -}}
+{{- $hasMax := isset . "exp_max" -}}
+{{- $max := .exp_max | default 0 -}}
+{{- $label := "Any" -}}
+{{- if not $hasMax -}}
+  {{- if gt $min 0 }}{{ $label = printf "%d+ yrs" $min }}{{ end -}}
+{{- else if and (eq $min 0) (eq $max 0) -}}
+  {{- $label = "None" -}}
+{{- else if eq $min 0 -}}
+  {{- $label = printf "New–%d %s" $max (cond (eq $max 1) "yr" "yrs") -}}
+{{- else -}}
+  {{- $label = printf "%d–%d yrs" $min $max -}}
+{{- end -}}
+{{- return $label -}}

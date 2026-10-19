@@ -1,0 +1,62 @@
+# The About page (/about/, layouts/about.html). Edit the words here. The teachers come from data/home.yaml,
+# so they're kept in one place; the photos are in assets/images/home/ (focus: the part to keep when cropped).
+
+lede: A string program of the Sequim Community Orchestra, for students from toddlers to adults across the Olympic Peninsula.
+photo:
+  file: group-portrait.jpg
+  alt: Eight smiling PCYO students holding their violins, violas and cellos
+  focus: "50% 35%"
+
+story:
+  heading: Our story
+  steps:            # year, then what happened, in order
+    - year: "February 2012"
+      text: The Sequim Community Orchestra forms, with a mission to support music education for students of all ages in Sequim. Its children's program has run out of Sequim ever since, with a small but mighty student base.
+      link: { label: Learn about the SCO's mission, url: "https://sequimcommunityorchestra.org/aboutUs.php" }
+    - year: "June 2025"
+      text: The children's program becomes the Peninsula Community Youth Orchestra and invites string students from across the Olympic Peninsula, rehearsing at Swisher Hall in Sequim and First United Methodist Church in Port Angeles.
+    - year: "January 2026"
+      text: We partner with Christine Faught of String Beans Studio to offer early music education for children ages 0–7.
+    - year: "September 2026"
+      text: The children's program completes its expansion to cover middle school students, adding an intermediate class in Port Angeles and an advanced Youth Orchestra in both Port Angeles and Sequim.
+
+
+programs:
+  heading: One nonprofit, two programs
+  intro: The SCO is a 501(c)(3) charitable organization run by a volunteer board.
+  cards:
+    - name: Sequim Community Orchestra
+      text: A teaching orchestra that plays roughly high-school-level music and performs three times a year, led by a paid music director.
+      link: { label: Learn more about the SCO, url: "https://sequimcommunityorchestra.org" }
+      photo:
+        file: sco-concert.jpg   # 526×296; a larger copy would look sharper on high-resolution screens
+        alt: The Sequim Community Orchestra's conductor leading a concert, with a violin soloist beside her and the audience behind
+        focus: "50% 35%"
+    - name: Peninsula Community Youth Orchestra
+      text: Our string program for toddlers, children, teens and adults, from first notes to Youth Orchestra, led by teachers in Port Angeles and Sequim. We perform with the SCO once a year at the Winter Family Concert.
+      link: { label: See our classes, url: /classes/ }
+      photo:
+        file: youth-orchestra-rehearsal.jpg
+        alt: A conductor leading young violinists and cellists in front of tall windows
+        focus: "15% 50%"
+
+different:
+  heading: How we're different
+  intro: Unlike a traditional youth orchestra, we welcome very young children and adults who have never played before.
+  items:            # icon: a name from layouts/partials/home/icon.html
+    - icon: everyone
+      title: Sound Sprouts, ages 0–6
+      text: Even the youngest children can start with music and movement, alongside a grown-up.
+    - icon: growth
+      title: Suzuki Sprouts, ages 3–7
+      text: Children who aren't reading yet can begin an instrument as early as age 3.
+    - icon: together
+      title: Beginner Strings, ages 6 and up
+      text: Our main requirement is that students can read, so we can teach them to read music. Beginners rehearse separately from intermediate and advanced students.
+    - icon: 13plus        # a "13+" badge
+      title: Adult Labs
+      text: Welcoming adults who have never played a string instrument before.
+
+buttons:            # the first is drawn solid (the main action)
+  - { label: Find a class, url: /classes/ }
+  - { label: Learn more about the SCO, url: "https://sequimcommunityorchestra.org" }

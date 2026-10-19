@@ -1,40 +1,50 @@
+{{- /*
+  The home page. Its header is just the blue navigation bar: the hero section carries the page's heading (h1).
+  The sections above the events come from data/home.yaml (partials in layouts/partials/home/);
+  the event cards are the same as on /events/ (_default/event-summary.html).
+*/ -}}
+{{ define "header" }}
+  <header>{{ partials.Include "site-navigation.html" . }}</header>
+{{ end }}
+
 {{ define "main" }}
-  <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
-    {{ .Content }}
-  </article>
+  {{ $home := site.Data.home }}
+  <div class="home">
+    {{ partial "home/hero.html" $home.hero }}
+    {{ partial "home/classes.html" $home.classes }}
+    {{ partial "home/values.html" $home.values }}
+    {{ partial "home/path.html" $home.path }}
+    {{ partial "home/quote.html" $home.quote }}
+    {{ partial "home/teachers.html" $home.teachers }}
+    {{ partial "home/join.html" $home.join }}
+  </div>
 
-  {{/* Define a section to pull recent posts from. For Hugo 0.20 this will default to the section with the most number of pages. */}}
+  {{- /* The theme's switch for showing recent posts, which this site uses for upcoming events */}}
   {{ $mainSections := site.Params.mainSections | compare.Default (collections.Slice "post") }}
-  {{ $show_recent_posts := site.Params.ananke.show_recent_posts }}
-  {{ $section := collections.Where $.Site.RegularPages "Section" "in" $mainSections }}
-  {{ $section_count := len $section }}
-
-  {{ if and ($show_recent_posts) (compare.Ge $section_count 1) }}
-  <h2 class="tc mid-gray lh-copy">Upcoming Events</h2>
-    {{/* same event cards as /events/ (_default/event-summary.html) */}}
+  {{ $sectionPages := collections.Where site.RegularPages "Section" "in" $mainSections }}
+  {{ if and site.Params.ananke.show_recent_posts (compare.Ge (len $sectionPages) 1) }}
+    <h2 class="tc mid-gray lh-copy home-events-heading">{{ $home.events_heading | default "Upcoming Events" }}</h2>
     {{ partial "event-icons.html" . }}
     <div class="pa3 pa4-ns w-100 mw7 center">
       <section class="w-100">
-            {{/* soonest first */}}
-            {{ range sort (where .Site.RegularPages "Section" "events") ".Params.eventStartDate" "asc" }}
-	      {{/* homepageDate (optional): keep an event off the home page until this date.
-	           Built before that date, it is rendered hidden and the script below reveals it on the date. */}}
-	      <div class="w-100 relative"{{ with .Params.homepageDate }}{{ $show := time . }}{{ if $show.After now }} hidden data-show-after="{{ $show.Format "2006-01-02T15:04:05Z07:00" }}"{{ end }}{{ end }}>
+        {{- /* soonest first */}}
+        {{ range sort (where site.RegularPages "Section" "events") ".Params.eventStartDate" "asc" }}
+          {{- /* homepageDate (optional): keep an event off the home page until this date.
+                 Built before that date, it is rendered hidden and the script below reveals it on the date. */}}
+          <div class="w-100 relative"{{ with .Params.homepageDate }}{{ $show := time . }}{{ if $show.After now }} hidden data-show-after="{{ $show.Format "2006-01-02T15:04:05Z07:00" }}"{{ end }}{{ end }}>
             {{ .Render "event-summary" }}
           </div>
         {{ end }}
       </section>
-      <script>
-        document.querySelectorAll('[data-show-after]').forEach(function (el) {
-          if (new Date() >= new Date(el.dataset.showAfter)) el.hidden = false;
-        });
-      </script>
+      {{ with resources.Get "js/show-after.js" }}<script src="{{ .RelPermalink }}"></script>{{ end }}
+    </div>
 
+    {{- with $home.funders }}
+    <div class="home-funders">
+      {{- range . }}
+      <img src="{{ .image | relURL }}" alt="{{ .name }}" height="100">
+      {{- end }}
     </div>
-    <div class="tc">
-	<img height="100" src="/images/ARTSWA.png" />
-	<img height="100" src="/images/EDC.jpg" />
-    </div>
+    {{- end }}
   {{ end }}
 {{ end }}
-

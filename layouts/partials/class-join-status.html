@@ -1,0 +1,42 @@
+{{- /*
+  Can a new student join this class in this term? Logic only: returns a dict and prints nothing.
+
+  Takes a dict:
+    c     one class from data/classes.yaml (uses join, prereq, new_students, new_students_note)
+    term  the id of a term the class meets in (from data/terms.yaml)
+
+  Returns a dict:
+    key    open | skills | start | cont   picks the color (.class-status--<key> in class-status.css)
+    text   the words, up to where any term links go
+    links  term ids to show as links after text, joined with " or " (may be empty)
+    after  words after the links (may be empty)
+    title  the prerequisite, for a tooltip ("" if none)
+
+  The "join" field in classes.yaml is open, skills, continuing, or a list of the terms new students start in.
+  Used by class-schedule.html, and by classes.html, which hands the result to assets/js/classes.js,
+  so the class pages and the /classes/ table always say the same thing.
+*/ -}}
+{{- $c := .c -}}
+{{- $status := dict "key" "cont" "text" "Continuing students only" "links" (slice) "after" "" "title" "" -}}
+{{- if reflect.IsSlice $c.join -}}
+  {{- if in $c.join .term -}}
+    {{- $status = merge $status (dict "key" "start" "text" "New students start") -}}
+  {{- else -}}
+    {{- $status = merge $status (dict "text" "Continuing students only · new students join in " "links" $c.join) -}}
+  {{- end -}}
+{{- else if eq $c.join "open" -}}
+  {{- $status = merge $status (dict "key" "open" "text" "Open to all") -}}
+{{- else if eq $c.join "skills" -}}
+  {{- $status = merge $status (dict "key" "skills" "text" "Open with skills" "title" ($c.prereq | default "")) -}}
+{{- else if $c.new_students_note -}}
+  {{- /* in words, where newcomers go instead (e.g. another town's class), followed by a link to the
+         new_students term if there is one: "… join Port Angeles Suzuki Sprouts in Winter" */ -}}
+  {{- $status = merge $status (dict "text" (printf "Continuing students only · new students: %s" $c.new_students_note)) -}}
+  {{- with where site.Data.terms.terms "id" ($c.new_students | default "") -}}
+    {{- $status = merge $status (dict "text" (printf "%s " $status.text) "links" (slice $c.new_students)) -}}
+  {{- end -}}
+{{- else if where site.Data.terms.terms "id" ($c.new_students | default "") -}}
+  {{- /* the term newcomers should look at instead */ -}}
+  {{- $status = merge $status (dict "text" "Continuing students only · new students: see " "links" (slice $c.new_students) "after" " Term") -}}
+{{- end -}}
+{{- return $status -}}

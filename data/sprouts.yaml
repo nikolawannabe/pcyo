@@ -1,0 +1,68 @@
+# The Sprouts page (/classes/sprouts/, layouts/classes/sprouts.html): Suzuki Sprouts and Sound Sprouts.
+# The design is shared with the other class pages: see layouts/partials/class-page.html for every section it can have.
+# Class times and places come from data/classes.yaml, tuition from data/terms.yaml ({tuition} is replaced with it),
+# and teacher photos from the teachers list in data/home.yaml. The home page links to #suzuki-sprouts and #sound-sprouts.
+
+crumb: Sprouts
+title: "Sprouts: music for ages 0–7"
+lede: Joyful first steps in music for young children and their grown-ups, in Sequim and Port Angeles. No musical background needed.
+photo:
+  file: sprouts-e-string.jpg   # a copy of static/images/e_string_song.jpg
+  alt: A teacher plays the violin while young Suzuki Sprouts students and their grown-ups play along in a bright classroom
+  focus: "30% 50%"
+buttons:            # the first is drawn solid (the main action)
+  - { label: Register on Jovial, url: "https://jovial.org/pcyo/hello" }
+  - { label: Join our mailing list, url: "https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073" }
+
+facts:
+  - { value: "0–7", text: "two classes for the youngest musicians" }
+  - { value: "50", text: "minute class once a week" }
+  - { value: "1", text: "grown-up joins their child in every class" }
+  - { value: "${tuition}", text: "per term: $50 at registration, the rest a week before class" }
+
+cards:
+  heading: Our two Sprouts classes
+  items:            # id: the anchor other pages link to; logo: in static/images/; text: paragraphs (Markdown links work)
+    - name: Suzuki Sprouts
+      id: suzuki-sprouts
+      logo: /images/suzuki-sprouts-logo.png
+      teacher: Christine Faught
+      meta: Ages 3–7 · a joyful first step to the violin. New students start in January 2027 in Port Angeles.
+      text:
+        - This weekly class blends rhythm, song and playful movement to build the coordination, listening and focus skills that are the foundation for violin study. Children sing, tap, move and explore music with scarves, rhythm instruments and song stories in a warm, structured setting.
+        - It builds timing, motor control and musical awareness through familiar songs like Frog in the Meadow and Lightly Row, classical favorites like Fingal's Cave, and pieces from the Suzuki repertoire. Each class follows a consistent format that balances predictability with discovery, so children feel confident, attentive and excited to learn.
+      link: { label: "Schedule, places and when to join ↓", url: "#schedule" }
+    - name: Sound Sprouts
+      id: sound-sprouts
+      logo: /images/sound-sprouts-logo.png
+      teacher: Christine Faught
+      meta: Ages 0–6 · a research-based introduction to music for young children and their families. Join any time.
+      text:
+        - Sound Sprouts brings real music (classical, folk and traditional songs) into children's lives through play, movement and family connection. From infancy through early childhood, it develops listening, rhythm, coordination and connection with others, and a lifelong love of great music.
+        - Classes combine singing, rhythm instruments, storytelling and imaginative movement to masterpieces by Bach, Handel and others. Every activity engages the whole child, through active listening, singing in tune and keeping a steady beat.
+        - Parents take part alongside their children and pick up simple ways to make music part of daily life. No musical background needed, just a willingness to sing, move and connect. It's not entertainment; it's education made joyful.
+      link: { label: "Schedule, places and when to join ↓", url: "#schedule" }
+
+path:
+  heading: Where Sprouts leads
+  steps:
+    - { when: Ages 0–6, name: Sound Sprouts, text: "Music, movement and songs, with a grown-up." }
+    - { when: Ages 3–7, name: Suzuki Sprouts, text: "A first violin, learned by ear with songs and games." }
+    - { when: Ages 6+, name: Beginner Strings, text: "Violin, viola, cello or bass, reading music from day one.", url: /classes/6-plus-classes/ }
+
+# The classes shown in "Schedule & joining" (names from data/classes.yaml)
+schedule: [Suzuki Sprouts, Sound Sprouts]
+
+faq:
+  heading: Questions families ask
+  items:            # q: the question; a: the answer (Markdown links work)
+    - q: What's the difference between Suzuki Sprouts and Sound Sprouts?
+      a: They have a lot in common. In both, parents are part of every class, and families sing, move, play rhythm instruments and listen to great music together. The main difference is the violin. **Sound Sprouts** (ages 0–6) is all about music and movement, with no instrument needed, while **Suzuki Sprouts** (ages 3–7) also gently introduces the violin in a way that's right for young children.
+    - q: Will my Suzuki Sprout be handed a violin at their first class?
+      a: No. Most students begin on a box violin and mock bow that we provide. Over the first term they learn violin skills, including how to handle the instrument and basic technique. When the parent and teacher agree they're ready, they may borrow a violin from our [instrument library](/instruments/#instrument-library), or rent or buy one elsewhere.
+    - q: My child is 6 or 7. Should they join Suzuki Sprouts or a 6+ Beginner class?
+      a: Suzuki Sprouts (ages 3–7) and our [6+ Beginner classes](/classes/6-plus-classes/) overlap on purpose, so each child can join the group that fits them best, whatever their age. Suzuki Sprouts teaches violin by ear through songs, games and movement, and suits children who aren't reading yet or who do best with short, active activities. 6+ Beginner classes teach violin, viola, cello or bass and start reading music right away, so they suit children who can read and are ready to focus for about 30–45 minutes. Not sure? Email the registrar and we'll help you decide.
+    - q: How much does it cost?
+      a: "${tuition} per term, with $50 due at registration and the rest due a week before class starts. Scholarships are available, and no student is turned away for inability to pay."
+
+contact: Questions about registration? Email our registrar.

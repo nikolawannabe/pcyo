@@ -5,6 +5,9 @@
 # join_note: who can sign up that term; shown when a family taps the term on the chart.
 # icon: seasonal decoration (maple, snowflake, rose or star) used on the chart and class cards.
 # sprinkle: optional small icon scattered across a term's bar on the timeline (e.g. twinkle).
+# makeup: make-up days at the end of a term. early: days before a term starts when some classes already meet
+#   (who: whose classes, as in breaks; label: shown on the chart, calendar and term panel).
+#   Both are drawn hatched in the term's color.
 year: "2026–2027"
 tuition: 150            # per regular term
 # How a regular term is described on /classes/ (the calendar dates include breaks and make-up days).
@@ -43,6 +46,8 @@ terms:
     name: Spring Term
     start: 2027-03-29
     end: 2027-05-21
+    # Christine's classes start a week early, because she takes an extra spring break week (Apr 11–16)
+    early: { start: 2027-03-22, end: 2027-03-26, who: Christine, label: "Christine's Monday and Friday classes start a week early" }
     color: "#2e7d4f"
     icon: rose
     join_note: "Beginner classes are for continuing students; new beginners start in Fall. Students with intermediate skills (school orchestra, lessons, or our classes) can join."

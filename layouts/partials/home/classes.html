@@ -1,0 +1,42 @@
+{{- /*
+  "Find your starting place": one card per kind of class, each linking to its class page.
+  Takes the "classes" section of data/home.yaml. A card without a photo shows the PCYO note instead.
+
+  The class name is the card's only link, so screen readers hear a short link name ("Sound Sprouts")
+  rather than every word on the card; the stylesheet stretches that link over the whole card so a
+  click anywhere on it works. Styles: .home-classes and .home-card in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-band home-band--white" id="{{ .id }}" aria-labelledby="{{ .id }}-heading">
+  <div class="home-section">
+    <div class="home-section__intro">
+      <h2 class="home-heading" id="{{ .id }}-heading">{{ .heading }}</h2>
+      <p>{{ .intro }}</p>
+    </div>
+
+    <ul class="home-classes">
+      {{- range .cards }}
+      <li class="home-card">
+        {{- with .photo }}
+        {{ partial "home/photo.html" (dict "photo" .
+             "widths" (slice 300 450 600) "sizes" "(min-width: 60em) 14rem, (min-width: 30em) 45vw, 90vw") }}
+        {{- else }}
+        <div class="home-card__no-photo">
+          <img src="{{ "images/purple-note.svg" | relURL }}" alt="" width="64" height="64">
+        </div>
+        {{- end }}
+        <div class="home-card__body">
+          <h3 class="home-card__name"><a href="{{ .url }}">{{ .name }}</a></h3>
+          <p class="home-card__ages">{{ .ages }}</p>
+          <p class="home-card__text">{{ .text }}</p>
+          {{- /* a visual cue only: the class name above is the link */}}
+          <span class="home-card__more" aria-hidden="true">{{ .link }} →</span>
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+
+    {{- with .more }}
+    <p class="home-section__more">{{ .before }} <a href="{{ .url }}">{{ .label }}</a></p>
+    {{- end }}
+  </div>
+</section>

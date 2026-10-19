@@ -1,0 +1,20 @@
+{{- /*
+  One home page photo as an <img>, cropped to its box by the stylesheet (.home-photo in home.css).
+
+  Takes a dict:
+    photo     a photo from data/home.yaml: file, alt, and optional focus ("x% y%": the part to keep when cropping)
+    class     optional extra class, for where the photo sits (e.g. "home-hero__photo")
+    widths    the widths (px) to make copies at (see home/photo-copies.html)
+    sizes     how wide the photo shows, so the browser can pick a copy (the <img sizes> attribute)
+    eager     true for photos visible as the page opens; the rest load as you scroll down to them
+    priority  true for the one photo the page should load before anything else (the big hero photo)
+
+  Prints nothing if the photo's file is missing.
+*/ -}}
+{{- with partial "home/photo-copies.html" (dict "file" .photo.file "widths" .widths) }}
+<img class="home-photo {{ $.class }}" src="{{ .src }}" srcset="{{ .srcset }}" sizes="{{ $.sizes }}"
+     width="{{ .width }}" height="{{ .height }}" alt="{{ $.photo.alt }}"
+     {{- with $.photo.focus }} style="--focus: {{ . }}"{{ end }}
+     {{- if not $.eager }} loading="lazy"{{ end }}
+     {{- if $.priority }} fetchpriority="high"{{ end }}>
+{{- end }}

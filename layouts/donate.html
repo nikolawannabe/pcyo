@@ -1,0 +1,77 @@
+{{- /*
+  The Donate page (content/donate.md sets layout = 'donate'). Words, links and numbers: data/donate.yaml.
+  Styles: assets/ananke/css/donate.css, plus the shared .home-* and .about-hero pieces (home.css, about.css).
+*/ -}}
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $d := site.Data.donate }}
+  <div class="home donate">
+    <header class="home-section about-hero">
+      <div class="about-hero__text">
+        <h1 class="about-hero__title">{{ .Title }}</h1>
+        <p class="about-hero__lede">{{ $d.lede }}</p>
+        {{- with $d.buttons }}<div class="donate-hero__buttons">{{ partial "home/buttons.html" . }}</div>{{ end }}
+      </div>
+      {{- with $d.photo }}
+      <div class="about-hero__photo">
+        {{ partial "home/photo.html" (dict "photo" . "widths" (slice 500 900 1400) "sizes" "(min-width: 60em) 34rem, 92vw" "eager" true) }}
+      </div>
+      {{- end }}
+    </header>
+
+    {{- with $d.facts }}
+    <section class="home-band home-band--blue" aria-label="The program in numbers">
+      <ul class="home-section donate-facts">
+        {{- range . }}
+        <li class="donate-fact"><span class="donate-fact__value">{{ .value }}</span> <span class="donate-fact__text">{{ .text }}</span></li>
+        {{- end }}
+      </ul>
+    </section>
+    {{- end }}
+
+    {{- with $d.budget }}
+    <section class="home-section" aria-labelledby="donate-budget-heading">
+      <div class="home-section__intro">
+        <h2 class="home-heading" id="donate-budget-heading">{{ .heading }}</h2>
+        <p>{{ .intro }}</p>
+      </div>
+      {{- /* a bar split by share; the list under it says the same thing in words */}}
+      <div class="donate-bar" aria-hidden="true">
+        {{- range $i, $p := .parts }}<span class="donate-bar__part donate-bar__part--{{ $i }}" style="--share: {{ $p.share }}%">{{ $p.share }}%</span>{{ end }}
+      </div>
+      <ul class="donate-bar__key">
+        {{- range $i, $p := .parts }}
+        <li><span class="donate-bar__swatch donate-bar__part--{{ $i }}" aria-hidden="true"></span><b>{{ $p.share }}%</b> {{ $p.label }}</li>
+        {{- end }}
+      </ul>
+    </section>
+    {{- end }}
+
+    {{- with $d.ways }}
+    <section class="home-band home-band--white" id="{{ .id }}" aria-labelledby="donate-ways-heading">
+      <div class="home-section">
+        <h2 class="home-heading home-heading--center" id="donate-ways-heading">{{ .heading }}</h2>
+        <ul class="donate-ways">
+          {{- range .items }}
+          <li class="donate-way">
+            <span class="home-value__icon">{{ partial "home/icon.html" .icon }}</span>
+            <h3 class="donate-way__title">{{ .title }}</h3>
+            <p>{{ .text }}</p>
+            {{- with .link }}<p class="donate-way__more"><a href="{{ .url }}">{{ .label }}</a></p>{{ end }}
+            {{- with .email }}<p class="donate-way__more"><a href="mailto:{{ . }}">{{ replace . "@" "@<wbr>" | safe.HTML }}</a></p>{{ end }}
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+    </section>
+    {{- end }}
+
+    {{- with $d.why }}
+    <section class="home-section donate-why" aria-labelledby="donate-why-heading">
+      <h2 class="home-heading" id="donate-why-heading">{{ .heading }}</h2>
+      {{- range .paragraphs }}<p>{{ . | markdownify }}</p>{{ end }}
+      {{- with .thanks }}<p class="donate-why__thanks">{{ . }}</p>{{ end }}
+    </section>
+    {{- end }}
+  </div>
+{{ end }}

@@ -1,0 +1,52 @@
+# The Donate page (/donate/, layouts/donate.html). Edit the words and links here.
+# Photos are in assets/images/home/ (focus: the part to keep when cropped).
+
+lede: Your gift keeps tuition low and scholarships available, so no child is kept from the program because their family can't pay.
+photo:
+  file: sprouts-concert.webp
+  alt: A line of young violinists performing at a concert
+  focus: "50% 55%"
+buttons:            # the first is drawn solid (the main action)
+  - { label: Donate online, url: "https://sequimcommunityorchestra.org/index.php" }
+  - { label: Ways to give, url: "#ways-to-give" }
+
+# Big numbers. value is shown large; text explains it.
+facts:
+  - { value: "85%", text: "of our yearly cost is teaching" }
+  - { value: "~60%", text: "of projected operating costs is covered by tuition, on average" }
+  - { value: "2012", text: "supporting young string players since" }
+
+budget:
+  heading: Where your gift goes
+  intro: We keep a tight budget so tuition and every donation stretch as far as possible.
+  parts:            # share: a percentage, used for the bar's width; keep them adding up to 100
+    - { label: Teaching, share: 85 }
+    - { label: "Insurance, instrument storage and repair, classroom supplies", share: 15 }
+
+ways:
+  id: ways-to-give
+  heading: Ways to give
+  items:            # icon: a name from layouts/partials/home/icon.html
+    - icon: everyone
+      title: Online
+      text: Donate to the program through PayPal on the Sequim Community Orchestra's home page.
+      link: { label: Go to the SCO home page, url: "https://sequimcommunityorchestra.org/index.php" }
+    - icon: calendar
+      title: In person
+      text: Come to an SCO concert or a PCYO event and donate there.
+      link: { label: See upcoming events, url: /events/ }
+    - icon: file
+      title: In your will
+      text: Name the Sequim Community Orchestra as a beneficiary in your will.
+    - icon: mail
+      title: Another way
+      text: To give some other way, contact the SCO treasurer.
+      email: treasurer@sequimcommunityorchestra.org
+
+why:
+  heading: Why give?
+  paragraphs:
+    - The Peninsula Community Youth Orchestra is run and funded by the [Sequim Community Orchestra](https://sequimcommunityorchestra.org), as part of the [SCO's mission](https://sequimcommunityorchestra.org/aboutUs.php) to give musicians of all ages chances to learn and perform.
+    - Since the program began in 2012 as SCO String Kids, the SCO Board has worked to keep tuition low and to give as many scholarships as are needed.
+    - As of 2026, tuition has covered around 60% of the program's projected operating costs on average over the last several years. The rest comes from generous donations from the community, including the SCO's own members, who voted to raise their dues to keep children's tuition as low as possible.
+  thanks: Thank you for considering a gift to the Peninsula Community Youth Orchestra.

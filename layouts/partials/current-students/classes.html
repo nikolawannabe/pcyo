@@ -1,0 +1,43 @@
+{{- /*
+  "When and where classes meet": a card for each building, by town, listing the classes that meet there
+  with their days, times and teacher, and links to add the class to a calendar (partials/class-calendar.html). Takes classes from data/current-students.yaml; the places come from
+  partials/class-places.html and the classes from data/classes.yaml.
+*/ -}}
+<section class="cs-section" id="{{ .id }}" aria-labelledby="cs-classes-heading">
+  <h2 class="cs-heading" id="cs-classes-heading">{{ .heading }}</h2>
+  {{- with .intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
+  {{- with .calendar_intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
+  {{- $labels := . }}
+  {{- range partials.IncludeCached "class-places.html" "class-places" }}
+  <h3 class="cs-town">{{ .town }}</h3>
+  <div class="cs-places">
+    {{- range .places }}
+    <article class="cs-place">
+      <h4 class="cs-place__name">
+        <a href="{{ .map_url }}"><span class="cs-place__icon">{{ partial "home/icon.html" "map-pin" }}</span>{{ .name }}<span class="cs-hidden"> (map)</span></a>
+      </h4>
+      {{- /* the address without the building name, which is the heading */}}
+      <p class="cs-place__address">{{ delimit (after 1 (split .address ",")) "," | strings.TrimSpace }}</p>
+      <ul class="cs-place__classes">
+        {{- range partial "current-students/classes-at.html" .address }}
+        <li class="cs-class">
+          <a class="cs-class__name" href="{{ .link }}">{{ .name }}</a>
+          <span class="cs-class__time">{{ .time }}</span>
+          {{- with .teacher }}<span class="cs-class__teacher">with {{ . }}</span>{{ end }}
+          {{- $class := . }}
+          {{- with partial "class-calendar.html" . }}
+          <span class="cs-class__add">
+            <span class="cs-class__add-icon">{{ partial "home/icon.html" "calendar" }}</span>
+            <a href="{{ .google }}">{{ $labels.google_label }}<span class="cs-hidden">: add {{ $class.name }} ({{ $class.town }})</span></a>
+            <a href="{{ .webcal | safeURL }}">{{/* safeURL: Hugo blocks webcal:// links otherwise */}}{{ $labels.other_label }}<span class="cs-hidden">: add {{ $class.name }} ({{ $class.town }})</span></a>
+          </span>
+          {{- end }}
+        </li>
+        {{- end }}
+      </ul>
+    </article>
+    {{- end }}
+  </div>
+  {{- end }}
+  {{- with .more_url }}<p class="cs-section__more"><a href="{{ . }}">{{ $.more_label }}</a></p>{{ end }}
+</section>

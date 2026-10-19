@@ -1,0 +1,107 @@
+/*
+  The /classes/ page's class finder (layouts/partials/classes.html, run by assets/js/classes.js):
+  the selected term's panel, and the age and experience sliders.
+*/
+
+/* The selected term: its left edge takes the term's color (classes.js sets --term from data/terms.yaml). */
+.class-finder__term-panel { border-left: 6px solid var(--term, rgba(0, 0, 0, .2)); }
+.class-finder__term-icon { color: var(--term); }
+.class-finder__card { color: var(--ink-muted); }   /* a class on phones */
+
+/* ---- Sliders --------------------------------------------------------------------------------
+   Each slider is a range input laid over a colored bar. Until a family picks a value the filter is "unset":
+   the bar fades and the handle hides (classes.js toggles .class-finder__filter--unset). */
+.class-finder__filter {
+  --track-height: 2.6rem;              /* tall enough to tap comfortably */
+  --bar-top: .55rem;
+  --bar-height: 1.5rem;
+  --thumb-border: var(--ink-strong);
+}
+.class-finder__track { position: relative; height: var(--track-height); }
+
+/* Age zones: equal widths so the young ages, where most choices are, are easy to pick.
+   Decorative pastels (not brand colors) under dark text: 7.7:1 or better. */
+.class-finder__age-zones {
+  position: absolute;
+  top: var(--bar-top);
+  left: 0;
+  right: 0;
+  display: flex;
+  height: var(--bar-height);
+  overflow: hidden;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08);
+}
+.class-finder__age-zone {
+  flex: 1;
+  color: var(--ink-strong);
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: var(--bar-height);
+  text-align: center;
+}
+.class-finder__age-zone + .class-finder__age-zone { border-left: 2px solid white; }
+.class-finder__age-zone--toddler { background: #f6c1cc; }
+.class-finder__age-zone--sprouts { background: #f7dc8f; }
+.class-finder__age-zone--kids    { background: #a9cdef; }
+.class-finder__age-zone--teens   { background: #cdb6e8; }
+
+/* Experience: a gradient from new (light green) to 5+ years (purple). Decorative, no text on it. */
+.class-finder__exp-bar {
+  position: absolute;
+  top: var(--bar-top);
+  left: 0;
+  right: 0;
+  height: var(--bar-height);
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d9f2c9 0%, #a6dcc4 25%, #8ec5e8 50%, #8f9fe0 75%, #8a63c9 100%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08);
+}
+.class-finder__exp-ticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 .1rem;
+  color: var(--ink-muted);
+  font-size: .75rem;
+  font-weight: 600;
+}
+.class-finder__filter--unset .class-finder__age-zones,
+.class-finder__filter--unset .class-finder__exp-bar { opacity: .75; }
+
+/* The range input itself: transparent, so the bar shows through; only the handle is drawn. */
+.class-finder__range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--track-height);
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.class-finder__range::-webkit-slider-runnable-track { height: var(--track-height); background: transparent; }
+.class-finder__range::-moz-range-track { height: var(--track-height); background: transparent; }
+.class-finder__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1.4rem;
+  height: var(--track-height);
+  border: 3px solid var(--thumb-border);
+  border-radius: .7rem;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+/* Firefox draws the thumb inside the track's height, so it is a little smaller to look the same. */
+.class-finder__range::-moz-range-thumb {
+  width: 1.1rem;
+  height: 2.2rem;
+  border: 3px solid var(--thumb-border);
+  border-radius: .7rem;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+.class-finder__filter--unset .class-finder__range::-webkit-slider-thumb { opacity: 0; }
+.class-finder__filter--unset .class-finder__range::-moz-range-thumb { opacity: 0; }
+.class-finder__range:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; border-radius: 999px; }

@@ -1,0 +1,80 @@
+# The Adult Strings page (/classes/adult-strings/, layouts/classes/adult-strings.html). Edit the words here.
+# The design is shared with the other class pages: see layouts/partials/class-page.html for every section it can have.
+# Class times and places come from data/classes.yaml, and teacher photos from the teachers list in data/home.yaml.
+
+crumb: Adult Strings
+title: Adult Strings
+lede: It's never too late. Group labs for teens and adults who want to learn a string instrument from the ground up, in a supportive, low-pressure setting.
+photo:
+  file: adult-learners.jpg
+  alt: A teenage cellist and her dad playing the violin
+  focus: "50% 30%"
+buttons:            # the first is drawn solid (the main action)
+  - { label: Tell us you're interested, url: "https://forms.gle/qoUm6fbLmfrrVxAx8" }
+  - { label: Join our mailing list, url: "https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073" }
+
+facts:
+  - { value: "13+", text: "teens and adults" }
+  - { value: "0", text: "experience needed on your instrument" }
+  - { value: "1", text: "lab a week, with your group" }
+  - { value: "2", text: "towns: Sequim and Port Angeles" }
+
+cards:
+  heading: Our labs
+  items:            # teacher: shows their photo from data/home.yaml; text: paragraphs (Markdown links work)
+    - name: Violin Lab
+      teacher: Christine Faught
+      meta: Beginner group started January 2026 in Port Angeles.
+      text:
+        - For adults who want to learn violin from the ground up. We develop essential violin skills using the Suzuki method as a guiding framework, drawing on other approaches as they serve the group.
+        - Tone, listening, rhythm and healthy beginner technique come first. Questions are welcome, curiosity is encouraged, and mistakes are part of learning. No musical experience needed.
+      link: { label: "Time and place ↓", url: "#schedule" }
+    - name: Viola Lab
+      teacher: Anne Burns
+      meta: Beginner group started March 2026 in Sequim.
+      text:
+        - For absolute beginner violists, folks with some viola experience, and students switching from other instruments. We cover note reading, learning a new clef, how viola technique differs from violin, and musical discovery.
+        - The only requirement is a desire to learn the viola. Join us for fun and friendship.
+      link: { label: "Time and place ↓", url: "#schedule" }
+    - name: Cello Lab
+      meta: Start date to be decided.
+      text:
+        - Want to learn cello? Tell us where and when you'd like to meet in the [Adult Strings Interest Survey](https://forms.gle/qoUm6fbLmfrrVxAx8).
+      link: { label: Take the survey, url: "https://forms.gle/qoUm6fbLmfrrVxAx8" }
+
+path:
+  heading: Where a lab leads
+  steps:
+    - { when: First years, name: Adult Strings Lab, text: "Learn your instrument with your group, one term at a time." }
+    - { when: When you're ready, name: Sequim Community Orchestra, text: "Join a high-school-level community orchestra of teens and adults.", url: "https://sequimcommunityorchestra.org" }
+
+# The classes shown in "Schedule & joining" (names from data/classes.yaml)
+schedule: [Adult Violin Lab, Adult Viola Lab]
+
+callout:
+  heading: Want a lab for your instrument or town?
+  text: We start a new group when enough people are interested in a town and time and a qualified teacher is available, usually no more than once a year per instrument. The current labs are for their existing students, so the survey is the way to get the next one started.
+  button: Take the interest survey
+  url: "https://forms.gle/qoUm6fbLmfrrVxAx8"
+
+faq:
+  heading: Questions adults ask
+  items:            # q: the question; a: the answer (Markdown links work)
+    - q: Who are these labs for?
+      a: Adults and students 13 and up with no experience on the lab's instrument. People switching from other instruments are welcome and encouraged to join.
+    - q: Should I take private lessons too?
+      a: Yes. It isn't required, but we strongly encourage meeting with a teacher one-on-one a second time each week. Private lessons are arranged directly with the teacher, outside these classes.
+    - q: Where do the labs meet?
+      a: In Port Angeles or Sequim, depending on where most of a group's students are.
+    - q: When do the labs meet?
+      a: Weekly, at a time set by the preferences of the group's students. It may be daytime, evening or weekends.
+    - q: Can I start if I missed the registration date?
+      a: You can join a new group until the third week of class, with the registrar's permission. After that, we'll refer you to the teacher to talk about prerequisites. If there's room, you may also join after the first term if you meet the group's technical requirements.
+    - q: How long do the labs run?
+      a: Students generally stay with their group until they have the skills to join the Sequim Community Orchestra. Progress depends on the group. You enroll one term at a time, and each term is eight weeks long.
+    - q: What if too many students drop between terms?
+      a: If a group falls below three students, the teacher may combine it with another group, combine it with another instrument's group with similar prerequisites, or offer one-on-one lessons at their own rates.
+    - q: When will a new group start for my instrument?
+      a: When enough people are interested in a particular town and time, and a qualified teacher is available. To tell us you're interested, fill out the [Adult Strings Interest Survey](https://forms.gle/qoUm6fbLmfrrVxAx8). We generally don't start a new group for an instrument more than once a year.
+
+contact: Questions about registration? Email our registrar.

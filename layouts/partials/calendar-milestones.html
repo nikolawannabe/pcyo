@@ -1,0 +1,13 @@
+{{- /*
+  The key dates from data/terms.yaml (milestones), ready for the scripts that draw them.
+  Takes nothing. Returns each milestone with two more fields:
+    url   its event page, if it has one (partials/milestone-url.html)
+    orgs  for concerts, a list of group ids, host first, e.g. ["sco" "pcyo"] (partials/concert-orgs.html)
+*/ -}}
+{{- $ms := slice -}}
+{{- range site.Data.terms.milestones -}}
+  {{- $extra := dict "url" (partial "milestone-url.html" .) -}}
+  {{- if eq .type "concert" }}{{ $extra = merge $extra (dict "orgs" (partial "concert-orgs.html" (.org | default "PCYO"))) }}{{ end -}}
+  {{- $ms = $ms | append (merge . $extra) -}}
+{{- end -}}
+{{- return $ms -}}

@@ -1,0 +1,7 @@
+{{- /*
+  A person's initials: the first letter of each word of their name ("Amber Roskamp" → "AR"). No markup.
+  Takes the name.
+*/ -}}
+{{- $initials := "" -}}
+{{- range split . " " }}{{ $initials = print $initials (substr . 0 1) }}{{ end -}}
+{{- return $initials -}}

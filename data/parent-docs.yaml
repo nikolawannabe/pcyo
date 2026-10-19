@@ -1,0 +1,74 @@
+# Documents for families: the PDFs in static/pdfs/docs_for_parents/. Every one is listed on the Current Students
+# page (in group order), and pages link to them by id (the 6+ classes page, and {{< parent-doc "id" >}} in content).
+#
+# Each year: put the new PDF in the folder, change "file" here, and add the old file's address to "replaces"
+# (then delete the old PDF). Anyone following an old link is sent on to the new file by the 404 page
+# (layouts/404.html). GitHub Pages can't redirect a missing file itself, so this is how it's done.
+#
+#   id:       how pages refer to it (keep it the same from year to year)
+#   group:    heading it's listed under on the Current Students page
+#   label:    link text
+#   note:     small line under the label (optional)
+#   file:     file name in static/pdfs/docs_for_parents/
+#   replaces: addresses of older versions, as they were linked (e.g. /Instrument%20Care.pdf)
+
+folder: /pdfs/docs_for_parents/
+
+docs:
+  - id: handbook-sequim-amber
+    group: Family handbooks
+    label: "Sequim Family Handbook: Amber Roskamp"
+    note: Beginner and Intermediate Strings · 2026–2027
+    file: 26-27 PCYO Sequim Family Handbook - Amber Roskamp.pdf
+  - id: handbook-sequim-youth-orchestra
+    group: Family handbooks
+    label: "Sequim Family Handbook: Youth Orchestra"
+    note: Christine Faught · 2026–2027
+    file: 26-27 PCYO Sequim Family Handbook - Christine Faught - Youth Orchestra.pdf
+  - id: handbook-sequim-sprouts
+    group: Family handbooks
+    label: "Sequim Family Handbook: Sprouts"
+    note: Christine Faught · 2026–2027
+    file: 26-27 PCYO Sequim Family Handbook - Christine Faught (Sprouts).pdf
+  - id: handbook-port-angeles
+    group: Family handbooks
+    label: Port Angeles Family Handbook
+    note: Jesse Ahmann · 2026–2027
+    file: 26-27 PCYO Port Angeles Family Handbook - Jesse Ahmann.pdf
+    replaces: [/25-26_PCYO_PA_Handbook.pdf]
+
+  - id: policies-6-plus
+    group: Class policies
+    label: 6+ Class Policies
+    note: Beginner Strings and up · 2026–2027
+    file: PCYO 6+ Policies 2026-2027.pdf
+    replaces: [/PCYO-Policies_2025-2026.pdf]
+  - id: policies-sprouts
+    group: Class policies
+    label: Sprouts Behavior Policies
+    note: Sound Sprouts and Suzuki Sprouts · 2026–2027
+    file: PCYO Sprouts Behavior Policies 2026-2027.pdf
+
+  - id: instrument-care
+    group: Instruments
+    label: Instrument Care Handbook
+    note: Covers the loan of most violins and violas · 2026
+    file: 2026_ Instrument Care.pdf
+    replaces: [/Instrument%20Care.pdf]
+  - id: cello-loan
+    group: Instruments
+    label: Cello and Expensive Instrument Loan Policy
+    note: 2026–2027
+    file: Cello and Expensive Instrument Loan Policy - 2026-2027.pdf
+    replaces: [/cellos_and_expensive_instrument_policy.pdf]
+
+# Old documents with no single newer version: the 404 page sends their links to the list on Current Students.
+retired:
+  to: /current-students/#class-materials
+  addresses:
+    - /25-26_PCYO_Sequim_Handbook.pdf            # now one handbook per teacher
+    - /PCYO-Family-Handbook_2025-2026.pdf        # now one handbook per teacher
+    - /Non-Program%20Loan%20Policy%20-%202025.pdf
+
+# Not listed here on purpose: static/AbusePrevention.pdf stays on the site at its old address (not updated for
+# 2026–2027, and not linked from any page). Don't delete it.

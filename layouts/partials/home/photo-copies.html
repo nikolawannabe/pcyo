@@ -1,0 +1,28 @@
+{{- /*
+  Web-sized copies of one home page photo. No markup here; home/photo.html draws the <img>.
+
+  Takes a dict:
+    file    the photo's file name in assets/images/home/
+    widths  the widths (px) to make; widths larger than the original are skipped, so photos are never enlarged
+
+  Returns a dict, or false when the file isn't there:
+    src, width, height   the largest copy (for browsers that ignore srcset, and for the width/height attributes
+                         that keep the page from jumping while photos load)
+    srcset               every copy, for the browser to pick from
+*/ -}}
+{{- $quality := "q80" -}}   {{- /* webp quality: small files, no visible loss at these sizes */ -}}
+{{- $result := false -}}
+{{- with resources.Get (print "images/home/" $.file) -}}
+  {{- $image := . -}}
+  {{- $copies := slice -}}
+  {{- range $.widths -}}
+    {{- if le . $image.Width }}{{ $copies = $copies | append ($image.Resize (printf "%dx webp %s" . $quality)) }}{{ end -}}
+  {{- end -}}
+  {{- if not $copies }}{{ $copies = slice ($image.Resize (printf "%dx webp %s" $image.Width $quality)) }}{{ end -}}
+
+  {{- $srcset := slice -}}
+  {{- range $copies }}{{ $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) }}{{ end -}}
+  {{- $largest := index $copies (sub (len $copies) 1) -}}
+  {{- $result = dict "src" $largest.RelPermalink "width" $largest.Width "height" $largest.Height "srcset" (delimit $srcset ", ") -}}
+{{- end -}}
+{{- return $result -}}

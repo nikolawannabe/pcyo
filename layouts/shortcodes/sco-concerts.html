@@ -1,0 +1,14 @@
+{{- /* The Sequim Community Orchestra's concerts this school year, from the milestones in data/terms.yaml:
+       concerts the SCO puts on whose label says "Concert" (so the Holiday Market, a joint event, is left out).
+       Each links to its event page while it's live. Usage: {{< sco-concerts >}} */ -}}
+<ul>
+{{- range sort site.Data.terms.milestones "date" }}
+  {{- $orgs := partial "concert-orgs.html" (.org | default "") }}
+  {{- if and (eq .type "concert") (in $orgs "sco") (strings.Contains .label "Concert") }}
+  {{- $when := (time .date).Format "Monday, January 2, 2006" }}
+  {{- $text := printf "%s: %s" $when .label }}
+  {{- if in $orgs "pcyo" }}{{ $text = printf "%s, with the Peninsula Community Youth Orchestra" $text }}{{ end }}
+  <li>{{ with partial "milestone-url.html" . }}<a href="{{ . }}">{{ $text }}</a>{{ else }}{{ $text }}{{ end }}</li>
+  {{- end }}
+{{- end }}
+</ul>

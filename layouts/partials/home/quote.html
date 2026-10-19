@@ -1,0 +1,15 @@
+{{- /*
+  A quote from a PCYO family, with an optional round photo beside it.
+  Takes the "quote" section of data/home.yaml. Styles: .home-quote in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-band home-band--blue" aria-label="{{ .label }}">
+  <figure class="home-quote">
+    {{- with .photo }}
+    {{ partial "home/photo.html" (dict "photo" . "widths" (slice 160 320) "sizes" "9rem") }}
+    {{- end }}
+    <div class="home-quote__body">
+      <blockquote class="home-quote__text"><p>“{{ .text }}”</p></blockquote>
+      <figcaption class="home-quote__by">{{ .by }}</figcaption>
+    </div>
+  </figure>
+</section>

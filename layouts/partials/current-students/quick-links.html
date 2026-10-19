@@ -1,0 +1,22 @@
+{{- /*
+  The buttons at the top of the Current Students page: Family Portal (Jovial logo), ClassDojo (its logo) and, smaller, email the
+  registrar. Takes quick_links from data/current-students.yaml. A link with email: true mails the registrar
+  (the address is in data/footer.yaml, so it is kept in one place). A logo replaces the icon; it is decorative
+  (empty alt text) because the label beside it names the link.
+*/ -}}
+<ul class="cs-quick">
+  {{- range . }}
+  {{- $url := .url }}{{ if .email }}{{ $url = printf "mailto:%s" site.Data.footer.contact.email }}{{ end }}
+  <li class="cs-quick__item">
+    <a class="cs-quick__link{{ if .secondary }} cs-quick__link--secondary{{ end }}" href="{{ $url }}">
+      {{- with .logo }}
+      <span class="cs-quick__logo"><img src="{{ . | relURL }}" alt=""></span>
+      {{- else }}
+      <span class="cs-quick__icon">{{ partial "home/icon.html" .icon }}</span>
+      {{- end }}
+      <span class="cs-quick__label">{{ .label }}</span>
+      <span class="cs-quick__text">{{ .text }}{{ if .email }}<span class="cs-quick__email">{{ replace site.Data.footer.contact.email "@" "@<wbr>" | safe.HTML }}</span>{{ end }}</span>
+    </a>
+  </li>
+  {{- end }}
+</ul>

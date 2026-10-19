@@ -1,0 +1,32 @@
+{{- /*
+  The places where regular classes meet, grouped by town, from data/classes.yaml.
+  Takes nothing. Returns a list of towns in the order they first appear in the data:
+    [ { town: "Sequim", places: [ { name: "Swisher Hall", address: "Swisher Hall, 506 N Blake Ave, Sequim",
+                                    map_url: "https://www.google.com/maps/…" } ] } ]
+  Classes that only meet in the Holiday Session are left out, as in the class-locations shortcode,
+  because those places aren't where families go week to week.
+*/ -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+
+{{- /* Every regular class that has a location */ -}}
+{{- $classes := slice -}}
+{{- range site.Data.classes -}}
+  {{- $holidayOnly := eq (delimit (.terms | default $regular) ",") "holiday" -}}
+  {{- if and .location .town (not $holidayOnly) -}}
+    {{- $classes = $classes | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $towns := slice -}}
+{{- range $town := uniq (apply $classes "index" "." "town") -}}
+  {{- $places := slice -}}
+  {{- range $address := uniq (apply (where $classes "town" $town) "index" "." "location") -}}
+    {{- /* The building name is the part of the address before the first comma */ -}}
+    {{- $name := index (split $address ",") 0 -}}
+    {{- $mapURL := printf "https://www.google.com/maps/search/?api=1&query=%s" (printf "%s, WA" $address | urlquery) -}}
+    {{- $places = $places | append (dict "name" $name "address" $address "map_url" $mapURL) -}}
+  {{- end -}}
+  {{- $towns = $towns | append (dict "town" $town "places" $places) -}}
+{{- end -}}
+
+{{- return $towns -}}

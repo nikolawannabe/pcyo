@@ -1,0 +1,96 @@
+/*
+  Year-at-a-glance timeline (layouts/partials/term-timeline.html, run by assets/js/term-timeline.js):
+  term bars, lanes of date badges under them, the "Show:" buttons, the key and the dates list.
+  Colors come from brand.css; term bar colors come from data/terms.yaml.
+*/
+
+/* The chart scrolls sideways on phones rather than shrinking below a readable size. */
+.term-timeline { --min-readable-width: 760px; width: 100%; min-width: var(--min-readable-width); font-family: inherit; }
+
+/* Hidden until the script places it (the today line, lanes with nothing showing). */
+.term-timeline__hidden { display: none; }
+
+/* ---- Grid, months, today ---- */
+.term-timeline .tl-grid { stroke: black; stroke-opacity: .12; }
+.term-timeline__month { fill: var(--ink-muted); }
+.term-timeline__today line { stroke: var(--today); }
+.term-timeline__today text { fill: var(--today); }
+
+/* ---- Term bars ---- */
+.term-timeline .tl-hit,
+.term-timeline .tl-term { cursor: pointer; }
+.term-timeline .tl-term:focus { outline: none; }                     /* the bar's outline below shows focus instead */
+.term-timeline .tl-term:hover .tl-bar,
+.term-timeline .tl-term:focus .tl-bar { stroke: var(--today); stroke-width: 3; }
+.term-timeline .tl-term.sel .tl-bar { stroke: var(--ink-strong); stroke-width: 3; }
+.term-timeline.has-sel .tl-term:not(.sel) { opacity: .55; }
+.term-timeline__flag { fill: var(--ink-strong); }                   /* "New … start" flag over a term */
+.term-timeline__flag-pole { stroke: var(--ink-strong); }
+
+/* ---- Lanes of badges (each lane's color is --lane, set from the partial) ---- */
+.term-timeline__lane-line { stroke: var(--lane); stroke-opacity: .3; }
+.term-timeline__lane-label { fill: var(--lane); }
+.term-timeline .tl-m { outline: none; }                             /* the ring below shows focus instead */
+.term-timeline .tl-m .ico {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform .15s ease-out;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25));
+}
+.term-timeline .tl-m:hover .ico,
+.term-timeline .tl-m:focus .ico,
+.term-timeline .tl-m.sel .ico { transform: scale(1.3); }
+.term-timeline .tl-m .ring { display: none; stroke: var(--today); }
+.term-timeline .tl-m.sel .ring,
+.term-timeline .tl-m:focus .ring { display: inline; }
+.term-timeline .tl-m .span { fill: var(--mark-off); pointer-events: none; }
+.term-timeline .tl-m .who circle { fill: var(--today); }             /* the teacher's initial on a day off */
+@media (prefers-reduced-motion: reduce) {
+  .term-timeline .tl-m .ico { transition: none; }
+}
+
+/* ---- Badge icons (the <symbol>s in the partial, also used by the calendars and the dates list) ---- */
+.term-timeline__off-fill    { fill: var(--mark-off); }
+.term-timeline__off-stroke  { stroke: var(--mark-off); }
+.term-timeline__reg-fill    { fill: var(--mark-registration); }
+.term-timeline__reg-stroke  { stroke: var(--mark-registration); }
+.term-timeline__reg-tint    { fill: color-mix(in srgb, var(--mark-registration) 15%, white); }
+.term-timeline__inst-fill   { fill: var(--mark-instrument); }
+.term-timeline__inst-stroke { stroke: var(--mark-instrument); }
+.term-timeline__inst-body   { fill: color-mix(in srgb, var(--mark-instrument) 55%, var(--brand-gold)); }   /* the violin's wood */
+
+/* ---- "Show:" buttons ----
+   An "off" button fades only its icons: its words stay full strength so they keep 4.5:1 contrast. */
+.tl-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  margin: 0 .4rem .4rem 0;
+  padding: .2rem .6rem .2rem .3rem;
+  border: 1px dashed rgba(0, 0, 0, .3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  cursor: pointer;
+  transition: background .15s;
+}
+.tl-toggle[aria-pressed="false"] svg { opacity: .5; filter: grayscale(1); }
+.tl-toggle[aria-pressed="true"] {
+  border: 1px solid rgba(0, 0, 0, .25);
+  background: white;
+  color: var(--ink-strong);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+}
+.tl-toggle:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+
+/* ---- Key and dates list under the chart ---- */
+.term-timeline__key { --key-width: 22px; --key-height: 12px; width: var(--key-width); height: var(--key-height); }
+.term-timeline__key--makeup {
+  background: repeating-linear-gradient(45deg, var(--brand-blue-text) 0 3px, color-mix(in srgb, var(--brand-blue-text) 45%, white) 3px 6px);
+}
+.term-timeline__key--today { --key-width: 2px; --key-height: 14px; background: var(--today); }
+.term-timeline__dates { columns: 16rem; }
+.term-timeline__dates li { break-inside: avoid; padding: .1rem 0; }
+.term-timeline__dates svg { margin-right: .3rem; }

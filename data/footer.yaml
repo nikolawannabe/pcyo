@@ -1,0 +1,45 @@
+# What the site footer shows (layouts/partials/site-footer.html). Edit the text and links here, not in the
+# template. Where the classes meet is not listed here: the footer reads it from data/classes.yaml.
+
+tagline: String classes for children of all ages, and youths at heart, across Clallam and Jefferson County.
+
+# Who runs the program, shown under the tagline.
+parent:
+  before: A program of the
+  name: Sequim Community Orchestra
+  url: https://sequimcommunityorchestra.org
+  after: ", a 501(c)(3) nonprofit, since 2012."
+
+# The two big buttons under the tagline. The first one is the main action and is drawn solid.
+actions:
+  - label: Register on Jovial
+    url: https://jovial.org/pcyo/hello
+  - label: Join our mailing list
+    url: https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073
+
+# Link columns, in order. show_contact: true puts the "contact" block below that column's links.
+columns:
+  - heading: Explore
+    links:
+      - { label: Classes for new students, url: /classes/ }
+      - { label: Concerts and events, url: /events/ }
+      - { label: About us, url: /about/ }
+      - { label: Donate, url: /donate/ }
+  - heading: Families
+    show_contact: true
+    links:
+      - { label: Family Portal, url: "https://jovial.org/pcyo/family" }
+      - { label: This month's calendar, url: /current-students/#this-month }
+      - { label: Handbooks and policies, url: /current-students/#class-materials }
+      - { label: Newsletters, url: /newsletters/ }
+
+# The "Where we meet" column: its heading, and the page that lists every class at each place.
+places:
+  heading: Where we meet
+  more_label: Which class meets where
+  more_url: /current-students/#where-classes-meet
+
+contact:
+  heading: Questions?
+  label: Email our registrar
+  email: registrar@sequimcommunityorchestra.org

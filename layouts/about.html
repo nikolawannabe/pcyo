@@ -1,0 +1,89 @@
+{{- /*
+  The About page (content/about.md sets layout = 'about'). Words and photos: data/about.yaml; the teachers
+  section is the home page's (data/home.yaml, partials/home/teachers.html), so it stays in one place.
+  Styles: assets/ananke/css/about.css, plus the shared .home-* pieces in home.css.
+*/ -}}
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $a := site.Data.about }}
+  <div class="home about">
+    <header class="home-section about-hero">
+      <div class="about-hero__text">
+        <h1 class="about-hero__title">{{ .Title }}</h1>
+        <p class="about-hero__lede">{{ $a.lede }}</p>
+      </div>
+      {{- with $a.photo }}
+      <div class="about-hero__photo">
+        {{ partial "home/photo.html" (dict "photo" . "widths" (slice 500 900 1400) "sizes" "(min-width: 60em) 34rem, 92vw" "eager" true) }}
+      </div>
+      {{- end }}
+    </header>
+
+    {{- with $a.story }}
+    <section class="home-band home-band--white" aria-labelledby="about-story-heading">
+      <div class="home-section">
+        <h2 class="home-heading home-heading--center" id="about-story-heading">{{ .heading }}</h2>
+        <ol class="about-story">
+          {{- range .steps }}
+          <li class="about-story__step">
+            <p class="about-story__year">{{ .year }}</p>
+            <p class="about-story__text">{{ .text }}{{ with .link }} <a href="{{ .url }}">{{ .label }}</a>{{ end }}</p>
+          </li>
+          {{- end }}
+        </ol>
+      </div>
+    </section>
+    {{- end }}
+
+    {{- with $a.programs }}
+    <section class="home-section" aria-labelledby="about-programs-heading">
+      <div class="home-section__intro">
+        <h2 class="home-heading" id="about-programs-heading">{{ .heading }}</h2>
+        <p>{{ .intro }}</p>
+      </div>
+      <div class="about-programs">
+        {{- range .cards }}
+        <article class="about-program">
+          {{- with .photo }}
+          <div class="about-program__photo">{{ partial "home/photo.html" (dict "photo" . "widths" (slice 400 800) "sizes" "(min-width: 48em) 30rem, 92vw") }}</div>
+          {{- end }}
+          <div class="about-program__body">
+            <h3 class="about-program__name">{{ .name }}</h3>
+            <p>{{ .text }}</p>
+            {{- with .link }}<p class="about-program__more"><a href="{{ .url }}">{{ .label }}</a></p>{{ end }}
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+
+    {{- with $a.different }}
+    <section class="home-band home-band--white" aria-labelledby="about-different-heading">
+      <div class="home-section">
+        <div class="home-section__intro">
+          <h2 class="home-heading" id="about-different-heading">{{ .heading }}</h2>
+          <p>{{ .intro }}</p>
+        </div>
+        <ul class="about-different">
+          {{- range .items }}
+          <li class="home-value">
+            <span class="home-value__icon">{{ partial "home/icon.html" .icon }}</span>
+            <div>
+              <h3 class="home-value__title">{{ .title }}</h3>
+              <p>{{ .text }}</p>
+            </div>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+    </section>
+    {{- end }}
+
+    {{ partial "home/teachers.html" site.Data.home.teachers }}
+
+    {{- with $a.buttons }}
+    <div class="home-section about-actions">{{ partial "home/buttons.html" . }}</div>
+    {{- end }}
+  </div>
+{{ end }}

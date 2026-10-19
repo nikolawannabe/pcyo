@@ -1,0 +1,55 @@
+/*
+  "Who can join" labels for a class in a term: the chips on each class page's schedule (partials/class-schedule.html)
+  and the badges in the /classes/ table (assets/js/classes.js). The words come from partials/class-join-status.html.
+
+  Colors are tints of the brand text colors, so no new hex values. Contrast (text on its own background):
+    open 5.4:1 · skills 5.3:1 · continuing / not offered 6.7:1 · start (white on green) 6.4:1
+*/
+.class-status {
+  --status-ink: var(--ink-muted);
+  --status-bg: color-mix(in srgb, var(--ink-muted) 10%, white);
+  display: inline-block;
+  padding: .2rem .5rem;
+  border-radius: 999px;
+  background: var(--status-bg);
+  color: var(--status-ink);
+  font-size: .8rem;
+  line-height: 1.25;
+}
+.class-status--open   { --status-ink: var(--brand-green-text); --status-bg: color-mix(in srgb, var(--brand-green-text) 12%, white); }
+.class-status--skills { --status-ink: var(--brand-blue-text);  --status-bg: color-mix(in srgb, var(--brand-blue-text) 12%, white); }
+.class-status a {
+  color: var(--brand-blue-text);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* "New students start": the classes we most want families to notice. Solid green with a shimmer every few seconds. */
+.class-status--start {
+  --status-ink: white;
+  --status-bg: var(--brand-green-text);
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+.class-status--start::after {
+  --shimmer-width: 45%;                /* the bright band, as a share of the chip */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: var(--shimmer-width);
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .6), transparent);
+  transform: skewX(-20deg);
+  animation: class-status-shimmer 5s ease-in-out infinite;
+  pointer-events: none;
+}
+/* The band crosses in the last 28% of each 5 s cycle and rests the rest of the time. */
+@keyframes class-status-shimmer {
+  0%, 72% { left: -60%; }
+  100% { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .class-status--start::after { display: none; }
+}

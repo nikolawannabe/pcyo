@@ -1,0 +1,27 @@
+{{- /*
+  "Handbooks and policies": every document in data/parent-docs.yaml, under its group heading (groups in the order
+  they first appear there). Takes documents from data/current-students.yaml (heading, intro, id).
+*/ -}}
+{{- $docs := partial "parent-docs.html" -}}
+<section class="cs-section" id="{{ .id }}" aria-labelledby="cs-documents-heading">
+  <h2 class="cs-heading" id="cs-documents-heading">{{ .heading }}</h2>
+  {{- with .intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
+  <div class="cs-docs">
+    {{- range $group := uniq (apply $docs "index" "." "group") }}
+    <div class="cs-docs__group">
+      <h3 class="cs-docs__name">{{ $group }}</h3>
+      <ul class="cs-docs__list">
+        {{- range where $docs "group" $group }}
+        <li>
+          <a class="cs-doc" href="{{ .url }}">
+            <span class="cs-doc__icon">{{ partial "home/icon.html" "file" }}</span>
+            <span class="cs-doc__label">{{ .label }}<span class="cs-hidden"> (PDF)</span></span>
+            {{- with .note }}<span class="cs-doc__note">{{ . }}</span>{{ end }}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+  </div>
+</section>

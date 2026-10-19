@@ -1,58 +1,20 @@
+{{- /*
+  The /classes/ page body: term timeline, the selected term's panel, age / experience / town filters, the class
+  table (cards on phones) and the full-year calendar. assets/js/classes.js draws the term panel and class list from the
+  page data written at the bottom; the experience and "who can join" words come from class-experience.html and
+  class-join-status.html, the same partials the class pages use.
+  Styles: assets/ananke/css/class-finder.css and class-status.css.
+*/ -}}
 {{- $T := site.Data.terms -}}
 {{- $terms := where $T.terms "hidden" "!=" true -}}
-<style>
-  .badge { display:inline-block; font-size:.8rem; line-height:1.2; padding:.2rem .5rem; border-radius:999px; white-space:nowrap; }
-  .badge-open { background:#dff3e4; color:#1d6b36; }
-  /* "New students start": the classes we most want families to notice. Solid green with a shimmer every few seconds. */
-  .badge-start { position: relative; overflow: hidden; background: #1f8a45; color: #fff; font-weight: 600; }
-  .badge-start::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none;
-    background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg);
-    animation: pcyo-shimmer 5s ease-in-out infinite; }
-  @keyframes pcyo-shimmer { 0%, 72% { left: -60%; } 100% { left: 130%; } }
-  @media (prefers-reduced-motion: reduce) { .badge-start::after { animation: none; display: none; } }
-  .badge-skills { background:#dde9f8; color:#1f4e8c; }
-  .badge-cont { background:#eee; color:#555; }
-  .badge a.term-link { color: #1f4e8c; font-weight: 600; text-decoration: underline; }
-  .age-track { position: relative; height: 2.6rem; }
-  .age-zones { position: absolute; left: 0; right: 0; top: .55rem; height: 1.5rem; display: flex; border-radius: 999px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-  .age-zones span { flex: 1; text-align: center; font-size: .75rem; line-height: 1.5rem; font-weight: 600; color: #333; }
-  .age-zones span + span { border-left: 2px solid #fff; }
-  #ageFilter.unset .age-zones { opacity: .75; }
-  #ageRange { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 2.6rem; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
-  #ageRange::-webkit-slider-runnable-track { height: 2.6rem; background: transparent; }
-  #ageRange::-moz-range-track { height: 2.6rem; background: transparent; }
-  #ageRange::-webkit-slider-thumb { -webkit-appearance: none; width: 1.4rem; height: 2.6rem; border-radius: .7rem; background: #fff; border: 3px solid #103742; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
-  #ageRange::-moz-range-thumb { width: 1.1rem; height: 2.2rem; border-radius: .7rem; background: #fff; border: 3px solid #103742; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
-  #ageFilter.unset #ageRange::-webkit-slider-thumb { opacity: 0; }
-  #ageFilter.unset #ageRange::-moz-range-thumb { opacity: 0; }
-  #ageRange:focus-visible { outline: 2px solid #c4001a; outline-offset: 2px; border-radius: 999px; }
-  .exp-track { position: relative; height: 2.6rem; }
-  .exp-bar { position: absolute; left: 0; right: 0; top: .55rem; height: 1.5rem; border-radius: 999px;
-    background: linear-gradient(90deg, #d9f2c9 0%, #a6dcc4 25%, #8ec5e8 50%, #8f9fe0 75%, #8a63c9 100%); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-  #expFilter.unset .exp-bar { opacity: .75; }
-  #expRange { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 2.6rem; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
-  #expRange::-webkit-slider-runnable-track { height: 2.6rem; background: transparent; }
-  #expRange::-moz-range-track { height: 2.6rem; background: transparent; }
-  #expRange::-webkit-slider-thumb { -webkit-appearance: none; width: 1.4rem; height: 2.6rem; border-radius: .7rem; background: #fff; border: 3px solid #103742; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
-  #expRange::-moz-range-thumb { width: 1.1rem; height: 2.2rem; border-radius: .7rem; background: #fff; border: 3px solid #103742; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
-  #expFilter.unset #expRange::-webkit-slider-thumb { opacity: 0; }
-  #expFilter.unset #expRange::-moz-range-thumb { opacity: 0; }
-  #expRange:focus-visible { outline: 2px solid #c4001a; outline-offset: 2px; border-radius: 999px; }
-  .exp-ticks { display: flex; justify-content: space-between; font-size: .75rem; font-weight: 600; color: #555; padding: 0 .1rem; }
-  .mini-month table { border-collapse: collapse; font-size: .7rem; }
-  .mini-month td { width: 1.6rem; height: 1.5rem; text-align: center; }
-  .mini-month { width: 13.5rem; vertical-align: top; }
-  .cal-notes { font-size: .72rem; line-height: 1.3; color: #444; }
-  .cal-notes li { margin-bottom: .25rem; }
-  .cal-notes li > *:first-child { margin-top: .1rem; }
-</style>
 <article class="cf ph3 ph5-l pv3 pv4-l f4 center mw8 lh-copy nested-links mid-gray">
   <h2 class="tc">{{ $T.year }} Classes and Ensembles</h2>
 
-  {{ partial "term-timeline.html" . }}
+  {{- /* New families only need registration dates here; the Current Students page shows every kind. */}}
+  {{ partial "term-timeline.html" (dict "show" (slice "registration") "pickTerms" true) }}
 
   <!-- Selected term: chosen by tapping a term on the chart above -->
-  <div id="termPanel" class="pa3 bg-white br2 mb3 f5" style="border-left:6px solid #ccc" aria-live="polite">
+  <div id="termPanel" class="class-finder__term-panel pa3 bg-white br2 mb3 f5" aria-live="polite">
     <div class="flex items-center mb2">
       <h3 id="termTitle" class="f4 mv0 flex-auto"></h3>
       <button id="termPrev" type="button" class="pointer ba b--black-20 br2 bg-white ph2 pv1 ml2 f5" aria-label="Previous term">‹</button>
@@ -63,32 +25,32 @@
   </div>
 
   <!-- Age slider: filters the classes below. Zones are equal width so young ages are easy to pick. -->
-  <div id="ageFilter" class="mb3 f5 unset">
+  <div id="ageFilter" class="class-finder__filter class-finder__filter--unset mb3 f5">
     <div class="flex items-baseline mb1">
       <label for="ageRange" class="b mr2">Student's age:</label>
       <span id="ageValue" class="f4 b mr2" aria-live="polite">All ages</span>
       <button id="ageClear" type="button" class="pointer bn bg-transparent pa0 f6 blue underline" hidden>Show all ages</button>
     </div>
-    <div class="age-track">
-      <div class="age-zones" aria-hidden="true">
-        <span style="background:#f6c1cc">0–3</span><span style="background:#f7dc8f">3–7</span><span style="background:#a9cdef">8–12</span><span style="background:#cdb6e8">13+</span>
+    <div class="class-finder__track">
+      <div class="class-finder__age-zones" aria-hidden="true">
+        <span class="class-finder__age-zone class-finder__age-zone--toddler">0–3</span><span class="class-finder__age-zone class-finder__age-zone--sprouts">3–7</span><span class="class-finder__age-zone class-finder__age-zone--kids">8–12</span><span class="class-finder__age-zone class-finder__age-zone--teens">13+</span>
       </div>
-      <input id="ageRange" type="range" min="0" max="999" value="0" step="1" aria-valuetext="All ages">
+      <input id="ageRange" class="class-finder__range" type="range" min="0" max="999" value="0" step="1" aria-valuetext="All ages">
     </div>
   </div>
 
   <!-- Experience slider: years playing a string instrument, 0 to 5+ -->
-  <div id="expFilter" class="mb3 f5 unset">
+  <div id="expFilter" class="class-finder__filter class-finder__filter--unset mb3 f5">
     <div class="flex items-baseline mb1">
       <label for="expRange" class="b mr2">Experience:</label>
       <span id="expValue" class="f4 b mr2" aria-live="polite">Any experience</span>
       <button id="expClear" type="button" class="pointer bn bg-transparent pa0 f6 blue underline" hidden>Show any experience</button>
     </div>
-    <div class="exp-track">
-      <div class="exp-bar" aria-hidden="true"></div>
-      <input id="expRange" type="range" min="0" max="5" value="0" step="1" aria-valuetext="Any experience">
+    <div class="class-finder__track">
+      <div class="class-finder__exp-bar" aria-hidden="true"></div>
+      <input id="expRange" class="class-finder__range" type="range" min="0" max="5" value="0" step="1" aria-valuetext="Any experience">
     </div>
-    <div class="exp-ticks" aria-hidden="true"><span>New</span><span>1 yr</span><span>2 yrs</span><span>3 yrs</span><span>4 yrs</span><span>5+ yrs</span></div>
+    <div class="class-finder__exp-ticks" aria-hidden="true"><span>New</span><span>1 yr</span><span>2 yrs</span><span>3 yrs</span><span>4 yrs</span><span>5+ yrs</span></div>
   </div>
 
   <div class="flex flex-wrap items-center mb3 f5">
@@ -111,19 +73,20 @@
   </div>
   <div class="dn-ns" id="cardContainer"></div>
 
-  <details class="mt4 f5">
-    <summary class="pointer b">Full {{ $T.year }} calendar</summary>
-    <div id="yearCalendar" class="flex flex-wrap justify-center items-start mt3"></div>
-  </details>
+  {{ partial "year-calendar.html" }}
 </article>
-{{- /* class times are written from days / start / length (see layouts/partials/class-time.html) */ -}}
-{{- $cls := slice }}{{ range site.Data.classes }}{{ $cls = $cls | append (merge . (dict "time" (partial "class-time.html" (dict "c" . "style" "short")))) }}{{ end }}
-{{- /* milestones get their event page "url" and, for concerts, "orgs": a list of group ids, e.g. ["sco" "pcyo"] (see concert-orgs.html) */ -}}
-{{- $ms := slice }}
-{{- range $T.milestones }}
-  {{- $extra := dict "url" (partial "milestone-url.html" .) }}
-  {{- if eq .type "concert" }}{{ $extra = merge $extra (dict "orgs" (partial "concert-orgs.html" (.org | default "PCYO"))) }}{{ end }}
-  {{- $ms = $ms | append (merge . $extra) }}
+{{- /* Each class goes to classes.js with the words to show, worked out here so the class pages and the table agree:
+       time        from days / start / length (class-time.html)
+       exp_label   the experience range (class-experience.html)
+       status      for each term the class meets in, who can join (class-join-status.html) */ -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+{{- $cls := slice -}}
+{{- range site.Data.classes -}}
+  {{- $c := . -}}
+  {{- $status := dict -}}
+  {{- range .terms | default $regular }}{{ $status = merge $status (dict . (partial "class-join-status.html" (dict "c" $c "term" .))) }}{{ end -}}
+  {{- $extra := dict "time" (partial "class-time.html" (dict "c" . "style" "short")) "exp_label" (partial "class-experience.html" .) "status" $status -}}
+  {{- $cls = $cls | append (merge . $extra) -}}
 {{- end }}
-<script type="application/json" id="pcyo-data">{{ dict "terms" $terms "termLength" $T.term_length "milestones" $ms "breaks" $T.breaks "classes" $cls | jsonify | safeJS }}</script>
+<script type="application/json" id="pcyo-data">{{ dict "terms" $terms "termLength" $T.term_length "classes" $cls | jsonify | safeJS }}</script>
 {{ with resources.Get "js/classes.js" }}<script src="{{ .RelPermalink }}"></script>{{ end }}

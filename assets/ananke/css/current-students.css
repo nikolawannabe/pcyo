@@ -1,0 +1,193 @@
+/*
+  The Current Students page (layouts/current-students.html, partials in layouts/partials/current-students/).
+  Every color is a brand.css variable; the contrast of each pairing (WCAG 2.1 AA) is noted there.
+  Pairings used here: ink and muted ink on Warm Yellow and on white, Dodger Blue text on both,
+  Electric Purple's darker group shade (--pcyo-purple) for small headings on white (7.9:1).
+*/
+:root {
+  --cs-max-width: 60rem;               /* wide enough for the timeline without sideways scrolling on laptops */
+  --cs-gutter: 1.25rem;                /* side padding on phones */
+  --cs-radius: 1rem;
+  --cs-heading-font: 'Ovo', 'Crimson Text', Georgia, serif;   /* the brand header font, as in home.css */
+  --cs-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.cs {
+  max-width: var(--cs-max-width);
+  margin: 0 auto;
+  padding: 2rem var(--cs-gutter) 3rem;
+  color: var(--ink);
+  line-height: 1.55;
+}
+/* Plain text links. :where() keeps this at the lowest specificity, so any classed link below overrides it. */
+:where(.cs) a { color: var(--brand-blue-text); }
+.cs a:focus-visible { outline: 3px solid var(--brand-blue-text); outline-offset: 3px; }
+
+/* Text only screen readers hear, e.g. "(map)" after a building name */
+.cs-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Title and quick links ---------- */
+
+.cs-title {
+  margin: 0;
+  font-family: var(--cs-heading-font);
+  font-size: clamp(2.25rem, 5vw, 3rem);
+  line-height: 1.1;
+  color: var(--ink-strong);
+}
+.cs-lede { margin: 0.5rem 0 0; font-size: 1.125rem; color: var(--ink-muted); }
+
+.cs-top {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1.75rem;
+}
+@media (max-width: 48rem) { .cs-top { grid-template-columns: minmax(0, 1fr); } }
+
+.cs-quick {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);   /* stacked beside the month calendar */
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cs-quick__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.85rem;
+  height: 100%;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--cs-radius);
+  background: #fff;
+  box-shadow: var(--cs-card-shadow);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.cs-quick__link:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
+.cs-quick__icon {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--brand-gold);
+  color: var(--brand-gold-ink);
+}
+.cs-quick__logo { grid-row: span 2; display: flex; align-items: center; }
+.cs-quick__logo img { display: block; width: auto; height: 1.75rem; max-width: 6rem; object-fit: contain; }   /* logos (Jovial, ClassDojo) at one height, so a wide one isn't tiny */
+.cs-quick__label { font-size: 1.125rem; font-weight: 700; color: var(--brand-blue-text); }
+.cs-quick__link:hover .cs-quick__label { text-decoration: underline; }
+.cs-quick__label, .cs-quick__text { min-width: 0; }   /* let grid items shrink below their longest word */
+.cs-quick__text { font-size: 0.9375rem; color: var(--ink-muted); }
+/* the address is one long word after the @, so it may break anywhere rather than spill out of the card */
+/* A secondary link (email the registrar): smaller and quieter, about 60% of the main buttons' weight */
+.cs-quick__link--secondary { padding: 0.6rem 1rem; box-shadow: none; background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(0, 0, 0, 0.08); }
+.cs-quick__link--secondary .cs-quick__icon { width: 1.75rem; height: 1.75rem; background: none; color: var(--ink-muted); }
+.cs-quick__link--secondary .cs-quick__icon svg { width: 1.1rem; height: 1.1rem; }
+.cs-quick__link--secondary .cs-quick__label { font-size: 0.9375rem; }
+.cs-quick__link--secondary .cs-quick__text { font-size: 0.8125rem; }
+.cs-quick__email { display: block; margin-top: 0.15rem; color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+
+/* ---------- Sections ---------- */
+
+.cs-section { margin-top: 3.5rem; scroll-margin-top: 1rem; }
+.cs-copy { margin-top: 1.5rem; }
+.cs-heading {
+  margin: 0;
+  font-family: var(--cs-heading-font);
+  font-size: clamp(1.75rem, 3.5vw, 2.125rem);
+  line-height: 1.15;
+  color: var(--brand-blue-text);
+}
+.cs-section__intro { margin: 0.4rem 0 1.25rem; color: var(--ink-muted); }
+.cs-section__more { margin: 1.5rem 0 0; }
+.cs-fineprint { margin: 0.75rem 0 0; font-size: 0.875rem; color: var(--ink-muted); }
+
+/* ---------- When and where classes meet ---------- */
+
+.cs-town {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.cs-places {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+.cs-place {
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--cs-radius);
+  background: #fff;
+  box-shadow: var(--cs-card-shadow);
+}
+.cs-place__name { margin: 0; font-size: 1.125rem; line-height: 1.3; }
+.cs-place__name a { display: inline-flex; align-items: flex-start; gap: 0.4rem; font-weight: 700; text-decoration: none; }
+.cs-place__name a:hover { text-decoration: underline; }
+.cs-place__icon { flex: none; display: flex; margin-top: 0.05rem; }
+.cs-place__icon svg { width: 1.2rem; height: 1.2rem; }
+.cs-place__address { margin: 0.15rem 0 0; font-size: 0.875rem; color: var(--ink-muted); }
+.cs-place__classes { margin: 0.85rem 0 0; padding: 0; list-style: none; }
+.cs-class {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.9375rem;
+}
+.cs-class__name { flex: 1 0 100%; font-weight: 700; }
+.cs-class__time { color: var(--ink); }
+.cs-class__teacher { color: var(--ink-muted); }
+/* "Add to calendar" links under each class */
+.cs-class__add { flex: 1 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.9rem; margin-top: 0.3rem; font-size: 0.875rem; }
+.cs-class__add-icon { display: flex; color: var(--ink-muted); }
+.cs-class__add-icon svg { width: 1rem; height: 1rem; }
+.cs-class__add a { min-height: 1.5rem; display: inline-flex; align-items: center; }   /* WCAG 2.2 target size 24px */
+
+/* ---------- Handbooks and policies ---------- */
+
+.cs-docs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem 1.5rem;
+}
+.cs-docs__name {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.cs-docs__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.cs-doc {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 0.7rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: var(--cs-card-shadow);
+  text-decoration: none;
+}
+.cs-doc:hover .cs-doc__label { text-decoration: underline; }
+.cs-doc__icon { grid-row: span 2; display: flex; color: var(--pcyo-purple); }
+.cs-doc__label { font-weight: 700; line-height: 1.3; }
+.cs-doc__note { font-size: 0.875rem; color: var(--ink-muted); }

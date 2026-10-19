@@ -1,0 +1,35 @@
+{{- /*
+  "Our values": the PCYO core values with an icon each, beside a mosaic of photos.
+  Takes the "values" section of data/home.yaml. Styles: .home-values and .home-mosaic in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-section home-values" aria-labelledby="home-values-heading">
+  <div class="home-values__text">
+    <h2 class="home-heading" id="home-values-heading">{{ .heading }}</h2>
+    <ul class="home-values__list">
+      {{- range .items }}
+      <li class="home-value">
+        <span class="home-value__icon">{{ partial "home/icon.html" .icon }}</span>
+        <div>
+          <h3 class="home-value__title">{{ .title }}</h3>
+          <p>{{ .text }}</p>
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+    {{- with .more }}
+    <p><a href="{{ .url }}">{{ .label }}</a></p>
+    {{- end }}
+  </div>
+
+  {{- with .photos }}
+  <div class="home-mosaic">
+    {{- range . }}
+      {{- /* the mosaic has two columns: a wide photo spans both, any other photo shows at one column's width */}}
+      {{- $class := "" }}
+      {{- with .size }}{{ $class = print "home-mosaic__photo--" . }}{{ end }}
+      {{- $sizes := cond (eq .size "wide") "(min-width: 60em) 34rem, 90vw" "(min-width: 60em) 17rem, 45vw" }}
+    {{ partial "home/photo.html" (dict "photo" . "class" $class "widths" (slice 300 500 800 1100) "sizes" $sizes) }}
+    {{- end }}
+  </div>
+  {{- end }}
+</section>

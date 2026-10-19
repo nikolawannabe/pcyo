@@ -1,0 +1,447 @@
+/*
+  The home page (layouts/index.html): the sections above the events (layouts/partials/home/, words and
+  photos in data/home.yaml), the events heading and the funder logos.
+  Every color is a brand.css variable; the contrast of each pairing (WCAG 2.1 AA) is noted there.
+  Pairings used here: text and headings on Warm Yellow and white, white on the blue quote band,
+  white on the green buttons and purple age labels, brown ink on Golden Sun.
+*/
+:root {
+  --home-radius: 1.25rem;
+  --home-max-width: 72rem;              /* matches the footer */
+  --home-gutter: 1.25rem;               /* side padding on phones */
+  --home-heading-font: 'Ovo', 'Crimson Text', Georgia, serif;   /* the brand header font, as in footer.css */
+}
+
+.home {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+/* ---------- Shared pieces ---------- */
+
+.home-section {
+  max-width: var(--home-max-width);
+  margin: 0 auto;
+  padding: 4rem var(--home-gutter);
+}
+/* A full-width colored band; the .home-section inside keeps the content width */
+.home-band--white { background: #fff; }
+.home-band--blue  { background: var(--brand-blue-text); color: #fff; }
+
+.home-section__intro {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  text-align: center;
+  color: var(--ink-muted);
+}
+.home-section__intro p { margin: 0.5rem 0 0; }
+.home-section__more { margin: 2rem 0 0; text-align: center; }
+
+.home-heading {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  color: var(--brand-blue-text);
+}
+.home-heading--center { text-align: center; margin-bottom: 2rem; }
+
+/* Plain text links. :where() keeps this at the lowest specificity, so any classed link below overrides it. */
+:where(.home) a {
+  color: var(--brand-blue-text);
+  font-weight: 600;
+}
+.home a:focus-visible {
+  outline: 3px solid var(--brand-blue-text);
+  outline-offset: 3px;
+}
+
+.home-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.home-band .home-buttons { justify-content: center; }
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;                    /* a comfortable tap target */
+  padding: 0 1.6rem;
+  border: 2px solid var(--brand-green-text);
+  border-radius: 999px;
+  color: var(--brand-green-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+.home-button:hover,
+.home-button--primary {
+  background: var(--brand-green-text);
+  color: #fff;
+}
+.home-button--primary:hover { background: var(--ink-strong); border-color: var(--ink-strong); }
+
+/* Photos fill their box and are cropped to fit, keeping the part named by their focus (data/home.yaml) */
+.home-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focus, 50% 50%);
+}
+
+/* ---------- Hero ---------- */
+
+.home-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  max-width: var(--home-max-width);
+  margin: 0 auto;
+  padding: 3.5rem var(--home-gutter) 3rem;
+}
+.home-hero__text {
+  flex: 1 1 24rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.home-hero__eyebrow {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pcyo-purple);
+}
+.home-hero__heading {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--brand-blue-text);
+}
+.home-hero__intro { margin: 0; font-size: 1.25rem; max-width: 34em; }
+.home-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+}
+/* A dot between facts; the empty alternative text keeps screen readers from saying "dot" */
+.home-hero__facts li + li::before { content: "·" / ""; margin: 0 0.6rem; }
+
+/* One big photo across two rows, two small ones stacked beside it */
+.home-hero__photos {
+  flex: 1.15 1 26rem;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, minmax(8rem, 10.5rem));
+  gap: 0.75rem;
+}
+.home-hero__photo { border-radius: var(--home-radius); }
+.home-hero__photo--main { grid-row: 1 / 3; }
+
+/* ---------- Class cards ---------- */
+
+.home-classes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* The class name is the card's one link; its ::after stretches over the whole card so all of it is clickable */
+.home-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--home-radius);
+  background: var(--brand-yellow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.home-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
+/* keyboard focus on the name link rings the whole card (not on mouse clicks, which :focus-within would) */
+.home-card:has(a:focus-visible) { outline: 3px solid var(--brand-blue-text); outline-offset: 3px; }
+.home-card .home-photo { height: auto; aspect-ratio: 1 / 1; }
+/* A card with no photo yet: the PCYO note on Golden Sun */
+.home-card__no-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  background: var(--brand-gold);
+}
+.home-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-grow: 1;
+  padding: 1.1rem;
+}
+.home-card__ages {
+  order: -1;                           /* shown above the name, but read after it */
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  background: var(--pcyo-purple);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.home-card__name {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.home-card__name a {
+  color: var(--brand-blue-text);
+  font-weight: inherit;
+  text-decoration: none;
+}
+.home-card__name a::after { content: ""; position: absolute; inset: 0; }
+.home-card__name a:focus-visible { outline: none; }   /* the card shows the focus ring instead */
+.home-card__text { margin: 0; font-size: 0.9375rem; }
+.home-card__more {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--brand-blue-text);
+}
+.home-card:hover .home-card__more { text-decoration: underline; }
+
+/* ---------- Values and photo mosaic ---------- */
+
+.home-values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+}
+.home-values__text {
+  flex: 1 1 22rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.home-values__text p { margin: 0; }
+.home-values__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-value { display: flex; gap: 1rem; align-items: flex-start; }
+.home-value p { margin: 0; }
+.home-value__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.875rem;
+  background: var(--brand-gold);
+  color: var(--brand-gold-ink);
+}
+.home-value__title {
+  margin: 0;
+  font-family: inherit;               /* body font: these are short labels, not section titles */
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+/* Two columns; photos fill in order, and "dense" tucks small ones into gaps left by tall or wide ones */
+.home-mosaic {
+  flex: 1.25 1 26rem;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 11rem;
+  grid-auto-flow: dense;
+  gap: 0.75rem;
+}
+.home-mosaic .home-photo { border-radius: var(--home-radius); }
+.home-mosaic__photo--tall { grid-row: span 2; }
+.home-mosaic__photo--wide { grid-column: span 2; }
+
+/* ---------- Path ---------- */
+
+.home-path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-path__step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.1rem;
+  border-top: 6px solid var(--brand-gold);
+  border-radius: 1rem;
+  background: var(--brand-yellow);
+}
+.home-path__when { order: -1; margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--pcyo-purple); }
+.home-path__name {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink-strong);
+}
+.home-path__text { margin: 0; font-size: 0.875rem; }
+
+/* ---------- Family quote ---------- */
+
+.home-quote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 3.5rem var(--home-gutter);
+}
+.home-quote .home-photo {
+  flex-shrink: 0;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+}
+.home-quote__body { flex: 1 1 22rem; min-width: 0; }
+.home-quote__text { margin: 0; }
+.home-quote__text p {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  line-height: 1.35;
+}
+.home-quote__by { margin-top: 1rem; font-size: 1rem; }
+.home-quote__by::before { content: "— " / ""; }
+
+/* ---------- Teachers ---------- */
+
+.home-teachers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-teacher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.home-teacher .home-photo,
+.home-teacher__initials {
+  width: 10.5rem;
+  height: 10.5rem;
+  border-radius: 50%;
+}
+/* Until a teacher has a photo: their initials on Golden Sun */
+.home-teacher__initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-gold);
+  color: var(--brand-gold-ink);
+  font-family: var(--home-heading-font);
+  font-size: 3rem;
+}
+.home-teacher__name {
+  margin: 0;
+  font-family: var(--home-heading-font);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+.home-teacher__teaches { margin: 0; font-size: 0.9375rem; color: var(--ink-muted); }
+
+/* ---------- Joining steps ---------- */
+
+.home-join {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: home-join;
+}
+.home-join__step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border-radius: var(--home-radius);
+  background: var(--brand-yellow);
+  counter-increment: home-join;
+}
+/* The step number in a blue circle, from the list's own counter (the list already tells screen readers the order) */
+.home-join__step::before {
+  content: counter(home-join) / "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--brand-blue-text);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.home-join__title { margin: 0; font-family: inherit; font-size: 1.1875rem; font-weight: 600; color: var(--ink-strong); }
+.home-join__step p { margin: 0; }
+
+/* ---------- Below the sections ---------- */
+
+.home-events-heading {
+  margin: 3.5rem 0 0;
+  font-family: var(--home-heading-font);
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+}
+.home-funders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 var(--home-gutter) 1rem;
+}
+.home-funders img { height: 100px; width: auto; }
+
+/* People who ask for less motion don't get the card lift */
+@media (prefers-reduced-motion: reduce) {
+  .home-card,
+  .home-button { transition: none; }
+  .home-card:hover { transform: none; }
+}

@@ -1,0 +1,7 @@
+# Hugo build output (rebuilt by `hugo` and by the GitHub Pages workflow)
+public/
+resources/_gen/
+.hugo_build.lock
+
+# Node
+node_modules/

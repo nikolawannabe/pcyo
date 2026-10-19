@@ -1,0 +1,12 @@
+{{- /*
+  "This year at a glance": the timeline with every kind of date, the full calendar under it, collapsed,
+  and a small link to the year's spreadsheet.
+  Takes timeline from data/current-students.yaml. The dates come from data/terms.yaml.
+*/ -}}
+<section class="cs-section" aria-labelledby="cs-timeline-heading">
+  <h2 class="cs-heading" id="cs-timeline-heading">{{ .heading }}</h2>
+  {{- with .intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
+  {{ partial "term-timeline.html" (dict) }}
+  {{ partial "year-calendar.html" }}
+  {{- with .spreadsheet_url }}<p class="cs-fineprint"><a href="{{ . }}">{{ $.spreadsheet_label }}</a></p>{{ end }}
+</section>

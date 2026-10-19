@@ -1,0 +1,211 @@
+# The home page sections above "Upcoming Events" (layouts/index.html and layouts/partials/home/).
+# Edit the words, links and photos here, not in the templates. Styles: assets/ananke/css/home.css.
+#
+# Photos live in assets/images/home/. Each photo is:
+#   file:  the file name in assets/images/home/ (Hugo makes web-sized copies; the original can be big)
+#   alt:   what the photo shows, for people using screen readers
+#   focus: optional; which part of the photo to keep when it is cropped to fit, as "x% y%"
+#          ("50% 25%" keeps the top middle, where faces usually are). Default: the center.
+# Leave a photo out (or delete its lines) and the section still works: class cards show the PCYO note
+# instead, and the teachers show their initials.
+
+hero:
+  eyebrow: Peninsula Community Youth Orchestra
+  heading: String beginnings start here.
+  intro: Community-funded and run group string classes in Sequim and Port Angeles, with classes and ensembles for toddlers, kids, teens and adults. No experience needed.
+  buttons:            # the first one is the main action and is drawn solid
+    - label: Find your class
+      url: "#find-your-class"
+    - label: Register on Jovial
+      url: https://jovial.org/pcyo/hello
+  facts:              # the short line under the buttons
+    - Ages 0 to adult
+    - Sequim & Port Angeles
+    - 80 students and growing
+  photos:             # one big photo, then two small ones beside it
+    main:
+      file: group-portrait.jpg
+      alt: Eight smiling PCYO students holding their violins, violas and cellos
+      focus: "50% 35%"
+    small:
+      - file: young-violinist.jpg
+        alt: A young girl in a yellow dress playing her violin
+        focus: "50% 50%"
+      - file: violinist-portrait.jpg
+        alt: A smiling student holding his violin
+        focus: "50% 15%"
+
+classes:
+  id: find-your-class   # the hero's "Find your class" button jumps here
+  heading: Find your starting place
+  intro: Whether you're three or fifty, we aim to support your journey. Pick the one closest to you; we'll help with the rest.
+  cards:
+    - ages: Ages 0–6
+      name: Sound Sprouts
+      text: Music, movement and songs with a grown-up. Join any time.
+      link: Explore Sound Sprouts
+      url: /classes/sprouts/#sound-sprouts
+      photo:
+        file: sound-sprouts.jpg
+        alt: A young Sound Sprouts student and her grandmother doing music and movement together in class
+    - ages: Ages 3–7
+      name: Suzuki Sprouts
+      text: Your child's first violin class with a parent. No attention span required. New students begin each January in Port Angeles.
+      link: Explore Suzuki Sprouts
+      url: /classes/sprouts/#suzuki-sprouts
+      photo:
+        file: sprouts-with-teacher.jpg
+        alt: A young Suzuki Sprouts student and her teacher holding a violin together
+        focus: "50% 80%"
+    - ages: Ages 6–12
+      name: Beginner Strings
+      text: Violin, viola, cello or bass, from the very first note. New students begin each fall.
+      link: Explore Beginner Strings
+      url: /classes/6-plus-classes/
+      photo:
+        file: violin-and-cello-students.jpg
+        alt: Two boys with a violin and a cello
+        focus: "50% 25%"
+    - ages: Ages 7–13
+      name: Intermediate & Youth Orchestra
+      text: Already playing? Grow your skills and perform in real concerts.
+      link: Explore the ensembles
+      url: /classes/youth-orchestra/
+      photo:
+        file: youth-orchestra-rehearsal.jpg
+        alt: A conductor leading young violinists and cellists in front of tall windows
+        focus: "15% 50%"
+    - ages: Teens & adults
+      name: Adult Strings
+      text: Always wanted to play? It's never too late. Violin and viola labs for grown-ups.
+      link: Explore Adult Strings
+      url: /classes/adult-strings/
+      photo:
+        file: adult-learners.jpg
+        alt: A teenage cellist and her dad playing the violin
+        focus: "50% 30%"
+  more:
+    before: Not sure which fits?
+    label: Compare all classes and schedules
+    url: /classes/
+
+values:
+  heading: Our values
+  items:              # icon: one of together, everyone, growth (layouts/partials/home/icon.html)
+    - icon: together
+      title: Playing music together makes us better
+      text: Group classes build friendships and keep the long journey to skilled play fun from day one.
+    - icon: everyone
+      title: Orchestral music is for everyone
+      text: We never want finances to keep a student from learning music. No instrument? Borrow one from our library, which we maintain with donations. Tuition scholarships are available on request.
+    - icon: growth
+      title: Mistakes are part of success
+      text: Every player starts somewhere. Our classes are a friendly place to try, slip up and keep improving, at any age.
+  more:
+    label: More about us and our mission
+    url: /about/
+  # The photo mosaic beside the values. Two columns; size: tall (two rows high), wide (both columns) or
+  # leave it out for one cell. Photos fill in order, so put a tall one first and a wide one last.
+  photos:
+    - file: bassist-concert.jpg
+      alt: A young bassist playing her double bass with a bow at a concert
+      focus: "50% 25%"
+      size: tall
+    - file: sprouts-concert.webp
+      alt: A line of young violinists performing at a concert
+      focus: "50% 55%"
+    - file: young-violinists.jpg
+      alt: Three young violin students grinning at the camera
+      focus: "50% 85%"
+    - file: concert-hall.webp
+      alt: The orchestra on stage at Swisher Hall during a concert
+      focus: "50% 65%"
+      size: wide
+
+path:
+  heading: A path that grows with you
+  intro: Start small and keep going. Each level leads to the next, with concerts every term and a yearly concert alongside the Sequim Community Orchestra.
+  steps:
+    - when: Ages 0–7
+      name: Sprouts
+      text: Learn by ear, with songs and movement.
+    - when: Year 1
+      name: Beginner Strings
+      text: First notes and first music reading.
+    - when: Years 2–3
+      name: Intermediate Strings
+      text: Build real command of the instrument.
+    - when: Years 4–6
+      name: Youth Orchestra
+      text: Full orchestral music with peers.
+    - when: Years 7+
+      name: Sequim Community Orchestra
+      text: Graduate into a high-school-level community orchestra.
+    - when: Beyond us...?
+      name: Port Angeles Symphony
+      text: Graduates of the SCO may choose to audition for the local symphony.
+  note: Adults start in an Adult Strings lab and can grow into the Sequim Community Orchestra too.
+
+quote:
+  label: What families say   # names the section for screen readers
+  text: We are a family who have been participating in sprouts for the last year and have three young children. This program has been an absolute godsend. Not only is Christine an amazing teacher with fabulous energy and patience, but to know how much our kids are benefitting from the music exposure makes it all the better.
+  by: Meagan, parent of Suzuki Sprouts students
+  # photo: optional, shown in a circle beside the quote
+
+teachers:
+  heading: Meet your teachers
+  intro: Experienced string teachers who love working with beginners of every age.
+  people:             # photo: optional; without one, their initials show in a circle
+    - name: Christine Faught
+      teaches: Sprouts, Youth Orchestra (Sequim), Adult Violin
+      photo:
+        file: teacher-christine-faught.jpg
+        alt: Christine Faught with her violin
+        focus: "50% 40%"
+    - name: Amber Roskamp
+      teaches: Beginner & Intermediate Strings, Sequim
+      photo:
+        file: teacher-amber-roskamp.jpg
+        alt: Amber Roskamp smiling with her violin
+        focus: "50% 25%"
+    - name: Jesse Ahmann
+      teaches: Beginner, Intermediate & Youth Orchestra, Port Angeles
+      photo:
+        file: teacher-jesse-ahmann.jpg
+        alt: Jesse Ahmann playing the cello
+    - name: Anne Burns
+      teaches: Adult Viola Lab, Sequim
+      photo:
+        file: teacher-anne-burns.jpg
+        alt: Anne Burns smiling
+        # The sides of this photo were widened (blurred wall mirrored outward) so the circle can show her hair.
+
+join:
+  heading: Joining is easy
+  steps:
+    - title: Pick a class
+      text: Use the class finder to see ages, times and places.
+      link: Compare classes
+      url: /classes/
+    - title: Register on Jovial
+      text: Sign up online in a few minutes.
+      link: Register now
+      url: https://jovial.org/pcyo/hello
+    - title: Get an instrument
+      text: Come to instrument checkout day and borrow the right size from our library.
+      link: About the library
+      url: /instruments/#instrument-library
+  buttons:            # the first one is the main action and is drawn solid
+    - label: Register on Jovial
+      url: https://jovial.org/pcyo/hello
+    - label: Not ready? Join our mailing list
+      url: https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073
+
+events_heading: "Come hear us play: upcoming events"
+
+# Logos of the organizations that fund us, shown below the events. name: the alt text for screen readers.
+funders:
+  - name: ArtsWA, the Washington State Arts Commission
+    image: /images/ARTSWA.png
+  - name: EDC
+    image: /images/EDC.jpg

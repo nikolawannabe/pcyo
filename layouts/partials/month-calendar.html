@@ -1,0 +1,16 @@
+{{- /*
+  One month of the school-year calendar, opening on the current month, with ‹ › to step through the year.
+  assets/js/year-calendar.js draws it in the browser (so "this month" is always right). Needs the full calendar
+  (partials/year-calendar.html) on the same page for its data and script, and the timeline for its icons.
+  Takes { heading, today_label }. Styles: .month-now in assets/ananke/css/calendar.css.
+*/ -}}
+{{- /* id: the footer's calendar link jumps here (data/footer.yaml) */}}
+<section class="month-now" id="this-month" aria-labelledby="month-now-heading">
+  <div class="month-now__head">
+    <h2 class="month-now__heading" id="month-now-heading">{{ .heading }}</h2>
+    <button type="button" class="month-now__today" id="monthToday" hidden>{{ .today_label }}</button>
+    <button type="button" class="month-now__step" id="monthPrev" aria-label="Previous month">‹</button>
+    <button type="button" class="month-now__step" id="monthNext" aria-label="Next month">›</button>
+  </div>
+  <div class="month-now__body" id="monthCalendar" aria-live="polite"></div>
+</section>

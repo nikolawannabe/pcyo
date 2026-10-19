@@ -6,11 +6,14 @@
 #          [fall]      only in the listed term(s); continuing students the rest of the year
 #          continuing  returning students only
 #   new_students: for a "continuing" class, the term new students should look at instead (linked on the site)
+#   new_students_note: or, where to send new students in words; with new_students too, that term is linked
+#          after the words (e.g. note "join Port Angeles Suzuki Sprouts in" + new_students: winter)
 #   days / start / length: when it meets. The site writes every time from these, so they can't drift apart:
 #          days: [Mon, Wed]   start: "4:30pm"   length: 45   (minutes; leave out if not known yet)
 #          Classes that only meet in an optional term (Holiday Session) also list their dates,
 #          worked out from the term dates and days off.
 #   location: where it meets (shown with a map link)
+#   calendar: false leaves out the class's "add to calendar" links on Current Students (dates not settled)
 #   exp_min / exp_max: years of experience the class suits (0 = brand new); the experience slider uses them.
 #          Leave out for "any experience".
 #   ages:  shown to families; the age slider reads the numbers in it ("3–7", "6+", "Children 0–6").
@@ -43,7 +46,8 @@
   location: "Trinity United Methodist Church, 100 N Blake Ave, Sequim"
   link: /classes/sprouts/#suzuki-sprouts
   join: continuing
-  new_students: winter   # new Suzuki Sprouts students start in Winter
+  new_students_note: join Port Angeles Suzuki Sprouts in   # Sequim has no new-student Suzuki class this year
+  new_students: winter     # linked after the note: "… in Winter"
   description: The continuation class for Suzuki Sprouts students who started January 2026. A good fit for children who aren't reading yet.
 
 - name: Beginner Strings
@@ -100,6 +104,7 @@
   length: 45
   location: "Swisher Hall, 506 N Blake Ave, Sequim"
   link: /classes/adult-strings/
+  calendar: false     # no calendar links: Anne's lab start and end dates aren't set (the first class moved to Sep 22)
   join: continuing
   description: For adult viola students who began in March 2026. We may add more adult classes (intermediate, cello, and others) as interest grows.
 

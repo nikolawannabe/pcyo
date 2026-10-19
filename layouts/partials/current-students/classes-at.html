@@ -1,0 +1,13 @@
+{{- /*
+  The weekly classes that meet at one address, for the Current Students page.
+  Takes the address (a "location" in data/classes.yaml). Returns those classes, each with "time" added
+  (partials/class-time.html). Classes that only meet in the Holiday Session are left out, as in class-places.html.
+*/ -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+{{- $out := slice -}}
+{{- range where site.Data.classes "location" . -}}
+  {{- if ne (delimit (.terms | default $regular) ",") "holiday" -}}
+    {{- $out = $out | append (merge . (dict "time" (partial "class-time.html" (dict "c" . "style" "short")))) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

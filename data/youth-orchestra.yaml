@@ -1,0 +1,68 @@
+# The Youth Orchestra page (/classes/youth-orchestra/, layouts/classes/youth-orchestra.html). Edit the words here.
+# The design is shared with the other class pages: see layouts/partials/class-page.html for every section it can have.
+# Class times and places come from data/classes.yaml, tuition from data/terms.yaml ({tuition} is replaced with it),
+# and teacher photos from the teachers list in data/home.yaml (matched by name).
+
+crumb: Youth Orchestra
+title: Youth Orchestra
+lede: For young musicians who have mastered the basics of their instrument and are ready to play as an ensemble, in Sequim and Port Angeles.
+photo:
+  file: youth-orchestra-rehearsal.jpg
+  alt: A conductor leading young violinists and cellists in front of tall windows
+  focus: "15% 50%"
+buttons:            # the first is drawn solid (the main action)
+  - { label: Ask about an audition, url: "mailto:registrar@sequimcommunityorchestra.org" }
+  - { label: Join our mailing list, url: "https://docs.google.com/forms/d/e/1FAIpQLScurZKvTNpv0szRfphVk_cIhgXW5aps4tpTj1Ee50dNgMF8mw/viewform?usp=sharing&ouid=107459316929255460073" }
+
+facts:
+  - { value: "3+", text: "years of classes or lessons" }
+  - { value: "75", text: "minute rehearsal each week, with a short break" }
+  - { value: "${tuition}", text: "per term, with scholarships for students who needs them" }
+  - { value: "2", text: "orchestras: Sequim and Port Angeles" }
+
+checklist:
+  heading: What we expect
+  items:
+    - At least 3 years of classes (ours or school orchestra) or private lessons.
+    - Basic posture, bow hold and instrument hold, mastered.
+    - At least the G and D major scales.
+    - Ready to focus through a 75-minute rehearsal (there's a short break in the middle).
+    - Ready to play alongside students who are mostly in middle school.
+
+path:
+  heading: Where Youth Orchestra leads
+  steps:
+    - { when: Years 4–6, name: Youth Orchestra, text: "Full orchestral music with peers." }
+    - { when: Years 7+, name: Sequim Community Orchestra, text: "A high-school-level community orchestra, for high school students and adults.", url: "https://sequimcommunityorchestra.org" }
+    - { when: Beyond, name: Port Angeles Symphony, text: "Graduates of the SCO may choose to audition for the local symphony." }
+
+teachers:
+  heading: Your conductors
+  people:
+    - { name: Christine Faught, role: Sequim Youth Orchestra }
+    - { name: Jesse Ahmann, role: Port Angeles Youth Orchestra }
+
+# The classes shown in "Schedule & joining" (names from data/classes.yaml)
+schedule: [Youth Orchestra, Intermediate & Youth Orchestra]
+
+callout:
+  heading: Interested in joining?
+  text: Email our registrar to talk about an audition. We'll work with you to make sure your student is placed well, and find a good audition time.
+  button: Email the registrar
+  email: true
+
+faq:
+  heading: Questions families ask
+  items:            # q: the question; a: the answer (Markdown links work). {tuition} becomes the tuition.
+    - q: Who is this ensemble for?
+      a: Students who have finished at least 3 years of classes (ours or school orchestra) or private lessons, and are ready to join classes with mostly middle school students. High school students are likely ready for the [Sequim Community Orchestra](https://sequimcommunityorchestra.org) instead. Not quite ready? [Intermediate Strings](/classes/6-plus-classes/) is a great alternative.
+    - q: May winds join?
+      a: In Port Angeles, yes. In Sequim, we'd like to keep the group to strings this year and add winds in the future.
+    - q: Should my student take private lessons too?
+      a: Yes. It isn't required, but we strongly encourage students to meet with a teacher one-on-one a second time each week. Private lessons are arranged directly with the teacher, outside these classes.
+    - q: Where does Youth Orchestra meet?
+      a: There's a Youth Orchestra in both Port Angeles and Sequim; see [Schedule & joining](#schedule) for where and when each meets.
+    - q: How much does it cost?
+      a: "Like all our classes, ${tuition} per term, with three terms a year (Fall, Winter and Spring) plus an optional Holiday Session; see [Schedule & joining](#schedule) for dates. Scholarships are available, and no student is turned away for inability to pay."
+
+contact: Questions about registration? Email our registrar.

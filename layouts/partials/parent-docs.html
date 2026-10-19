@@ -1,0 +1,11 @@
+{{- /*
+  The documents for families from data/parent-docs.yaml, each with its "url" added
+  (the folder plus the file name, with spaces written as %20).
+  Takes nothing. Returns the list in data order. Pages pick one by id: where (partial "parent-docs.html") "id" "cello-loan"
+*/ -}}
+{{- $d := index site.Data "parent-docs" -}}
+{{- $out := slice -}}
+{{- range $d.docs -}}
+  {{- $out = $out | append (merge . (dict "url" (printf "%s%s" $d.folder (replace .file " " "%20")))) -}}
+{{- end -}}
+{{- return $out -}}

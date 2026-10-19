@@ -37,7 +37,8 @@ site_logo = "images/white-note.png"
 favicon = "images/purple-note.png"
 # Extra stylesheets from assets/ananke/css/, bundled into the theme's main.css in this order
 # (brand.css first: it defines the brand color variables the others use).
-custom_css = ["brand.css", "events.css"]
+custom_css = ["brand.css", "events.css", "footer.css", "home.css", "calendar.css", "current-students.css", "about.css", "donate.css",
+              "class-status.css", "class-schedule.css", "class-finder.css", "term-timeline.css", "term-classes.css", "class-page.css"]
 
 [caches]
   [caches.images]

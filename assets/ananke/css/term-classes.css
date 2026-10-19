@@ -1,0 +1,16 @@
+/*
+  Class cards for one term ({{< term-classes >}}, layouts/shortcodes/term-classes.html), on the Holiday Session page.
+  Moved here from a <style> block in content/pages/2026-holiday-session.html.
+*/
+.term-class-card {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+}
+.term-class-card__name {
+  margin-top: .3rem;
+  color: var(--brand-green-text);   /* 5.9:1 on Warm Yellow */
+  font-size: 1.5rem;
+}
+.term-class-card p { margin: .3rem 0; }

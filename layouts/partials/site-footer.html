@@ -1,8 +1,64 @@
-<footer class="{{ .Site.Params.background_color_class | compare.Default "bg-black" }} bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 dn dib-ns pv2 ph3 no-underline" href="{{ .Site.Home.Permalink }}" >
-    &copy; {{ with .Site.Copyright | compare.Default .Site.Title }} {{ . | safe.HTML }} {{ now.Format "2006"}} {{ end }}
-  </a>
-    <div>{{ partials.IncludeCached "social/follow.html" . }}</div>
+{{- /*
+  The site footer on every page. Shows the text and links in data/footer.yaml and the places classes meet
+  (from data/classes.yaml, through partials/class-places.html). Styles: assets/ananke/css/footer.css.
+  Takes the page context, only for the social-follow partial from the theme.
+*/ -}}
+{{- $f := site.Data.footer -}}
+<footer class="site-footer" role="contentinfo">
+  {{- /* A five-line music staff along the top edge; decorative only */}}
+  <div class="site-footer__staff" aria-hidden="true"></div>
+
+  <div class="site-footer__inner">
+    <section class="site-footer__about" aria-label="About {{ site.Title }}">
+      <a class="site-footer__brand" href="{{ site.Home.RelPermalink }}">
+        {{- with site.Params.site_logo }}
+          <img class="site-footer__logo" src="{{ urls.RelURL . }}" alt="" width="40" height="40">
+        {{- end }}
+        <span class="site-footer__name">{{ site.Title }}</span>
+      </a>
+      <p class="site-footer__tagline">{{ $f.tagline }}</p>
+      {{- with $f.parent }}
+        <p class="site-footer__parent">{{ .before }} <a href="{{ .url }}">{{ .name }}</a>{{ .after }}</p>
+      {{- end }}
+      <div class="site-footer__actions">
+        {{- range $i, $action := $f.actions }}
+          <a class="site-footer__button {{ if eq $i 0 }}site-footer__button--primary{{ end }}" href="{{ $action.url }}">{{ $action.label }}</a>
+        {{- end }}
+      </div>
+    </section>
+
+    {{- range $f.columns }}
+      <nav class="site-footer__column" aria-label="{{ .heading }}">
+        <h2 class="site-footer__heading">{{ .heading }}</h2>
+        <ul class="site-footer__links">
+          {{- range .links }}
+            <li><a href="{{ .url }}">{{ .label }}</a></li>
+          {{- end }}
+        </ul>
+        {{- if .show_contact }}{{ with $f.contact }}
+          <h2 class="site-footer__heading site-footer__heading--spaced">{{ .heading }}</h2>
+          <p class="site-footer__contact">{{ .label }}:<br><a href="mailto:{{ .email }}">{{ replace .email "@" "@<wbr>" | safe.HTML }}</a>{{/* <wbr>: wrap after the @ in narrow columns */}}</p>
+        {{- end }}{{ end }}
+      </nav>
+    {{- end }}
+
+    <section class="site-footer__column" aria-label="{{ $f.places.heading }}">
+      <h2 class="site-footer__heading">{{ $f.places.heading }}</h2>
+      {{- range partials.IncludeCached "class-places.html" "class-places" }}
+        <h3 class="site-footer__town">{{ .town }}</h3>
+        <ul class="site-footer__links">
+          {{- range .places }}
+            <li><a href="{{ .map_url }}" title="Map: {{ .address }}">{{ .name }}<span class="site-footer__hidden"> (map)</span></a></li>
+          {{- end }}
+        </ul>
+      {{- end }}
+      <p class="site-footer__more"><a href="{{ $f.places.more_url }}">{{ $f.places.more_label }}</a></p>
+
+    </section>
+  </div>
+
+  <div class="site-footer__bottom">
+    <p class="site-footer__copyright">&copy; {{ now.Format "2006" }} {{ site.Copyright | default site.Title | safe.HTML }}</p>
+    <div class="site-footer__social">{{ partials.IncludeCached "social/follow.html" . }}</div>
   </div>
 </footer>

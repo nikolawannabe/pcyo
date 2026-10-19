@@ -1,0 +1,34 @@
+{{- /*
+  The top of the home page: the page's main heading, intro, buttons, and a group of three photos.
+  Takes the "hero" section of data/home.yaml. Styles: .home-hero in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-hero">
+  <div class="home-hero__text">
+    <p class="home-hero__eyebrow">{{ .eyebrow }}</p>
+    <h1 class="home-hero__heading">{{ .heading }}</h1>
+    <p class="home-hero__intro">{{ .intro }}</p>
+    {{ partial "home/buttons.html" .buttons }}
+    {{- with .facts }}
+    <ul class="home-hero__facts">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+
+  <div class="home-hero__photos">
+    {{- with .photos.main }}
+    {{ partial "home/photo.html" (dict
+         "photo" . "class" "home-hero__photo home-hero__photo--main"
+         "widths" (slice 480 800 1200 1600) "sizes" "(min-width: 60em) 36rem, 66vw"
+         "eager" true "priority" true) }}
+    {{- end }}
+    {{- range .photos.small }}
+    {{ partial "home/photo.html" (dict
+         "photo" . "class" "home-hero__photo"
+         "widths" (slice 240 400 600) "sizes" "(min-width: 60em) 18rem, 33vw"
+         "eager" true) }}
+    {{- end }}
+  </div>
+</section>

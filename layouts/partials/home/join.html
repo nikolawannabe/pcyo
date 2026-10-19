@@ -1,0 +1,18 @@
+{{- /*
+  "Joining is easy": numbered steps, then the sign-up buttons.
+  Takes the "join" section of data/home.yaml. Styles: .home-join in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-band home-band--white" aria-labelledby="home-join-heading">
+  <div class="home-section">
+    <h2 class="home-heading home-heading--center" id="home-join-heading">{{ .heading }}</h2>
+    <ol class="home-join">
+      {{- range .steps }}
+      <li class="home-join__step">
+        <h3 class="home-join__title">{{ .title }}</h3>
+        <p>{{ .text }} <a href="{{ .url }}">{{ .link }}</a></p>
+      </li>
+      {{- end }}
+    </ol>
+    {{ partial "home/buttons.html" .buttons }}
+  </div>
+</section>

@@ -10,7 +10,30 @@
   --brand-yellow: #fff5c5;    /* Background: Warm Yellow */
   --brand-gold: #fec567;      /* Accent: Golden Sun */
 
+  /* Darker shades of Dodger Blue and the green accent, for text and button fills. The bright versions only
+     reach about 3:1 on Warm Yellow or under white text, short of WCAG AA's 4.5:1 for normal text.
+     Blue text: 5.8:1 on Warm Yellow, 6.3:1 on white. White on the blue: 6.3:1. White on the green: 6.5:1. */
+  --brand-blue-text: #0f5fb3;
+  --brand-green-text: #0f6e0f;
+  /* Text on Golden Sun (icons, initials): a dark brown, 6.6:1 */
+  --brand-gold-ink: #5a3a00;
+
+  /* Text colors. Contrast on Warm Yellow / white: 10.4:1 / 11.4:1, 12.9:1 / 14.2:1, 7.1:1 / 7.7:1 */
+  --ink: #3a3a3a;             /* body text, a little softer than black */
+  --ink-strong: #2b2b2b;      /* names and titles */
+  --ink-muted: #5b5146;       /* secondary lines; a warm grey that suits the yellow */
+
   /* Group colors: PCYO concerts and events, and our partner the Sequim Community Orchestra (SCO). */
   --pcyo-purple: #7a3fa0;     /* deeper than Electric Purple on purpose: reads better on the small badges */
   --sco-navy: #103742;        /* from the SCO site colors (assets/css/custom-colors.scss) */
+
+  /* Date markers on the timeline and calendars. Not brand colors: they were already used as hex values in
+     several files, and live here so each has one source of truth. Contrast on white / Warm Yellow: */
+  --today: #c4001a;           /* today's line and ring: 6.2:1 / 5.7:1 */
+  --mark-off: #5b6b7a;        /* days off (slate): 5.5:1 on white; white text on it 5.5:1 */
+  --mark-instrument: #8a4a14; /* instrument days (brown): 6.8:1 on white */
+  --mark-registration: var(--brand-green-text);  /* registration dates */
+
+  /* Keyboard focus ring, everywhere (the month calendar already used it): 6.3:1 on white, past the 3:1 needed */
+  --focus-ring: var(--brand-blue-text);
 }

@@ -1,0 +1,38 @@
+{{- /*
+  Every day a class meets this school year, from data/classes.yaml and data/terms.yaml.
+  Takes one class. Returns a list, in date order, of { date (a time), term (its name), kind }, where kind is
+    "class"   a regular class day
+    "early"   before the term starts, in its "early" week, when the class's teacher is the one starting early
+    "makeup"  one of the term's make-up days
+  Days off are left out: everyone's, and those for this class's teacher ("who" in breaks, as in class-time.html).
+  Terms marked hidden are left out.
+*/ -}}
+{{- $c := . -}}
+{{- $T := site.Data.terms -}}
+{{- $days := $c.days | default slice -}}
+{{- $teacher := $c.teacher | default "" -}}
+{{- $out := slice -}}
+{{- range $id := $c.terms | default (slice "fall" "winter" "spring") -}}
+  {{- with index (where (where $T.terms "id" $id) "hidden" "!=" true) 0 -}}
+    {{- $term := . -}}
+    {{- /* where to look: the term, reaching back to its early week if this class's teacher starts early */ -}}
+    {{- $from := time .start -}}
+    {{- $early := false -}}
+    {{- with .early }}{{ if and .who (in $teacher .who) }}{{ $early = . }}{{ $from = time .start }}{{ end }}{{ end -}}
+    {{- $n := int (div ((time .end).Sub $from).Hours 24) -}}
+    {{- range seq 0 $n -}}
+      {{- $d := $from.AddDate 0 0 . -}}
+      {{- if in $days ($d.Format "Mon") -}}
+        {{- $off := false -}}
+        {{- range $T.breaks }}{{ if and (not ($d.Before (time .start))) (not ($d.After (time .end))) (or (eq .who "all") (in $teacher .who)) }}{{ $off = true }}{{ end }}{{ end -}}
+        {{- if not $off -}}
+          {{- $kind := "class" -}}
+          {{- if $d.Before (time $term.start) }}{{ $kind = "early" }}{{ end -}}
+          {{- with $term.makeup }}{{ if and (not ($d.Before (time .start))) (not ($d.After (time .end))) }}{{ $kind = "makeup" }}{{ end }}{{ end -}}
+          {{- $out = $out | append (dict "date" $d "term" $term.name "kind" $kind) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

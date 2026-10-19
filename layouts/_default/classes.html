@@ -1,12 +1,13 @@
+{{- /*
+  The /classes/ page: the class finder (partials/classes.html), registration links, then the "About our classes"
+  text and how PCYO fits with other Peninsula music programs.
+*/ -}}
 
   {{ define "main" }}
   <div class="pa3">
     {{ partial "classes.html" . }}
   </div>
   <div class="f4 mw7 center">
-    <div  class="mb3 tc">
-      <a href="https://docs.google.com/spreadsheets/d/1c9Kp3MUUsrpSA7L6TWG9OsEty8YxFBLFp0ufsr6gOnk/edit?usp=sharing">Class Dates and Concert Dates for {{ site.Data.terms.year }}</a>
-    </div>
     <div class="mb3 tc">
         <a class="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib green" href=
         "https://jovial.org/pcyo/hello">✍️    New Students: Register on Jovial!</a> <a class=

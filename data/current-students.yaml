@@ -1,0 +1,53 @@
+# The Current Students page (/current-students/, layouts/current-students.html). Edit the words and links here.
+# The registrar's email comes from data/footer.yaml (contact), the class times and places from data/classes.yaml,
+# and the timeline and full calendar from data/terms.yaml.
+
+intro: Everything for families already in our classes, in one place.
+
+# The buttons at the top, in order. icon: a name from layouts/partials/home/icon.html,
+# or logo: an image in static/ shown instead of the icon (the label still says what it is).
+# email: true makes the button a mail link to the registrar (no url needed).
+# secondary: true draws it smaller and quieter, below the others.
+quick_links:
+  - label: Family Portal
+    text: Sign in to your family's Jovial account.
+    url: https://jovial.org/pcyo/family
+    logo: /images/jovial-with-text.png
+  - label: ClassDojo
+    text: Messages and updates from your teacher.
+    url: https://www.classdojo.com/      # ClassDojo's home page, where families log in; swap in a class invite link if there is one
+    logo: /images/classdojo-logo-small.png   # cropped and shrunk from ClassDojo-Logo.jpg (3840×2160, mostly white space)
+  - label: Email our registrar
+    text: Questions about classes, registration or tuition.
+    email: true
+    icon: mail
+    secondary: true
+
+# The month calendar at the top of the page (layouts/partials/month-calendar.html). It opens on the current month.
+month:
+  heading: This month
+  today_label: Back to this month
+
+timeline:
+  heading: This year at a glance
+  intro: Tap a term or a date for details. Use the Show buttons to pick what the chart marks.
+  # A small link under the full calendar, kept for anyone who wants the spreadsheet
+  spreadsheet_label: The year is also in a spreadsheet.
+  spreadsheet_url: https://docs.google.com/spreadsheets/d/1c9Kp3MUUsrpSA7L6TWG9OsEty8YxFBLFp0ufsr6gOnk/edit?usp=sharing
+
+classes:
+  id: where-classes-meet          # the footer links here; keep in step with data/footer.yaml
+  heading: When and where classes meet
+  intro: Every weekly class, by building. Tap a building for a map.
+  # Under each class: links that add every day it meets this year to a family's calendar (layouts/partials/class-calendar.html)
+  calendar_intro: Add your class to your calendar to get every class day this year, with days off left out. It stays up to date if dates change.
+  google_label: Google Calendar
+  other_label: Apple or Outlook
+  more_label: Class descriptions, ages and term dates are on the Classes page.
+  more_url: /classes/
+
+documents:
+  id: class-materials             # the footer links here; keep in step with data/footer.yaml
+  heading: Handbooks and policies
+  intro: All are PDFs.
+  # The documents themselves are listed in data/parent-docs.yaml.

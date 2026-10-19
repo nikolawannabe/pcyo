@@ -1,0 +1,24 @@
+{{- /*
+  "Meet your teachers": a round photo (or their initials, until there is one), name, and what they teach.
+  Takes the "teachers" section of data/home.yaml. Styles: .home-teachers in assets/ananke/css/home.css.
+*/ -}}
+<section class="home-section" aria-labelledby="home-teachers-heading">
+  <div class="home-section__intro">
+    <h2 class="home-heading" id="home-teachers-heading">{{ .heading }}</h2>
+    <p>{{ .intro }}</p>
+  </div>
+  <ul class="home-teachers">
+    {{- range .people }}
+    <li class="home-teacher">
+      {{- with .photo }}
+      {{ partial "home/photo.html" (dict "photo" . "widths" (slice 200 400) "sizes" "10.5rem") }}
+      {{- else }}
+      {{- /* decorative: the name is right below */}}
+      <span class="home-teacher__initials" aria-hidden="true">{{ partial "home/initials.html" .name }}</span>
+      {{- end }}
+      <h3 class="home-teacher__name">{{ .name }}</h3>
+      <p class="home-teacher__teaches">{{ .teaches }}</p>
+    </li>
+    {{- end }}
+  </ul>
+</section>

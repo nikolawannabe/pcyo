@@ -1,0 +1,14 @@
+{{- /*
+  A clock time from data/classes.yaml ("4:30pm", "11am") as minutes after midnight (4:30pm -> 990).
+  Takes the text. Returns -1 when it isn't a time in that form (e.g. "TBA").
+*/ -}}
+{{- $minutes := -1 -}}
+{{- with findRESubmatch `^\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)\s*$` (lower (string .)) 1 -}}
+  {{- $g := index . 0 -}}
+  {{- $h := int (strings.TrimLeft "0" (index $g 1) | default "0") -}}
+  {{- $m := int (strings.TrimLeft "0" (index $g 2) | default "0") -}}
+  {{- if and (eq (index $g 3) "pm") (ne $h 12) }}{{ $h = add $h 12 }}{{ end -}}
+  {{- if and (eq (index $g 3) "am") (eq $h 12) }}{{ $h = 0 }}{{ end -}}
+  {{- $minutes = add (mul $h 60) $m -}}
+{{- end -}}
+{{- return $minutes -}}

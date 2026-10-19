@@ -1,0 +1,181 @@
+{{- /*
+  The shared design for the class pages (6+ Classes, Youth Orchestra, Adult Strings). Each page's layout in
+  layouts/classes/ calls this with its words from data/ (e.g. data/youth-orchestra.yaml).
+
+  Takes the page's data. Every section is optional and shows only when the data has it, in this order:
+    title, lede, photo, buttons   the top of the page
+    facts                         big numbers on a blue band
+    cards                         one card per group, e.g. the adult labs (teacher: their photo from data/home.yaml;
+                                  logo: an image in static/ shown at the top; id: an anchor other pages link to)
+    checklist                     a short list with check marks ("What we expect")
+    path                          steps with arrows between ("Where these classes lead")
+    teachers                      photo (from data/home.yaml), role and bio
+    schedule                      class names for the shared "Schedule & joining" section (partials/class-schedule.html)
+    callout                       a highlighted note with a button
+    faq                           questions that open when tapped
+    documents                     family documents by id (data/parent-docs.yaml), then contact
+  Anywhere in the words, {tuition} becomes the per-term tuition from data/terms.yaml.
+  Styles: assets/ananke/css/class-page.css, plus the shared .home-*, .about-hero, .donate-facts and .cs-doc pieces.
+*/ -}}
+{{- $p := . }}
+{{- $tuition := string site.Data.terms.tuition }}
+{{- $email := site.Data.footer.contact.email }}
+{{- $people := site.Data.home.teachers.people }}
+<div class="home class-page">
+  {{- /* breadcrumb: the › between steps is drawn by the stylesheet, so screen readers hear just the three names */}}
+  <nav class="home-section class-page__crumbs" aria-label="Breadcrumb">
+    <ol class="class-page__crumb-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/classes/">Classes</a></li>
+      <li><span aria-current="page">{{ $p.crumb }}</span></li>
+    </ol>
+  </nav>
+
+  <header class="home-section about-hero class-page__hero">
+    <div class="about-hero__text">
+      <h1 class="about-hero__title">{{ $p.title }}</h1>
+      <p class="about-hero__lede">{{ $p.lede }}</p>
+      {{- with $p.buttons }}<div class="donate-hero__buttons">{{ partial "home/buttons.html" . }}</div>{{ end }}
+    </div>
+    {{- with $p.photo }}
+    <div class="about-hero__photo">
+      {{ partial "home/photo.html" (dict "photo" . "widths" (slice 500 900 1400) "sizes" "(min-width: 60em) 34rem, 92vw" "eager" true) }}
+    </div>
+    {{- end }}
+  </header>
+
+  {{- with $p.facts }}
+  <section class="home-band home-band--blue" aria-label="At a glance">
+    <ul class="home-section donate-facts class-page__facts">
+      {{- range . }}
+      <li class="donate-fact"><span class="donate-fact__value">{{ replace .value "{tuition}" $tuition }}</span> <span class="donate-fact__text">{{ replace .text "{tuition}" $tuition }}</span></li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+
+  {{- with $p.cards }}
+  <section class="home-band home-band--white" aria-labelledby="class-page-cards">
+    <div class="home-section">
+      <h2 class="home-heading home-heading--center" id="class-page-cards">{{ .heading }}</h2>
+      <div class="class-page__cards">
+        {{- range .items }}
+        <article class="class-page__card"{{ with .id }} id="{{ . }}"{{ end }}>
+          {{- /* decorative: the card's heading names the class */}}
+          {{- with .logo }}<img class="class-page__logo" src="{{ . | relURL }}" alt="" width="500" height="500">{{ end }}
+          <div class="class-page__card-head">
+            {{- with .teacher }}{{ with index (where $people "name" .) 0 }}{{ with .photo }}
+            <div class="class-page__face">{{ partial "home/photo.html" (dict "photo" . "widths" (slice 200) "sizes" "4rem") }}</div>
+            {{- end }}{{ end }}{{ end }}
+            <div>
+              <h3 class="class-page__card-name">{{ .name }}</h3>
+              {{- with .teacher }}<p class="class-page__card-teacher">with {{ . }}</p>{{ end }}
+            </div>
+          </div>
+          {{- with .meta }}<p class="class-page__card-meta">{{ . }}</p>{{ end }}
+          {{- range .text }}<p>{{ replace . "{tuition}" $tuition | markdownify }}</p>{{ end }}
+          {{- with .link }}<p class="class-page__card-more"><a href="{{ .url }}">{{ .label }}</a></p>{{ end }}
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{- end }}
+
+  {{- with $p.checklist }}
+  <section class="home-section class-page__narrow" aria-labelledby="class-page-checklist">
+    <h2 class="home-heading home-heading--center" id="class-page-checklist">{{ .heading }}</h2>
+    <ul class="class-page__checklist">
+      {{- range .items }}<li>{{ . | markdownify }}</li>{{ end }}
+    </ul>
+  </section>
+  {{- end }}
+
+  {{- with $p.path }}
+  <section class="home-section" aria-labelledby="class-page-path">
+    <h2 class="home-heading home-heading--center" id="class-page-path">{{ .heading }}</h2>
+    <ol class="class-page__path">
+      {{- range .steps }}
+      <li class="class-page__step">
+        <p class="class-page__when">{{ .when }}</p>
+        <h3 class="class-page__step-name">{{ with .url }}<a href="{{ . }}">{{ end }}{{ .name }}{{ if .url }}</a>{{ end }}</h3>
+        <p>{{ .text }}</p>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  {{- with $p.teachers }}
+  <section class="home-band home-band--white" aria-labelledby="class-page-teachers">
+    <div class="home-section">
+      <h2 class="home-heading home-heading--center" id="class-page-teachers">{{ .heading }}</h2>
+      <div class="class-page__teachers">
+        {{- range .people }}
+        <article class="class-page__teacher">
+          {{- /* the photo from the home page's teachers list, so each teacher's photo is set in one place */}}
+          {{- with index (where $people "name" .name) 0 }}{{ with .photo }}
+          <div class="class-page__teacher-photo">{{ partial "home/photo.html" (dict "photo" . "widths" (slice 200 400) "sizes" "8rem") }}</div>
+          {{- end }}{{ end }}
+          <div>
+            <h3 class="class-page__teacher-name">{{ .name }}</h3>
+            <p class="class-page__teacher-role">{{ .role }}</p>
+            {{- with .bio }}<p>{{ . }}</p>{{ end }}
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{- end }}
+
+  {{- with $p.schedule }}
+  <div class="class-page__schedule">{{ partial "class-schedule.html" (dict "names" .) }}</div>
+  {{- end }}
+
+  {{- with $p.callout }}
+  <section class="home-section class-page__narrow">
+    <div class="class-page__callout">
+      <h2 class="class-page__callout-heading">{{ .heading }}</h2>
+      <p>{{ replace .text "{tuition}" $tuition | markdownify }}</p>
+      {{- $url := .url }}{{ if .email }}{{ $url = printf "mailto:%s" $email }}{{ end }}
+      <p class="class-page__callout-button"><a class="home-button home-button--primary" href="{{ $url }}">{{ .button }}</a></p>
+    </div>
+  </section>
+  {{- end }}
+
+  {{- with $p.faq }}
+  <section class="home-band home-band--white" aria-labelledby="class-page-faq">
+    <div class="home-section class-page__narrow">
+      <h2 class="home-heading home-heading--center" id="class-page-faq">{{ .heading }}</h2>
+      {{- range .items }}
+      <details class="class-page__question">
+        <summary>{{ .q }}</summary>
+        <div class="class-page__answer">{{ replace .a "{tuition}" $tuition | markdownify }}</div>
+      </details>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+  <section class="home-section class-page__docs"{{ with $p.documents }} aria-labelledby="class-page-docs"{{ end }}>
+    {{- with $p.documents }}
+    <h2 class="home-heading home-heading--center" id="class-page-docs">{{ .heading }}</h2>
+    {{- $docs := partial "parent-docs.html" }}
+    <ul class="cs-docs__list class-page__doc-list">
+      {{- range .ids }}{{ with index (where $docs "id" .) 0 }}
+      <li>
+        <a class="cs-doc" href="{{ .url }}">
+          <span class="cs-doc__icon">{{ partial "home/icon.html" "file" }}</span>
+          <span class="cs-doc__label">{{ .label }}<span class="cs-hidden"> (PDF)</span></span>
+          {{- with .note }}<span class="cs-doc__note">{{ . }}</span>{{ end }}
+        </a>
+      </li>
+      {{- end }}{{ end }}
+    </ul>
+    {{- end }}
+    {{- with $p.contact }}
+    <p class="class-page__contact">{{ . }} <a href="mailto:{{ $email }}">{{ replace $email "@" "@<wbr>" | safe.HTML }}</a></p>
+    {{- end }}
+  </section>
+</div>

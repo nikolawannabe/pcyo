@@ -19,16 +19,11 @@
   {{- $dayText = delimit $names " & " -}}
 {{- end -}}
 
-{{- /* clock time: "4:30pm" -> minutes after midnight */ -}}
+{{- /* clock time: "4:30pm" -> minutes after midnight (partials/clock-minutes.html) */ -}}
 {{- $clock := "" -}}
 {{- with $c.start -}}
-  {{- $m := findRESubmatch `^\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)\s*$` (lower .) 1 -}}
-  {{- with $m }}{{ $g := index . 0 -}}
-    {{- $h := int (strings.TrimLeft "0" (index $g 1) | default "0") -}}
-    {{- $mi := int (strings.TrimLeft "0" (index $g 2) | default "0") -}}
-    {{- if and (eq (index $g 3) "pm") (ne $h 12) }}{{ $h = add $h 12 }}{{ end -}}
-    {{- if and (eq (index $g 3) "am") (eq $h 12) }}{{ $h = 0 }}{{ end -}}
-    {{- $s := add (mul $h 60) $mi -}}
+  {{- $s := partial "clock-minutes.html" . -}}
+  {{- if ge $s 0 -}}
     {{- $sAp := cond (ge $s 720) "pm" "am" -}}
     {{- $sH := mod (div $s 60) 12 }}{{ if eq $sH 0 }}{{ $sH = 12 }}{{ end -}}
     {{- $sText := printf "%d:%02d" $sH (mod $s 60) -}}

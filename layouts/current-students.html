@@ -1,0 +1,27 @@
+{{- /*
+  The Current Students page (content/current-students.md sets layout = 'current-students').
+  Words and links: data/current-students.yaml. Sections are partials in layouts/partials/current-students/.
+  Styles: assets/ananke/css/current-students.css.
+  Anything written in the body of content/current-students.md shows under the buttons at the top (a notice, say).
+*/ -}}
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $cs := index site.Data "current-students" }}
+  <div class="cs">
+    <header class="cs-intro">
+      <h1 class="cs-title">{{ .Title }}</h1>
+      {{- with $cs.intro }}<p class="cs-lede">{{ . }}</p>{{ end }}
+      {{- /* this month's calendar beside the quick links (stacked on phones) */}}
+      <div class="cs-top">
+        {{ partial "month-calendar.html" $cs.month }}
+        {{ partial "current-students/quick-links.html" $cs.quick_links }}
+      </div>
+    </header>
+
+    {{- with .Content }}<div class="cs-section cs-copy">{{ . }}</div>{{ end }}
+
+    {{ partial "current-students/timeline.html" $cs.timeline }}
+    {{ partial "current-students/classes.html" $cs.classes }}
+    {{ partial "current-students/documents.html" $cs.documents }}
+  </div>
+{{ end }}

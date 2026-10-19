@@ -1,0 +1,15 @@
+{{- /*
+  Where old document addresses should now go, for the 404 page: { "/old.pdf": "/pdfs/docs_for_parents/new.pdf", … }.
+  From "replaces" on each document in data/parent-docs.yaml, plus the "retired" addresses, which go to a page.
+  Takes nothing.
+*/ -}}
+{{- $map := dict -}}
+{{- range partial "parent-docs.html" -}}
+  {{- $url := .url -}}
+  {{- range .replaces }}{{ $map = merge $map (dict . $url) }}{{ end -}}
+{{- end -}}
+{{- with (index site.Data "parent-docs").retired -}}
+  {{- $to := .to -}}
+  {{- range .addresses }}{{ $map = merge $map (dict . $to) }}{{ end -}}
+{{- end -}}
+{{- return $map -}}
