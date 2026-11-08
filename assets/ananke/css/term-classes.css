@@ -14,3 +14,7 @@
   font-size: 1.5rem;
 }
 .term-class-card p { margin: .3rem 0; }
+/* Calendar links: the page's default link blue is only 3.69:1 on Warm Yellow; this one meets AA. */
+.term-class-card__calendar .cs-class__add { font-size: inherit; }
+.term-class-card__calendar .cs-class__add a { color: var(--brand-blue-text); }
+.term-class-card__calendar .cs-class__note { display: block; font-size: .875rem; }

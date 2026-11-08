@@ -7,7 +7,6 @@
   <h2 class="cs-heading" id="cs-classes-heading">{{ .heading }}</h2>
   {{- with .intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
   {{- with .calendar_intro }}<p class="cs-section__intro">{{ . }}</p>{{ end }}
-  {{- $labels := . }}
   {{- range partials.IncludeCached "class-places.html" "class-places" }}
   <h3 class="cs-town">{{ .town }}</h3>
   <div class="cs-places">
@@ -25,13 +24,7 @@
           <span class="cs-class__time">{{ .time }}</span>
           {{- with .teacher }}<span class="cs-class__teacher">with {{ . }}</span>{{ end }}
           {{- $class := . }}
-          {{- with partial "class-calendar.html" . }}
-          <span class="cs-class__add">
-            <span class="cs-class__add-icon">{{ partial "home/icon.html" "calendar" }}</span>
-            <a href="{{ .google }}">{{ $labels.google_label }}<span class="cs-hidden">: add {{ $class.name }} ({{ $class.town }})</span></a>
-            <a href="{{ .webcal | safeURL }}">{{/* safeURL: Hugo blocks webcal:// links otherwise */}}{{ $labels.other_label }}<span class="cs-hidden">: add {{ $class.name }} ({{ $class.town }})</span></a>
-          </span>
-          {{- end }}
+          {{- with partial "class-calendar.html" . }}{{ partial "class-calendar-links.html" (dict "links" . "name" $class.name "town" $class.town) }}{{ end }}
         </li>
         {{- end }}
       </ul>

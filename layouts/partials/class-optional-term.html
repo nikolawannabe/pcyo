@@ -1,0 +1,12 @@
+{{- /*
+  The optional term a class meets in when that's the only term it has, such as a Holiday Session class.
+  Takes one class from data/classes.yaml. Returns the term's id ("holiday"), or "" for any other class.
+  These classes share a name and town with a regular class, so they need their own calendar file.
+*/ -}}
+{{- $regular := slice "fall" "winter" "spring" -}}
+{{- $terms := .terms | default $regular -}}
+{{- $out := "" -}}
+{{- if and (eq (len $terms) 1) (not (in $regular (index $terms 0))) -}}
+  {{- $out = index $terms 0 -}}
+{{- end -}}
+{{- return $out -}}

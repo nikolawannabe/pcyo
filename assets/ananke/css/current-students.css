@@ -155,6 +155,8 @@
 .cs-class__name { flex: 1 0 100%; font-weight: 700; }
 .cs-class__time { color: var(--ink); }
 .cs-class__teacher { color: var(--ink-muted); }
+.cs-class__where,
+.cs-class__note { flex: 1 0 100%; color: var(--ink-muted); }
 /* "Add to calendar" links under each class */
 .cs-class__add { flex: 1 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.9rem; margin-top: 0.3rem; font-size: 0.875rem; }
 .cs-class__add-icon { display: flex; color: var(--ink-muted); }

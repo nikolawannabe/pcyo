@@ -1,0 +1,30 @@
+{{- /*
+  The classes of one term with their calendar links, grouped by town, for the Current Students page.
+  Takes the term's id ("holiday"). Returns "" when the term is hidden, over or has no classes; otherwise
+    { term: the term from data/terms.yaml, towns: [ { town, classes: [ { name, link, teacher, location,
+      time, calendar: links from partials/class-calendar.html, in_regular: its dates are in the class's
+      regular calendar } ] } ] }
+*/ -}}
+{{- $id := . -}}
+{{- $out := "" -}}
+{{- with index (where (where site.Data.terms.terms "id" $id) "hidden" "!=" true) 0 -}}
+  {{- $term := . -}}
+  {{- if now.Before ((time $term.end).AddDate 0 0 1) -}}
+    {{- $order := slice -}}
+    {{- $byTown := dict -}}
+    {{- range site.Data.classes -}}
+      {{- if in (.terms | default (slice "fall" "winter" "spring")) $id -}}
+        {{- $class := merge . (dict
+              "time" (partial "class-time.html" (dict "c" . "style" "short"))
+              "calendar" (partial "class-calendar.html" .)
+              "in_regular" (ne (partial "class-optional-term.html" .) $id)) -}}
+        {{- if not (in $order .town) }}{{ $order = $order | append .town }}{{ end -}}
+        {{- $byTown = merge $byTown (dict .town ((index $byTown .town | default slice) | append $class)) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $towns := slice -}}
+    {{- range $order }}{{ $towns = $towns | append (dict "town" . "classes" (index $byTown .)) }}{{ end -}}
+    {{- with $towns }}{{ $out = dict "term" $term "towns" . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

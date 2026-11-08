@@ -1,0 +1,32 @@
+{{- /*
+  An optional term's classes with their own calendar links, by town (partials/term-calendar-classes.html).
+  Optional classes stay out of regular calendars, so families only add them if they sign up. Disappears at
+  the first site build after the term ends. Takes holiday_calendars from data/current-students.yaml.
+*/ -}}
+{{- $labels := . }}
+{{- with partial "term-calendar-classes.html" .term }}
+<section class="cs-section" id="{{ $labels.id }}" aria-labelledby="cs-term-calendars-heading">
+  <h2 class="cs-heading" id="cs-term-calendars-heading">{{ .term.name }} calendars ({{ (time .term.start).Format "Jan 2" }} – {{ (time .term.end).Format "Jan 2" }})</h2>
+  <p class="cs-section__intro">{{ $labels.intro }}{{ with .term.page }} <a href="{{ . }}">{{ $labels.page_label }}</a>{{ end }}</p>
+  <div class="cs-places">
+    {{- range .towns }}
+    <article class="cs-place">
+      <h3 class="cs-place__name">{{ .town }}</h3>
+      <ul class="cs-place__classes">
+        {{- range .classes }}
+        <li class="cs-class">
+          <a class="cs-class__name" href="{{ .link }}">{{ .name }}</a>
+          <span class="cs-class__time">{{ .time }}</span>
+          {{- with .teacher }}<span class="cs-class__teacher">with {{ . }}</span>{{ end }}
+          {{- with .location }}<span class="cs-class__where">{{ . }}</span>{{ end }}
+          {{- if .in_regular }}<span class="cs-class__note">{{ $labels.regular_note }}</span>{{ end }}
+          {{- $class := . }}
+          {{- with .calendar }}{{ partial "class-calendar-links.html" (dict "links" . "name" $class.name "town" $class.town) }}{{ end }}
+        </li>
+        {{- end }}
+      </ul>
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

@@ -46,6 +46,15 @@ classes:
   more_label: Class descriptions, ages and term dates are on the Classes page.
   more_url: /classes/
 
+# An optional term's classes, each with its own calendar (layouts/partials/current-students/term-calendars.html).
+# The heading and dates come from data/terms.yaml; the classes from data/classes.yaml.
+holiday_calendars:
+  id: holiday-calendars
+  term: holiday
+  intro: The Holiday Session is optional, so its classes aren't in your regular class calendar. If you've signed up, add your class here.
+  page_label: About the Holiday Session
+  regular_note: These dates are already in this class's regular calendar.
+
 documents:
   id: class-materials             # the footer links here; keep in step with data/footer.yaml
   heading: Handbooks and policies

@@ -19,6 +19,12 @@
       {{- with $c.location }}<div><b>Location</b>: {{ . }}</div>{{ end }}
       {{- with $c.prereq }}<div><b>Prerequisite</b>: {{ . }}</div>{{ end }}
       {{- with $term.tuition }}<div><b>Tuition</b>: {{ . }}</div>{{ end }}
+      {{- with partial "class-calendar.html" $c }}
+      <div class="term-class-card__calendar"><b>Add to your calendar</b>:
+        {{- partial "class-calendar-links.html" (dict "links" . "name" $c.name "town" $c.town) }}
+        {{- if ne (partial "class-optional-term.html" $c) $id }}<span class="cs-class__note">{{ (index site.Data "current-students").holiday_calendars.regular_note }}</span>{{ end }}
+      </div>
+      {{- end }}
     </div>
   </article>
 {{- end }}{{ end }}

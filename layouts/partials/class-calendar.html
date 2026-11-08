@@ -1,6 +1,6 @@
 {{- /*
   A calendar file (.ics) for one class with every day it meets this year (partials/class-sessions.html), published
-  at /calendars/<town>-<class>.ics, and the links to subscribe to it. Subscribing (not importing) means a family's
+  at /calendars/<town>-<class>.ics (/calendars/<term>-<town>-<class>.ics for an optional term's own class), and the links to subscribe to it. Subscribing (not importing) means a family's
   calendar picks up date changes when the site is updated; Google checks about once a day.
   Takes one class from data/classes.yaml. Returns "" when the class has no start time or days yet, or has
   calendar: false; otherwise
@@ -13,7 +13,15 @@
 {{- if and (ge $start 0) $c.days (ne $c.calendar false) -}}
   {{- $length := int ($c.length | default 60) -}}
   {{- $host := (urls.Parse site.BaseURL).Host -}}
-  {{- $slug := urlize (printf "%s %s" $c.town $c.name) -}}
+  {{- /* no "+" from "6+ Beginners": it's easy to break in a calendar address */ -}}
+  {{- $slug := replace (urlize (printf "%s %s" $c.town $c.name)) "+" "" -}}
+  {{- $calendarName := printf "%s (%s)" $c.name $c.town -}}
+  {{- /* a class that only meets in an optional term shares its name and town with a regular class */ -}}
+  {{- with partial "class-optional-term.html" $c -}}
+    {{- $id := . -}}
+    {{- $slug = printf "%s-%s" $id $slug -}}
+    {{- with index (where site.Data.terms.terms "id" $id) 0 }}{{ $calendarName = printf "%s %s (%s)" $c.name .name $c.town }}{{ end -}}
+  {{- end -}}
   {{- $where := printf "%s, WA" ($c.location | default $c.town) -}}
   {{- $page := (site.GetPage "/current-students").Permalink -}}
   {{- $events := slice -}}
@@ -34,6 +42,6 @@
           "title" $title "where" $at "note" $note "tentative" (eq .kind "makeup")) -}}
   {{- end -}}
   {{- $result = partial "ics-file.html" (dict "path" (printf "calendars/%s.ics" $slug)
-        "name" (printf "%s (%s)" $c.name $c.town) "events" $events) -}}
+        "name" $calendarName "events" $events) -}}
 {{- end -}}
 {{- return $result -}}

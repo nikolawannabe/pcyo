@@ -1,0 +1,11 @@
+{{- /*
+  The links that add a class to a calendar. Used on the Current Students and Holiday Session pages.
+  Takes { links: from partials/class-calendar.html; name, town: the class, for screen readers }.
+  Labels: data/current-students.yaml.
+*/ -}}
+{{- $labels := (index site.Data "current-students").classes -}}
+<span class="cs-class__add">
+  <span class="cs-class__add-icon">{{ partial "home/icon.html" "calendar" }}</span>
+  <a href="{{ .links.google }}">{{ $labels.google_label }}<span class="cs-hidden">: add {{ .name }} ({{ .town }})</span></a>
+  <a href="{{ .links.webcal | safeURL }}">{{/* safeURL: Hugo blocks webcal:// links otherwise */}}{{ $labels.other_label }}<span class="cs-hidden">: add {{ .name }} ({{ .town }})</span></a>
+</span>
