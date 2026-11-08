@@ -30,7 +30,7 @@
                 {{- range $wd := seq 0 6 -}}
                   {{- $n := sub (add (mul $week 7) $wd 1) $lead -}}
                   {{- if and (ge $n 1) (le $n $days) -}}
-                    {{- $d := $m.AddDate 0 0 (sub $n 1) -}}
+                    {{- $d := $m.AddDate 0 0 (int (sub $n 1)) -}}
                     {{- $here := where $inMonth "date.Day" $n -}}
                     {{- if $here }}
                     <td class="schedule-month__day schedule-month__day--class{{ if where $here "kind" "makeup" }} schedule-month__day--makeup{{ end }}">
