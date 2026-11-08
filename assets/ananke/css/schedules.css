@@ -1,0 +1,39 @@
+/*
+  The unlisted schedule pages (layouts/schedules/single.html, partials/schedule-months.html): a place's or a class's
+  days, month by month. Colors are the brand variables (brand.css); the month grids print two to a page.
+*/
+.schedule { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+.schedule__title { margin: 0.5rem 0 0.25rem; }
+.schedule__lede { margin: 0 0 1rem; color: #444; }
+.schedule__heading { font-size: 1.25rem; margin: 1rem 0 0.5rem; }
+.schedule__classes { padding-left: 1.25rem; margin: 0 0 1rem; }
+.schedule__links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.schedule__button {
+  display: inline-block; padding: 0.4rem 0.8rem; border: 2px solid var(--brand-blue-text); border-radius: 0.4rem;
+  background: #fff; color: var(--brand-blue-text); font: inherit; text-decoration: none; cursor: pointer;
+}
+.schedule__button:hover, .schedule__button:focus { background: var(--brand-blue-text); color: #fff; }
+.schedule__note { margin-top: 1.5rem; color: #444; }
+
+.schedule-month { break-inside: avoid; margin: 1.5rem 0; }
+.schedule-month__grid { border-collapse: collapse; width: 100%; max-width: 28rem; table-layout: fixed; }
+.schedule-month__name { text-align: left; font-weight: bold; font-size: 1.1rem; padding-bottom: 0.25rem; }
+.schedule-month__grid th { font-size: 0.8rem; color: #444; padding: 0.2rem; }
+.schedule-month__day { border: 1px solid #ccc; height: 2.25rem; vertical-align: top; padding: 0.15rem 0.25rem; }
+.schedule-month__day--blank { border: none; }
+.schedule-month__num { font-size: 0.85rem; }
+/* a class day: the brand blue with white text (contrast 6.1:1) */
+.schedule-month__day--class { background: var(--brand-blue-text); color: #fff; font-weight: bold; }
+/* a make-up day: outlined, since it happens only when a class needs one */
+.schedule-month__day--makeup { background: #fff; color: var(--brand-blue-text); outline: 3px dashed var(--brand-blue-text); outline-offset: -4px; }
+.schedule-month__list { padding-left: 1.25rem; margin: 0.5rem 0 0; }
+.schedule-month__when { font-weight: bold; }
+.schedule-month__who { color: #444; }
+.schedule-month__tag { display: inline-block; padding: 0 0.4rem; border-radius: 0.3rem; background: var(--brand-yellow); color: var(--brand-gold-ink); font-size: 0.85rem; }
+
+@media print {
+  header, footer, .schedule__links { display: none !important; }
+  .schedule { max-width: none; padding: 0; }
+  .schedule-month__day--class { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+.schedule-month__none { margin: 0.5rem 0 0; color: #444; }

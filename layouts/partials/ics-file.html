@@ -1,0 +1,50 @@
+{{- /*
+  Publishes a calendar file (.ics) and returns the links to subscribe to it. Used for each class
+  (partials/class-calendar.html) and each schedule page (layouts/schedules/single.html).
+  Takes { path: where it's published, e.g. "calendars/sequim-sound-sprouts.ics"; name: the calendar's name;
+          events: list of { uid, from, to (times), title, where, note, tentative (bool) } }.
+  Returns { ics: the file's address, google: "add to Google Calendar" link, webcal: subscribe link for other apps }.
+  Times are in Pacific time.
+*/ -}}
+{{- $zone := "America/Los_Angeles" -}}
+{{- $lines := slice
+    "BEGIN:VCALENDAR"
+    "VERSION:2.0"
+    (printf "PRODID:-//%s//Classes//EN" site.Title)
+    "CALSCALE:GREGORIAN"
+    "METHOD:PUBLISH"
+    (printf "X-WR-CALNAME:%s" .name)
+    (printf "X-WR-TIMEZONE:%s" $zone)
+    "REFRESH-INTERVAL;VALUE=DURATION:PT12H"
+    "X-PUBLISHED-TTL:PT12H"
+    "BEGIN:VTIMEZONE" (printf "TZID:%s" $zone)
+    "BEGIN:DAYLIGHT" "TZOFFSETFROM:-0800" "TZOFFSETTO:-0700" "TZNAME:PDT" "DTSTART:19700308T020000" "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU" "END:DAYLIGHT"
+    "BEGIN:STANDARD" "TZOFFSETFROM:-0700" "TZOFFSETTO:-0800" "TZNAME:PST" "DTSTART:19701101T020000" "RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU" "END:STANDARD"
+    "END:VTIMEZONE" -}}
+{{- /* in calendar text, commas and semicolons are written \, and \; */ -}}
+{{- $stamp := now.UTC.Format "20060102T150405Z" -}}
+{{- range .events -}}
+  {{- $lines = $lines | append
+      "BEGIN:VEVENT"
+      (printf "UID:%s" .uid)
+      (printf "DTSTAMP:%s" $stamp)
+      (printf "DTSTART;TZID=%s:%s" $zone (.from.Format "20060102T150405"))
+      (printf "DTEND;TZID=%s:%s" $zone (.to.Format "20060102T150405"))
+      (printf "SUMMARY:%s" (replace (replace .title "," `\,`) ";" `\;`))
+      (printf "LOCATION:%s" (replace (replace .where "," `\,`) ";" `\;`))
+      (printf "DESCRIPTION:%s" (replace (replace .note "," `\,`) ";" `\;`))
+      (cond .tentative "STATUS:TENTATIVE" "STATUS:CONFIRMED")
+      "END:VEVENT" -}}
+{{- end -}}
+{{- $lines = $lines | append "END:VCALENDAR" -}}
+{{- /* lines longer than 75 bytes are folded: broken up, each new part starting with a space */ -}}
+{{- $folded := slice -}}
+{{- range $lines -}}
+  {{- $line := . -}}
+  {{- $parts := slice -}}
+  {{- range $i := seq 0 60 (sub (strings.RuneCount $line) 1) }}{{ $parts = $parts | append (substr $line $i 60) }}{{ end -}}
+  {{- $folded = $folded | append (delimit $parts "\r\n ") -}}
+{{- end -}}
+{{- $ics := (resources.FromString .path (printf "%s\r\n" (delimit $folded "\r\n"))).Permalink -}}
+{{- $webcal := replaceRE `^https?://` "webcal://" $ics -}}
+{{- return dict "ics" $ics "webcal" $webcal "google" (printf "https://calendar.google.com/calendar/render?cid=%s" (urlquery $webcal)) -}}

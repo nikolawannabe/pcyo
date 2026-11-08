@@ -1,0 +1,17 @@
+{{- /*
+  The unlisted schedule pages: one per place classes meet (/schedules/swisher-hall/) and one per class
+  (/schedules/sequim-sound-sprouts/), each with every class day this year by month, a calendar file and a print layout.
+  The days come from partials/schedule-places.html. layouts/schedules/single.html draws them.
+*/ -}}
+{{- $s := partial "schedule-places.html" . -}}
+{{- $hidden := dict "private" true -}}
+{{- /* build: listed nowhere, but rendered (a build map without render turns rendering off) */ -}}
+{{- $build := dict "list" "never" "render" "always" -}}
+{{- range $s.places -}}
+  {{- $.AddPage (dict "path" .slug "kind" "page" "title" (printf "Class schedule: %s" .name)
+        "params" (merge $hidden (dict "place" .slug)) "build" $build "sitemap" (dict "disable" true)) -}}
+{{- end -}}
+{{- range $s.classes -}}
+  {{- $.AddPage (dict "path" .slug "kind" "page" "title" (printf "Class schedule: %s, %s" .class.name .class.town)
+        "params" (merge $hidden (dict "class" .slug)) "build" $build "sitemap" (dict "disable" true)) -}}
+{{- end -}}

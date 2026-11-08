@@ -1,0 +1,10 @@
+{{- /*
+  The subscribe and print buttons on a schedule page. Takes the links from partials/ics-file.html.
+  Styles: assets/ananke/css/schedules.css (hidden when printing).
+*/ -}}
+<p class="schedule__links">
+  <a class="schedule__button" href="{{ .google }}">Add to Google Calendar</a>
+  <a class="schedule__button" href="{{ .webcal }}">Subscribe in another calendar app</a>
+  <a class="schedule__button" href="{{ .ics }}" download>Download the calendar file</a>
+  <button type="button" class="schedule__button" onclick="window.print()">Print</button>
+</p>

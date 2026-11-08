@@ -1,0 +1,24 @@
+{{- /*
+  A class's days from data/schedule.yaml, which the scheduler writes from its finalized terms: every class date, with
+  make-ups, extra dates and one-day moves already worked out, and cancellations and days off left out.
+  Takes one class from data/classes.yaml. Returns false when schedule.yaml has no dates for the class (class-sessions.html
+  then works them out from terms.yaml); otherwise the same list as class-sessions.html, for the class's terms only:
+  { date (a time), term (its name), kind ("class", "early" or "makeup"), location (only on a day the class meets
+  somewhere else) }, in date order. Hidden terms are left out.
+*/ -}}
+{{- $c := . -}}
+{{- $out := false -}}
+{{- with site.Data.schedule -}}
+  {{- with index (where (where .classes "name" $c.name) "town" $c.town) 0 -}}
+    {{- $out = slice -}}
+    {{- $terms := $c.terms | default (slice "fall" "winter" "spring") -}}
+    {{- range $d := .dates -}}
+      {{- if in $terms $d.term -}}
+        {{- with index (where (where site.Data.terms.terms "id" $d.term) "hidden" "!=" true) 0 -}}
+          {{- $out = $out | append (dict "date" (time $d.date) "term" .name "kind" $d.kind "location" ($d.location | default "")) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

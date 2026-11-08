@@ -1,0 +1,41 @@
+{{- /*
+  Who meets where and when this school year, for the unlisted schedule pages (content/schedules/_content.gotmpl).
+  Reads data/classes.yaml and each class's days (partials/class-sessions.html, from data/schedule.yaml when the
+  scheduler has exported it). Takes nothing. Returns
+    { places: list of { slug, name, location, meetings }, classes: list of { slug, class, meetings } }
+  where meetings is a list, in date order, of
+    { date (a time), from, to (times that day), class (its classes.yaml entry), term, kind, location }
+  A class meets at its usual location unless that day's session names another (a one-day move). Classes with no
+  days or start time yet are left out.
+*/ -}}
+{{- $byPlace := dict -}}
+{{- $byClass := dict -}}
+{{- range $c := site.Data.classes -}}
+  {{- $start := partial "clock-minutes.html" ($c.start | default "") -}}
+  {{- if and $c.days (ge $start 0) -}}
+    {{- $length := int ($c.length | default 60) -}}
+    {{- $meetings := slice -}}
+    {{- range partial "class-sessions.html" $c -}}
+      {{- $from := .date.Add (time.ParseDuration (printf "%dm" $start)) -}}
+      {{- $where := .location | default $c.location -}}
+      {{- $m := dict "date" .date "from" $from "to" ($from.Add (time.ParseDuration (printf "%dm" $length))) "class" $c
+            "term" .term "kind" .kind "location" $where -}}
+      {{- $meetings = $meetings | append $m -}}
+      {{- $key := trim (replaceRE `[^a-z0-9]+` "-" (replaceRE `['’]` "" (lower (index (split $where ",") 0)))) "-" -}}
+      {{- $place := index $byPlace $key | default (dict "slug" $key "name" (trim (index (split $where ",") 0) " ") "location" $where "meetings" slice) -}}
+      {{- $byPlace = merge $byPlace (dict $key (merge $place (dict "meetings" ($place.meetings | append $m)))) -}}
+    {{- end -}}
+    {{- $key := urlize (printf "%s %s" $c.town $c.name) -}}
+    {{- $entry := index $byClass $key | default (dict "slug" $key "class" $c "meetings" slice) -}}
+    {{- $byClass = merge $byClass (dict $key (merge $entry (dict "meetings" ($entry.meetings | append $meetings)))) -}}
+  {{- end -}}
+{{- end -}}
+{{- $places := slice -}}
+{{- range $byPlace -}}
+  {{- $places = $places | append (merge . (dict "meetings" (sort .meetings "from"))) -}}
+{{- end -}}
+{{- $classes := slice -}}
+{{- range $e := $byClass -}}
+  {{- with $e.meetings }}{{ $classes = $classes | append (merge $e (dict "meetings" (sort . "from"))) }}{{ end -}}
+{{- end -}}
+{{- return dict "places" (sort $places "name") "classes" $classes -}}

@@ -1,0 +1,58 @@
+{{- /*
+  An unlisted schedule page (content/schedules/_content.gotmpl): a place's classes (.Params.place) or one class's
+  days (.Params.class), month by month, with a calendar file to subscribe to and a print layout for a church office.
+  Data: partials/schedule-places.html. Grids: partials/schedule-months.html. Styles: assets/ananke/css/schedules.css.
+*/ -}}
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $s := partialCached "schedule-places.html" . "schedules" -}}
+  {{- $host := (urls.Parse site.BaseURL).Host -}}
+  {{- $year := site.Data.terms.year -}}
+  <article class="schedule">
+    {{- with .Params.place }}
+      {{- with index (where $s.places "slug" .) 0 }}
+      {{- $place := . }}
+      <h1 class="schedule__title">PCYO classes at {{ .name }}</h1>
+      <p class="schedule__lede">{{ .location }} · {{ $year }} school year · {{ len .meetings }} class meetings</p>
+      {{- /* who is here: each class once, with its usual day and time */}}
+      <h2 class="schedule__heading">Classes here</h2>
+      <ul class="schedule__classes">
+        {{- $seen := slice }}
+        {{- range .meetings }}
+          {{- $key := printf "%s|%s|%s" .class.town .class.name (delimit .class.days ",") }}
+          {{- if not (in $seen $key) }}{{ $seen = $seen | append $key }}
+          {{- $c := .class }}
+          <li><b>{{ $c.name }}</b> ({{ $c.town }}){{ with $c.teacher }} with {{ . }}{{ end }} ·
+            {{- if eq $c.location $place.location }}
+            {{ partial "class-time.html" (dict "c" $c "style" "long") }}
+            {{- else }}
+            {{- /* a class that usually meets elsewhere and comes here on a few days */}}
+            {{- $days := slice }}{{ range where (where $place.meetings "class.name" $c.name) "class.town" $c.town }}{{ $days = $days | append (.date.Format "Mon Jan 2") }}{{ end }}
+            only on {{ delimit $days ", " }} (usually at {{ index (split $c.location ",") 0 }})
+            {{- end }}</li>
+          {{- end }}
+        {{- end }}
+      </ul>
+      {{- $events := slice }}
+      {{- range .meetings }}
+        {{- $events = $events | append (dict "uid" (printf "%s-%s-%s@%s" (.from.Format "20060102T1504") (urlize .class.town) (urlize .class.name) $host)
+              "from" .from "to" .to "title" (printf "%s (PCYO)" .class.name) "where" (printf "%s, WA" .location)
+              "note" (printf "%s%s" .term (cond (eq .kind "makeup") " make-up day" "")) "tentative" (eq .kind "makeup")) }}
+      {{- end }}
+      {{- $ics := partial "ics-file.html" (dict "path" (printf "calendars/places/%s.ics" .slug) "name" (printf "PCYO at %s" .name) "events" $events) }}
+      {{- partial "schedule-links.html" $ics }}
+      {{- partial "schedule-months.html" (dict "meetings" .meetings "show_class" true) }}
+      {{- end }}
+    {{- end }}
+    {{- with .Params.class }}
+      {{- with index (where $s.classes "slug" .) 0 }}
+      {{- $c := .class }}
+      <h1 class="schedule__title">{{ $c.name }} ({{ $c.town }})</h1>
+      <p class="schedule__lede">{{ with $c.teacher }}With {{ . }} · {{ end }}{{ $c.location }} · {{ $year }} school year · {{ len .meetings }} class meetings</p>
+      {{- with partial "class-calendar.html" $c }}{{ partial "schedule-links.html" . }}{{ end }}
+      {{- partial "schedule-months.html" (dict "meetings" .meetings "show_class" false "home" $c.location) }}
+      {{- end }}
+    {{- end }}
+    <p class="schedule__note">Days off are left out. Make-up days happen only when a class needs one. Questions: {{ with site.Data.footer.contact.email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end }}</p>
+  </article>
+{{ end }}

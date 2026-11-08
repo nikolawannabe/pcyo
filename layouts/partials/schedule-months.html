@@ -1,0 +1,70 @@
+{{- /*
+  Month grids for a schedule page: every month from the first meeting to the last, weeks starting Sunday, each day
+  with meetings marked and its meetings listed under the grid. Drawn by Hugo (no script), so the page prints.
+  Takes { meetings: from partials/schedule-places.html, show_class: name each class (a place's page),
+          home: a class page's usual location; a day anywhere else says where }.
+  Styles: assets/ananke/css/schedules.css.
+*/ -}}
+{{- $meetings := .meetings -}}
+{{- $showClass := .show_class -}}
+{{- with $meetings -}}
+  {{- $first := (index . 0).date -}}
+  {{- $last := (index . (sub (len .) 1)).date -}}
+  {{- $month := time (printf "%d-%02d-01" $first.Year (int $first.Month)) -}}
+  {{- $end := time (printf "%d-%02d-01" $last.Year (int $last.Month)) -}}
+  {{- range seq 0 24 -}}
+    {{- $m := $month.AddDate 0 . 0 -}}
+    {{- if not ($m.After $end) -}}
+      {{- $inMonth := where $meetings "date.Month" $m.Month -}}
+      {{- $inMonth = where $inMonth "date.Year" $m.Year -}}
+      <section class="schedule-month">
+        <table class="schedule-month__grid">
+          <caption class="schedule-month__name">{{ $m.Format "January 2006" }}</caption>
+          <thead><tr>{{ range slice "Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat" }}<th scope="col">{{ . }}</th>{{ end }}</tr></thead>
+          <tbody>
+            {{- $lead := int $m.Weekday -}}
+            {{- $days := ($m.AddDate 0 1 -1).Day -}}
+            {{- range $week := seq 0 5 -}}
+              {{- if lt (mul $week 7) (add $lead $days) }}
+              <tr>
+                {{- range $wd := seq 0 6 -}}
+                  {{- $n := sub (add (mul $week 7) $wd 1) $lead -}}
+                  {{- if and (ge $n 1) (le $n $days) -}}
+                    {{- $d := $m.AddDate 0 0 (sub $n 1) -}}
+                    {{- $here := where $inMonth "date.Day" $n -}}
+                    {{- if $here }}
+                    <td class="schedule-month__day schedule-month__day--class{{ if where $here "kind" "makeup" }} schedule-month__day--makeup{{ end }}">
+                      <span class="schedule-month__num">{{ $n }}</span>
+                      <span class="clip">: {{ len $here }} class{{ if gt (len $here) 1 }}es{{ end }}</span>
+                    </td>
+                    {{- else }}
+                    <td class="schedule-month__day"><span class="schedule-month__num">{{ $n }}</span></td>
+                    {{- end -}}
+                  {{- else }}
+                    <td class="schedule-month__day schedule-month__day--blank"></td>
+                  {{- end -}}
+                {{- end }}
+              </tr>
+              {{- end -}}
+            {{- end }}
+          </tbody>
+        </table>
+        {{- with $inMonth }}
+        <ul class="schedule-month__list">
+          {{- range sort . "from" }}
+          <li>
+            <span class="schedule-month__when">{{ .date.Format "Mon Jan 2" }}, {{ .from.Format "3:04" }}–{{ .to.Format "3:04pm" }}</span>
+            {{- if $showClass }} {{ .class.name }}{{ with .class.teacher }} <span class="schedule-month__who">({{ . }})</span>{{ end }}{{ end }}
+            {{- if eq .kind "makeup" }} <span class="schedule-month__tag">make-up day</span>{{ end }}
+            {{- if eq .kind "early" }} <span class="schedule-month__tag">early start</span>{{ end }}
+            {{- if and (not $showClass) (ne .location $.home) }} <span class="schedule-month__tag">at {{ .location }}</span>{{ end }}
+          </li>
+          {{- end }}
+        </ul>
+        {{- else }}
+        <p class="schedule-month__none">No classes this month.</p>
+        {{- end }}
+      </section>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

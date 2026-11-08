@@ -1,5 +1,6 @@
 {{- /*
-  Every day a class meets this school year, from data/classes.yaml and data/terms.yaml.
+  Every day a class meets this school year: from data/schedule.yaml when the scheduler has exported the class's dates
+  (partials/class-sessions-from-schedule.html), otherwise worked out from data/classes.yaml and data/terms.yaml.
   Takes one class. Returns a list, in date order, of { date (a time), term (its name), kind }, where kind is
     "class"   a regular class day
     "early"   before the term starts, in its "early" week, when the class's teacher is the one starting early
@@ -11,7 +12,8 @@
 {{- $T := site.Data.terms -}}
 {{- $days := $c.days | default slice -}}
 {{- $teacher := $c.teacher | default "" -}}
-{{- $out := slice -}}
+{{- $out := partial "class-sessions-from-schedule.html" $c -}}
+{{- if not $out -}}{{- $out = slice -}}
 {{- range $id := $c.terms | default (slice "fall" "winter" "spring") -}}
   {{- with index (where (where $T.terms "id" $id) "hidden" "!=" true) 0 -}}
     {{- $term := . -}}
@@ -34,5 +36,6 @@
       {{- end -}}
     {{- end -}}
   {{- end -}}
+{{- end -}}
 {{- end -}}
 {{- return $out -}}

@@ -14,59 +14,26 @@
   {{- $length := int ($c.length | default 60) -}}
   {{- $host := (urls.Parse site.BaseURL).Host -}}
   {{- $slug := urlize (printf "%s %s" $c.town $c.name) -}}
-  {{- $zone := "America/Los_Angeles" -}}
   {{- $where := printf "%s, WA" ($c.location | default $c.town) -}}
   {{- $page := (site.GetPage "/current-students").Permalink -}}
-  {{- $lines := slice
-      "BEGIN:VCALENDAR"
-      "VERSION:2.0"
-      (printf "PRODID:-//%s//Classes//EN" site.Title)
-      "CALSCALE:GREGORIAN"
-      "METHOD:PUBLISH"
-      (printf "X-WR-CALNAME:%s (%s)" $c.name $c.town)
-      (printf "X-WR-TIMEZONE:%s" $zone)
-      "REFRESH-INTERVAL;VALUE=DURATION:PT12H"
-      "X-PUBLISHED-TTL:PT12H"
-      "BEGIN:VTIMEZONE" (printf "TZID:%s" $zone)
-      "BEGIN:DAYLIGHT" "TZOFFSETFROM:-0800" "TZOFFSETTO:-0700" "TZNAME:PDT" "DTSTART:19700308T020000" "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU" "END:DAYLIGHT"
-      "BEGIN:STANDARD" "TZOFFSETFROM:-0700" "TZOFFSETTO:-0800" "TZNAME:PST" "DTSTART:19701101T020000" "RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU" "END:STANDARD"
-      "END:VTIMEZONE" -}}
-  {{- /* in calendar text, commas and semicolons are written \, and \; */ -}}
-  {{- $stamp := now.UTC.Format "20060102T150405Z" -}}
+  {{- $events := slice -}}
   {{- range partial "class-sessions.html" $c -}}
     {{- $day := .date -}}
     {{- $from := $day.Add (time.ParseDuration (printf "%dm" $start)) -}}
-    {{- $to := $from.Add (time.ParseDuration (printf "%dm" $length)) -}}
     {{- $title := printf "%s (PCYO)" $c.name -}}
     {{- $note := printf "%s" .term -}}
     {{- if eq .kind "makeup" }}{{ $title = printf "%s: make-up day" $title }}{{ $note = printf "%s make-up day" .term }}{{ end -}}
     {{- if eq .kind "early" }}{{ $note = printf "%s, early start" .term }}{{ end -}}
     {{- with $c.teacher }}{{ $note = printf "%s · with %s" $note . }}{{ end -}}
     {{- $note = printf "%s · Days off and changes: %s" $note $page -}}
-    {{- $lines = $lines | append
-        "BEGIN:VEVENT"
-        (printf "UID:%s-%s@%s" ($day.Format "20060102") $slug $host)
-        (printf "DTSTAMP:%s" $stamp)
-        (printf "DTSTART;TZID=%s:%s" $zone ($from.Format "20060102T150405"))
-        (printf "DTEND;TZID=%s:%s" $zone ($to.Format "20060102T150405"))
-        (printf "SUMMARY:%s" (replace (replace $title "," `\,`) ";" `\;`))
-        (printf "LOCATION:%s" (replace (replace $where "," `\,`) ";" `\;`))
-        (printf "DESCRIPTION:%s" (replace (replace $note "," `\,`) ";" `\;`))
-        (cond (eq .kind "makeup") "STATUS:TENTATIVE" "STATUS:CONFIRMED")
-        "END:VEVENT" -}}
+    {{- /* a day the class meets somewhere else (exported by the scheduler) */ -}}
+    {{- $at := $where -}}
+    {{- with .location }}{{ $at = printf "%s, WA" . }}{{ end -}}
+    {{- $events = $events | append (dict "uid" (printf "%s-%s@%s" ($day.Format "20060102") $slug $host)
+          "from" $from "to" ($from.Add (time.ParseDuration (printf "%dm" $length)))
+          "title" $title "where" $at "note" $note "tentative" (eq .kind "makeup")) -}}
   {{- end -}}
-  {{- $lines = $lines | append "END:VCALENDAR" -}}
-  {{- /* lines longer than 75 bytes are folded: broken up, each new part starting with a space */ -}}
-  {{- $folded := slice -}}
-  {{- range $lines -}}
-    {{- $line := . -}}
-    {{- $parts := slice -}}
-    {{- range $i := seq 0 60 (sub (strings.RuneCount $line) 1) }}{{ $parts = $parts | append (substr $line $i 60) }}{{ end -}}
-    {{- $folded = $folded | append (delimit $parts "\r\n ") -}}
-  {{- end -}}
-  {{- $file := resources.FromString (printf "calendars/%s.ics" $slug) (printf "%s\r\n" (delimit $folded "\r\n")) -}}
-  {{- $ics := $file.Permalink -}}
-  {{- $webcal := replaceRE `^https?://` "webcal://" $ics -}}
-  {{- $result = dict "ics" $ics "webcal" $webcal "google" (printf "https://calendar.google.com/calendar/render?cid=%s" (urlquery $webcal)) -}}
+  {{- $result = partial "ics-file.html" (dict "path" (printf "calendars/%s.ics" $slug)
+        "name" (printf "%s (%s)" $c.name $c.town) "events" $events) -}}
 {{- end -}}
 {{- return $result -}}
